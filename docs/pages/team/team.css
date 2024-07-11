@@ -1,0 +1,9 @@
+ 
+img.profile_img{
+    width: 200px;
+    border-radius:50% !important;
+    filter: grayscale(100%) !important;
+}
+.table.th{
+    font-weight: bolder;
+}

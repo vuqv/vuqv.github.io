@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Quyen Vu">
 <meta name="dcterms.date" content="2022-12-09">
 
-<title>Home - Some Linux commands frequently used</title>
+<title>Some Linux commands frequently used – Home</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -144,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text"><strong>About me</strong></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/qvv5013"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/vuqv"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -272,6 +272,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash numberLines lineAnchors code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="fu">rsync</span> <span class="at">-avzhP</span> plgqvuvan@pro.cyfronet.pl:/net/people/plgqvuvan/plggligroup/qvuvan/10proj/post_trans/cat3/stride_by5/combine_trajs/ post_trans/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The above command sync the data from cluster pro.cyfronet.pl to local computer. To exclude files (e.g xtc file), add this: –exclude=*.xtc</p>
+</section>
+<section id="install-package-on-roar-cluster-without-root-permission" class="level1">
+<h1>Install package on Roar cluster without Root permission</h1>
+<p>Roar cluster runs RedHat Linux version 8.9</p>
+<p>To install rpm file without root permission: <code>rpm2cpio the_file_name.rpm | cpio -idv</code></p>
+<p>Example on install ATOM Code editor:</p>
+<pre><code>1. `rpm2cpio atom.x86_64.rpm | cpio -idv`
+This will extract rpm file to folder name ./usr . Move this folder to desired folder, e.g ~/programs:
+2. `mv usr ~/programs/Atom`
+3. Create Desktop link to application:
+    Go to ~/.local/share/applications/
+    create a desktop file: `Atom.desktop` with content:
+    ```
+    [Desktop Entry]
+    Name=Atom Editor
+    Comment=Code Editing. Redefined.
+    GenericName=Text Editor
+    Exec=/storage/home/qzv5006/programs/Atom/bin/atom %F
+    Icon=/storage/home/qzv5006/programs/Atom/share/icons/hicolor/32x32/apps/atom.png
+    Type=Application
+    StartupNotify=false
+    StartupWMClass=Code
+    Categories=TextEditor;Development;IDE;
+    MimeType=application/x-code-workspace;
+    Actions=new-empty-window;
+    Keywords=vscode;
+    
+    [Desktop Action new-empty-window]
+    Name=New Empty Window
+    Name[de]=Neues leeres Fenster
+    Name[es]=Nueva ventana vacÃ­a
+    Name[fr]=Nouvelle fenÃªtre vide
+    Name[it]=Nuova finestra vuota
+    Name[ja]=\u65b0\u3057\u3044\u7a7a\u306e\u30a6\u30a3\u30f3\u30c9\u30a6
+    Name[ko]=\uc0c8 \ube48 \ucc3d
+    Name[ru]=\u041d\u043e\u0432\u043e\u0435 \u043f\u0443\u0441\u0442\u043e\u0435 \u043e\u043a\u043d\u043e
+    Name[zh_CN]=\u65b0\u5efa\u7a7a\u7a97\u53e3
+    Name[zh_TW]=\u958b\u65b0\u7a7a\u8996\u7a97
+    Exec=/storage/home/qzv5006/programs/Atom/bin/atom --new-window %F
+    Icon=/storage/home/qzv5006/programs/Atom/share/icons/hicolor/32x32/apps/atom.png
+    ```
+4. Give executable permission for Desktop file: `chmod +x Atom.desktop`</code></pre>
+<div id="7b660e76a67111d9" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -312,18 +357,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -355,15 +389,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/qvv5013\.github\.io\/");
+      var filterRegex = new RegExp("https:\/\/vuqv\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -686,7 +742,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<script src="https://giscus.app/client.js" data-repo="qvv5013/qvv5013.github.io" data-repo-id="R_kgDOIfTJSQ" data-category="General" data-category-id="DIC_kwDOIfTJSc4CUDXd" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+<script src="https://giscus.app/client.js" data-repo="vuqv/vuqv.github.io" data-repo-id="R_kgDOIfTJSQ" data-category="General" data-category-id="DIC_kwDOIfTJSc4CUDXd" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
 <input type="hidden" id="giscus-base-theme" value="light">
 <input type="hidden" id="giscus-alt-theme" value="dark">
