@@ -9,7 +9,7 @@
 <link>https://vuqv.github.io/</link>
 <atom:link href="https://vuqv.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>My blog</description>
-<generator>quarto-1.4.554</generator>
+<generator>quarto-1.5.54</generator>
 <lastBuildDate>Sat, 14 Oct 2023 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Download Protein Ensemble Database entries</title>
@@ -54,6 +54,7 @@ font-style: inherit;">import</span> shutil</span></code></pre></div>
 <div id="dd6086c5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> download_entry(PEDID):</span>
 <span id="cb2-2">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -118,8 +119,10 @@ background-color: null;
 font-style: inherit;"># Check and create the 'single' and 'multiple' folders if they don't exist</span></span>
 <span id="cb2-23">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> os.path.exists(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'single'</span>):</span>
@@ -128,8 +131,10 @@ background-color: null;
 font-style: inherit;">'single'</span>)</span>
 <span id="cb2-25">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> os.path.exists(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'multiple'</span>):</span>
@@ -160,6 +165,7 @@ background-color: null;
 font-style: inherit;"># Check the response status code</span></span>
 <span id="cb2-35">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> res.status_code <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
@@ -198,6 +204,7 @@ background-color: null;
 font-style: inherit;">'construct_chains'</span>])</span>
 <span id="cb2-45">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> n_constructs <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
@@ -210,6 +217,7 @@ background-color: null;
 font-style: inherit;">'single/'</span></span>
 <span id="cb2-47">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb2-48">            folder <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -226,8 +234,10 @@ font-style: inherit;">=</span> [ensemble[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ensemble_id"</span>] <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> ensemble <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> res[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ensembles"</span>]]</span>
@@ -253,8 +263,10 @@ background-color: null;
 font-style: inherit;"># Iterate through ensemble IDs and download each ensemble's data</span></span>
 <span id="cb2-60">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> ensemble_id <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> ensembles_ids:</span>
 <span id="cb2-61">            <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -278,6 +290,7 @@ background-color: null;
 font-style: inherit;">=</span> requests.get(u)</span>
 <span id="cb2-67">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">with</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span>(<span class="ss" style="color: #20794D;
@@ -301,6 +314,7 @@ font-style: inherit;">as</span> f:</span>
 <span id="cb2-69"></span>
 <span id="cb2-70">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> res.status_code <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
@@ -343,6 +357,7 @@ N-terminal domain of dimeric eIF4G1 (1-249) from S. cerevisieae
 <div id="400fd8c1" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> extract_and_move_files(input_path, output_path):</span>
 <span id="cb5-2">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -389,8 +404,10 @@ background-color: null;
 font-style: inherit;">    """</span></span>
 <span id="cb5-19">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> os.path.isfile(input_path) <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">and</span> input_path.endswith(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">".tar.gz"</span>):</span>
@@ -404,6 +421,7 @@ background-color: null;
 font-style: inherit;">0</span>]</span>
 <span id="cb5-22">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">with</span> tarfile.<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span>(input_path, <span class="st" style="color: #20794D;
@@ -479,17 +497,21 @@ font-style: inherit;">"</span>)</span>
 <span id="cb5-30">            shutil.move(src, dst)</span>
 <span id="cb5-31">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> os.path.isdir(input_path):</span>
 <span id="cb5-32">        <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Handle the case where the input path is a folder containing tar.gz files</span></span>
 <span id="cb5-33">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> tar_file <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> os.listdir(input_path):</span>
 <span id="cb5-34">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> tar_file.endswith(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">".tar.gz"</span>):</span>
@@ -502,6 +524,7 @@ background-color: null;
 font-style: inherit;">0</span>]</span>
 <span id="cb5-36">                <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">with</span> tarfile.<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span>(os.path.join(input_path, tar_file), <span class="st" style="color: #20794D;
@@ -573,6 +596,7 @@ font-style: inherit;">"</span>)</span>
 <span id="cb5-44">                    shutil.move(src, dst)</span>
 <span id="cb5-45">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb5-46">        <span class="bu" style="color: null;
 background-color: null;
@@ -627,6 +651,7 @@ source file: pdb_multiple/PED00226e000.pdb, destination file: pdb_multiple/PED00
 <div id="8b548b9e" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> separate_chains(original_pdb, output_folder):</span>
 <span id="cb12-2">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -686,8 +711,10 @@ background-color: null;
 font-style: inherit;"># Check if the output folder exists, and create it if it doesn't</span></span>
 <span id="cb12-24">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> os.path.exists(output_folder):</span>
 <span id="cb12-25">        os.makedirs(output_folder)</span>
 <span id="cb12-26"></span>
@@ -696,6 +723,7 @@ background-color: null;
 font-style: inherit;"># Read content of the original PDB file</span></span>
 <span id="cb12-28">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">with</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span>(original_pdb, <span class="st" style="color: #20794D;
@@ -723,11 +751,14 @@ font-style: inherit;">set</span>()</span>
 <span id="cb12-34"></span>
 <span id="cb12-35">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> line <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> content:</span>
 <span id="cb12-36">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> line.startswith(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ATOM"</span>):</span>
@@ -747,8 +778,10 @@ background-color: null;
 font-style: inherit;"># Create separate PDB files for each chain</span></span>
 <span id="cb12-41">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> chain_identifier <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> chain_identifiers:</span>
 <span id="cb12-42">        output_file <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -770,6 +803,7 @@ font-style: inherit;">.pdb"</span>)</span>
 <span id="cb12-43"></span>
 <span id="cb12-44">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">with</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span>(output_file, <span class="st" style="color: #20794D;
@@ -779,15 +813,19 @@ background-color: null;
 font-style: inherit;">as</span> f:</span>
 <span id="cb12-45">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> line <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> content:</span>
 <span id="cb12-46">                <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> line.startswith(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"MODEL"</span>) <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">or</span> line.startswith(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ENDMDL"</span>):</span>
@@ -797,6 +835,7 @@ font-style: inherit;"># Write entire MODEL and ENDMDL lines</span></span>
 <span id="cb12-48">                    f.write(line)</span>
 <span id="cb12-49">                <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> line.startswith(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"ATOM"</span>):</span>
@@ -827,18 +866,22 @@ background-color: null;
 font-style: inherit;"># Check if the line matches the criteria for the current chain</span></span>
 <span id="cb12-55">                    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> atom_name <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"CA"</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">and</span> current_chain <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> chain_identifier <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">and</span> alternate_location <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> alternate_location_indicators:</span>
 <span id="cb12-56">                        f.write(line)</span></code></pre></div>
 </div>
@@ -967,6 +1010,7 @@ font-style: inherit;">import</span> itemgetter</span></code></pre></div>
 <div id="5a739572-5cc5-4f3c-a57f-1a4d41364f5b" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> get_mobidb_disordered_data(uniprot):</span>
 <span id="cb2-2">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1072,6 +1116,7 @@ font-style: inherit;">=</span> requests.get(url)</span>
 <span id="cb2-37"></span>
 <span id="cb2-38">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> res.status_code <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
@@ -1079,12 +1124,14 @@ background-color: null;
 font-style: inherit;">200</span>:</span>
 <span id="cb2-39">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">try</span>:</span>
 <span id="cb2-40">            result <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> res.json()</span>
 <span id="cb2-41">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">except</span>:</span>
 <span id="cb2-42">            <span class="bu" style="color: null;
 background-color: null;
@@ -1093,6 +1140,7 @@ background-color: null;
 font-style: inherit;">"ID DOES NOT EXITS IN THE DATABASE"</span>)</span>
 <span id="cb2-43">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> []  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Return an empty list if JSON parsing fails</span></span>
@@ -1103,13 +1151,17 @@ font-style: inherit;">=</span> []</span>
 <span id="cb2-46"></span>
 <span id="cb2-47">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> key <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> keywords:</span>
 <span id="cb2-48">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> key <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> result.keys():</span>
 <span id="cb2-49">                regions <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -1128,6 +1180,7 @@ background-color: null;
 font-style: inherit;"># print(disordered_regions)</span></span>
 <span id="cb2-54">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(disordered_regions) <span class="op" style="color: #5E5E5E;
@@ -1142,16 +1195,19 @@ background-color: null;
 font-style: inherit;">"NO DISORDER REGION FOUND"</span>)</span>
 <span id="cb2-56">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Fully structured"</span></span>
 <span id="cb2-57">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> disordered_regions</span>
 <span id="cb2-58"></span>
 <span id="cb2-59">    </span>
 <span id="cb2-60">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> []  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Return an empty list if the ID does not exist in the database</span></span></code></pre></div>
@@ -1176,6 +1232,7 @@ font-style: inherit;">"P02751"</span>)</span></code></pre></div>
 <div id="d7c124ab-4ca6-4306-8dc1-ba3aad9a0858" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> merge_data(data_sets):</span>
 <span id="cb5-2">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1252,6 +1309,7 @@ background-color: null;
 font-style: inherit;"># print(data_sets)</span></span>
 <span id="cb5-31">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">isinstance</span>(data_sets, <span class="bu" style="color: null;
@@ -1262,9 +1320,11 @@ background-color: null;
 font-style: inherit;"># if protein is fully structure, data_sets will be string- then do nothing</span></span>
 <span id="cb5-33">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> []</span>
 <span id="cb5-34">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(data_sets) <span class="op" style="color: #5E5E5E;
@@ -1277,6 +1337,7 @@ background-color: null;
 font-style: inherit;"># print("[ID does not exist in Database]")</span></span>
 <span id="cb5-36">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> []</span>
 <span id="cb5-37">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1290,8 +1351,10 @@ background-color: null;
 font-style: inherit;"># Iterate through each data set and collect all intervals</span></span>
 <span id="cb5-41">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> intervals <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> data_sets:</span>
 <span id="cb5-42">        all_intervals.extend(intervals)</span>
 <span id="cb5-43"></span>
@@ -1302,6 +1365,7 @@ font-style: inherit;"># Sort the intervals by their start values</span></span>
 background-color: null;
 font-style: inherit;">=</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">lambda</span> x: x[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>])</span>
@@ -1318,15 +1382,20 @@ background-color: null;
 font-style: inherit;"># Iterate through the sorted intervals and merge overlapping intervals</span></span>
 <span id="cb5-51">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> interval <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> all_intervals:</span>
 <span id="cb5-52">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> merged_intervals <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">or</span> interval[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
@@ -1344,6 +1413,7 @@ font-style: inherit;"># If the interval does not overlap with the last merged in
 <span id="cb5-54">            merged_intervals.append(interval)</span>
 <span id="cb5-55">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb5-56">            <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1386,13 +1456,16 @@ font-style: inherit;">0</span>]</span>
 <span id="cb5-62"></span>
 <span id="cb5-63">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> interval <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> merged_intervals[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>:]:</span>
 <span id="cb5-64">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> current_interval[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
@@ -1413,6 +1486,7 @@ background-color: null;
 font-style: inherit;">1</span>]</span>
 <span id="cb5-66">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb5-67">            final_merged_intervals.append(current_interval)</span>
 <span id="cb5-68">            current_interval <span class="op" style="color: #5E5E5E;
@@ -1432,6 +1506,7 @@ background-color: null;
 font-style: inherit;"># print(tuple(final_merged_intervals))</span></span>
 <span id="cb5-75">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">tuple</span>(final_merged_intervals)</span></code></pre></div>
@@ -1446,6 +1521,7 @@ font-style: inherit;">tuple</span>(final_merged_intervals)</span></code></pre></
 <div id="1658aed3-5364-41f6-9fed-9b5aaf1fd593" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> count_overlap(first_range, second_ranges):</span>
 <span id="cb6-2">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1498,6 +1574,7 @@ background-color: null;
 font-style: inherit;"># print(first_range, second_ranges)</span></span>
 <span id="cb6-21">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">isinstance</span>(second_ranges, <span class="bu" style="color: null;
@@ -1517,8 +1594,10 @@ font-style: inherit;">=</span> []</span>
 <span id="cb6-25"></span>
 <span id="cb6-26">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">bool</span>(second_ranges):</span>
@@ -1527,12 +1606,15 @@ background-color: null;
 font-style: inherit;"># when disorder region is empty-fully structure-return an empty list</span></span>
 <span id="cb6-28">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> []</span>
 <span id="cb6-29">    </span>
 <span id="cb6-30">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> second_range <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> second_ranges:</span>
 <span id="cb6-31">        <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1558,6 +1640,7 @@ font-style: inherit;">1</span>])</span>
 <span id="cb6-34"></span>
 <span id="cb6-35">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> start <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;=</span> end:</span>
@@ -1573,6 +1656,7 @@ font-style: inherit;">1</span></span>
 <span id="cb6-37">            overlaps.append(overlap_count)</span>
 <span id="cb6-38">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb6-39">            overlaps.append(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1580,6 +1664,7 @@ font-style: inherit;">0</span>)</span>
 <span id="cb6-40"></span>
 <span id="cb6-41">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> overlaps</span>
 <span id="cb6-42"></span></code></pre></div>
 </div>
@@ -1626,6 +1711,7 @@ font-style: inherit;">print</span>(overlaps)</span></code></pre></div>
 <div id="3be08918-0090-4398-a774-a6dc4f303830" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> classify_idr_regions(length_of_idr, length_in_ped):</span>
 <span id="cb9-2">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1720,6 +1806,7 @@ background-color: null;
 font-style: inherit;">    """</span></span>
 <span id="cb9-35">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> length_in_ped <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
@@ -1727,6 +1814,7 @@ background-color: null;
 font-style: inherit;">20</span>:</span>
 <span id="cb9-36">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Not Classified"</span></span>
@@ -1737,17 +1825,21 @@ font-style: inherit;">=</span> []</span>
 <span id="cb9-39"></span>
 <span id="cb9-40">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> idr_length <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> length_of_idr:</span>
 <span id="cb9-41">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> idr_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">50</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">and</span> (idr_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span> length_in_ped) <span class="op" style="color: #5E5E5E;
@@ -1763,6 +1855,7 @@ background-color: null;
 font-style: inherit;">"Full IDP"</span>)</span>
 <span id="cb9-44">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> idr_length <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
@@ -1773,6 +1866,7 @@ background-color: null;
 font-style: inherit;">"Long IDR"</span>)</span>
 <span id="cb9-46">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span> <span class="op" style="color: #5E5E5E;
@@ -1787,6 +1881,7 @@ background-color: null;
 font-style: inherit;">"Short IDR"</span>)</span>
 <span id="cb9-48">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb9-49">            classifications.append(<span class="st" style="color: #20794D;
 background-color: null;
@@ -1797,45 +1892,56 @@ background-color: null;
 font-style: inherit;"># Determine the final classification based on priority</span></span>
 <span id="cb9-52">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Full IDP"</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> classifications:</span>
 <span id="cb9-53">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Fully IDP"</span></span>
 <span id="cb9-54">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Long IDR"</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> classifications:</span>
 <span id="cb9-55">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Long IDR"</span></span>
 <span id="cb9-56">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Short IDR"</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> classifications:</span>
 <span id="cb9-57">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Short IDR"</span></span>
 <span id="cb9-58">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb9-59">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Fully Structured"</span></span>
@@ -1872,6 +1978,7 @@ background-color: null;
 font-style: inherit;">"""</span></span>
 <span id="cb10-4"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> get_ped_stats(PEDID):</span>
 <span id="cb10-5">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1944,6 +2051,7 @@ background-color: null;
 font-style: inherit;">=</span> requests.get(url)</span>
 <span id="cb10-30">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> res.status_code <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
@@ -2002,11 +2110,14 @@ font-style: inherit;">'construct_chains'</span>]</span>
 <span id="cb10-35"></span>
 <span id="cb10-36">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> chain <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> construct_chains:</span>
 <span id="cb10-37">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(construct_chains) <span class="op" style="color: #5E5E5E;
@@ -2022,6 +2133,7 @@ background-color: null;
 font-style: inherit;">=</span> PEDID</span>
 <span id="cb10-40">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb10-41">                <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -2053,8 +2165,10 @@ font-style: inherit;">'fragments'</span>]</span>
 <span id="cb10-46"></span>
 <span id="cb10-47">            <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> fragment, fragment_stats <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">zip</span>(fragments, chain[<span class="st" style="color: #20794D;
@@ -2088,12 +2202,15 @@ background-color: null;
 font-style: inherit;">tuple</span>()</span>
 <span id="cb10-54">                <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> fragment_stats[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'uniprot'</span>] <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">is</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span>:</span>
@@ -2188,6 +2305,7 @@ background-color: null;
 font-style: inherit;">"</span>)</span>
 <span id="cb10-62">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">elif</span> res.status_code <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
@@ -2206,6 +2324,7 @@ background-color: null;
 font-style: inherit;"> does not exist"</span>)</span>
 <span id="cb10-64">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span></span></code></pre></div>
 </div>
 </section>
@@ -2506,8 +2625,10 @@ font-style: inherit;"># wang_frenkel_force.addGlobalParameter('nu', 1)</span></s
 <span id="cb1-42"></span>
 <span id="cb1-43"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> _ <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> top.atoms():</span>
 <span id="cb1-44">    wang_frenkel_force.addParticle(())</span>
 <span id="cb1-45"></span>
@@ -2685,6 +2806,7 @@ font-style: inherit;">0.01</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span> time step <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> ps</span>
 <span id="cb2-4">nstxout <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2712,11 +2834,13 @@ font-style: inherit;">100</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span> frequency <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> center of mass motion removal</span>
 <span id="cb2-7"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span> select HPS model, available options: hps_kr, hps_urry, hps_ss, <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">or</span> mpipi</span>
 <span id="cb2-8">model <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2770,8 +2894,10 @@ font-style: inherit;">25</span></span>
 background-color: null;
 font-style: inherit;">;</span> Periodic boundary condition: <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> pcoupl <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">is</span> yes then pbc must be yes.</span>
 <span id="cb2-21">pbc <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2780,23 +2906,29 @@ font-style: inherit;">=</span> yes</span>
 background-color: null;
 font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> pbc<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>yes, then use box_dimension option to specify box_dimension <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> x <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">or</span> [x, y, z], unit of nanometer</span>
 <span id="cb2-23"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span> otherwise, box_dimension <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">is</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> required <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">and</span> does <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> take <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">any</span> effect.</span>
@@ -2843,6 +2975,7 @@ font-style: inherit;">=</span> GPU</span>
 background-color: null;
 font-style: inherit;">;</span> If CPU <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">is</span> specified, then use ppn variable</span>
 <span id="cb2-34">ppn <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2861,8 +2994,10 @@ font-style: inherit;">=</span> yes <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">;</span><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> restart, then minimize will be loaded, otherwise, minimize<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="va" style="color: #111111;
@@ -2919,6 +3054,7 @@ font-style: inherit;">False</span></span></code></pre></div>
 <p>Function is defined in <code>hps/core/system.py</code>. Here is the copied function:</p>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python numberLines lineAnchors code-with-copy"><code class="sourceCode python"><span id="cb1-1">    <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> add_Wang_Frenkel_Forces(<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>, use_pbc: <span class="bu" style="color: null;
@@ -2961,10 +3097,12 @@ background-color: null;
 font-style: inherit;">        """</span></span>
 <span id="cb1-13">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">assert</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.model <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> [<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'mpipi'</span>], <span class="st" style="color: #20794D;
@@ -3125,8 +3263,10 @@ font-style: inherit;">'id'</span>)</span>
 <span id="cb1-58"></span>
 <span id="cb1-59">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> i, atom <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">enumerate</span>(<span class="va" style="color: #111111;
@@ -3140,12 +3280,14 @@ font-style: inherit;">self</span>.particle_type_id[i],))</span>
 <span id="cb1-61"></span>
 <span id="cb1-62">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> use_pbc:</span>
 <span id="cb1-63">            <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">self</span>.wang_Frenkel_Force.setNonbondedMethod(mm.NonbondedForce.CutoffPeriodic)</span>
 <span id="cb1-64">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb1-65">            <span class="va" style="color: #111111;
 background-color: null;
@@ -3166,8 +3308,10 @@ font-style: inherit;">0</span>].index, b[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>].index) <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">list</span>(<span class="va" style="color: #111111;
@@ -5613,8 +5757,10 @@ background-color: null;
 font-style: inherit;">#!/bin/bash</span></span>
 <span id="cb1-2"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">{</span><span class="dv" style="color: #AD0000;
@@ -5628,12 +5774,14 @@ background-color: null;
 font-style: inherit;">}</span></span>
 <span id="cb1-3"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">do</span></span>
 <span id="cb1-4">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># DO SOMETHING</span></span>
 <span id="cb1-5"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">done</span></span></code></pre></div>
 <p>If the list to loop is not continous, used the following form:</p>
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash numberLines lineAnchors code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
@@ -5650,8 +5798,10 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span id="cb2-3"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span><span class="va" style="color: #111111;
@@ -5665,6 +5815,7 @@ background-color: null;
 font-style: inherit;">"</span></span>
 <span id="cb2-4"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">do</span></span>
 <span id="cb2-5">    <span class="bu" style="color: null;
 background-color: null;
@@ -5676,6 +5827,7 @@ background-color: null;
 font-style: inherit;">#DONE SOMETHING HERE</span></span>
 <span id="cb2-7"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">done</span></span></code></pre></div>
 <p>Note that <code>arr</code> definition is without whitespace.</p>
 </section>
@@ -5687,8 +5839,10 @@ background-color: null;
 font-style: inherit;">#!/bin/bash</span></span>
 <span id="cb3-2"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">{</span><span class="dv" style="color: #AD0000;
@@ -5702,6 +5856,7 @@ background-color: null;
 font-style: inherit;">}</span></span>
 <span id="cb3-3"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">do</span></span>
 <span id="cb3-4">        <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -5727,6 +5882,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span id="cb3-6">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">[</span> <span class="va" style="color: #111111;
@@ -5737,8 +5893,10 @@ font-style: inherit;">-eq</span> 400008 <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">]</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">then</span></span>
 <span id="cb3-7">                <span class="bu" style="color: null;
 background-color: null;
@@ -5755,6 +5913,7 @@ background-color: null;
 font-style: inherit;"> --- DONE"</span></span>
 <span id="cb3-8">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span></span>
 <span id="cb3-9">                <span class="bu" style="color: null;
 background-color: null;
@@ -5771,10 +5930,12 @@ background-color: null;
 font-style: inherit;"> --- Has not been DONE"</span></span>
 <span id="cb3-10">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">fi</span></span>
 <span id="cb3-11"></span>
 <span id="cb3-12"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">done</span></span></code></pre></div>
 <p>In this example, we loop through all simulations (1 to 100) and use command: <code>wc -l &lt; $i/G_traj_${i}.dat</code> to count the number of lines in file. we assign the output from this command to <code>nl</code> variable by packing previous command by <code>$(command)</code></p>
 </section>
@@ -5789,15 +5950,19 @@ font-style: inherit;">cur_dir</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">`</span><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">pwd</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">`</span></span>
 <span id="cb4-3"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">{</span><span class="dv" style="color: #AD0000;
@@ -5811,9 +5976,11 @@ background-color: null;
 font-style: inherit;">}</span></span>
 <span id="cb4-4"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">do</span></span>
 <span id="cb4-5">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">[</span> <span class="ot" style="color: #003B4F;
@@ -5828,8 +5995,10 @@ font-style: inherit;">/traj/1/prot_l213_dissociation_final.cor"</span> <span cla
 background-color: null;
 font-style: inherit;">]</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">then</span></span>
 <span id="cb4-6">                <span class="bu" style="color: null;
 background-color: null;
@@ -5848,6 +6017,7 @@ font-style: inherit;">-rf</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$i</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">&amp;&amp;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mkdir</span> <span class="va" style="color: #111111;
@@ -5902,6 +6072,7 @@ background-color: null;
 font-style: inherit;">${i}</span>/control.cntrl</span>
 <span id="cb4-13">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span></span>
 <span id="cb4-14">                <span class="bu" style="color: null;
 background-color: null;
@@ -5914,9 +6085,11 @@ background-color: null;
 font-style: inherit;"> is not finished"</span></span>
 <span id="cb4-15">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">fi</span></span>
 <span id="cb4-16"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">done</span></span></code></pre></div>
 <ul>
 <li>line 5: check if file <code>prot_l213_dissociation_final.cor</code> in specified directory existed. If yes, then run the code block.</li>
@@ -5934,6 +6107,51 @@ font-style: inherit;">rsync</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-avzhP</span> plgqvuvan@pro.cyfronet.pl:/net/people/plgqvuvan/plggligroup/qvuvan/10proj/post_trans/cat3/stride_by5/combine_trajs/ post_trans/</span></code></pre></div>
 <p>The above command sync the data from cluster pro.cyfronet.pl to local computer. To exclude files (e.g xtc file), add this: –exclude=*.xtc</p>
+</section>
+<section id="install-package-on-roar-cluster-without-root-permission" class="level1">
+<h1>Install package on Roar cluster without Root permission</h1>
+<p>Roar cluster runs RedHat Linux version 8.9</p>
+<p>To install rpm file without root permission: <code>rpm2cpio the_file_name.rpm | cpio -idv</code></p>
+<p>Example on install ATOM Code editor:</p>
+<pre><code>1. `rpm2cpio atom.x86_64.rpm | cpio -idv`
+This will extract rpm file to folder name ./usr . Move this folder to desired folder, e.g ~/programs:
+2. `mv usr ~/programs/Atom`
+3. Create Desktop link to application:
+    Go to ~/.local/share/applications/
+    create a desktop file: `Atom.desktop` with content:
+    ```
+    [Desktop Entry]
+    Name=Atom Editor
+    Comment=Code Editing. Redefined.
+    GenericName=Text Editor
+    Exec=/storage/home/qzv5006/programs/Atom/bin/atom %F
+    Icon=/storage/home/qzv5006/programs/Atom/share/icons/hicolor/32x32/apps/atom.png
+    Type=Application
+    StartupNotify=false
+    StartupWMClass=Code
+    Categories=TextEditor;Development;IDE;
+    MimeType=application/x-code-workspace;
+    Actions=new-empty-window;
+    Keywords=vscode;
+    
+    [Desktop Action new-empty-window]
+    Name=New Empty Window
+    Name[de]=Neues leeres Fenster
+    Name[es]=Nueva ventana vacÃ­a
+    Name[fr]=Nouvelle fenÃªtre vide
+    Name[it]=Nuova finestra vuota
+    Name[ja]=\u65b0\u3057\u3044\u7a7a\u306e\u30a6\u30a3\u30f3\u30c9\u30a6
+    Name[ko]=\uc0c8 \ube48 \ucc3d
+    Name[ru]=\u041d\u043e\u0432\u043e\u0435 \u043f\u0443\u0441\u0442\u043e\u0435 \u043e\u043a\u043d\u043e
+    Name[zh_CN]=\u65b0\u5efa\u7a7a\u7a97\u53e3
+    Name[zh_TW]=\u958b\u65b0\u7a7a\u8996\u7a97
+    Exec=/storage/home/qzv5006/programs/Atom/bin/atom --new-window %F
+    Icon=/storage/home/qzv5006/programs/Atom/share/icons/hicolor/32x32/apps/atom.png
+    ```
+4. Give executable permission for Desktop file: `chmod +x Atom.desktop`</code></pre>
+<div id="7b660e76a67111d9" class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div>
+</div>
 
 
 </section>
@@ -6090,10 +6308,12 @@ font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"NVIDIA-DRIVER version:"</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">`</span><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">nvidia-smi</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">`</span></span>
 <span id="cb4-26"></span>
 <span id="cb4-27"><span class="ex" style="color: null;
@@ -6245,10 +6465,12 @@ font-style: inherit;">$SLURM_SUBMIT_DIR</span></span>
 background-color: null;
 font-style: inherit;">echo</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">`</span><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">pwd</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">`</span></span>
 <span id="cb2-21"><span class="co" style="color: #5E5E5E;
 background-color: null;
