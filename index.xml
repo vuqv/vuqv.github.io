@@ -5,12 +5,12 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>&lt;b&gt;Home&lt;/b&gt;</title>
+<title>Home</title>
 <link>https://vuqv.github.io/</link>
 <atom:link href="https://vuqv.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>My blog</description>
 <generator>quarto-1.5.54</generator>
-<lastBuildDate>Sat, 14 Oct 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 14 Oct 2023 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Download Protein Ensemble Database entries</title>
   <dc:creator>Quyen Vu</dc:creator>
@@ -913,7 +913,7 @@ font-style: inherit;">"output_folder/"</span>)</span></code></pre></div>
  ]]></description>
   <category>IDP</category>
   <guid>https://vuqv.github.io/posts/2023/October/download_PED_entries.html</guid>
-  <pubDate>Sat, 14 Oct 2023 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 14 Oct 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Extracting information from IDP database and IDP classification</title>
@@ -2391,7 +2391,7 @@ Necci, Marco, Damiano Piovesan, and Silvio C. E. Tosatto. 2016. <span>“<span c
   <category>MobiDB</category>
   <category>DisProt</category>
   <guid>https://vuqv.github.io/posts/2023/October/Extracting_disorder_regions_from_MobiDB.html</guid>
-  <pubDate>Sun, 01 Oct 2023 00:00:00 GMT</pubDate>
+  <pubDate>Sun, 01 Oct 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>All-Atom simulations of IDP</title>
@@ -2426,7 +2426,7 @@ Mohanty, Priyesh, Jayakrishna Shenoy, Azamat Rizuan, José F. Mercado-Ortiz, Nic
   <category>IDP</category>
   <category>LLPS</category>
   <guid>https://vuqv.github.io/posts/Research/All-Atom_simulations_IDPs.html</guid>
-  <pubDate>Thu, 17 Aug 2023 00:00:00 GMT</pubDate>
+  <pubDate>Thu, 17 Aug 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Some Conda Commands Frequently Used</title>
@@ -2458,7 +2458,7 @@ Mohanty, Priyesh, Jayakrishna Shenoy, Azamat Rizuan, José F. Mercado-Ortiz, Nic
  ]]></description>
   <category>Python</category>
   <guid>https://vuqv.github.io/posts/python/conda-commands.html</guid>
-  <pubDate>Fri, 24 Feb 2023 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 24 Feb 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Simple OpenMM system for testing code development</title>
@@ -2735,7 +2735,7 @@ font-style: inherit;">print</span>(state.getForces())</span></code></pre></div>
  ]]></description>
   <category>OpenMM</category>
   <guid>https://vuqv.github.io/posts/openMM/openmm_code_snippet.html</guid>
-  <pubDate>Thu, 09 Feb 2023 00:00:00 GMT</pubDate>
+  <pubDate>Thu, 09 Feb 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>COSMO tutorial</title>
@@ -3025,7 +3025,7 @@ font-style: inherit;">False</span></span></code></pre></div>
   <category>IDP</category>
   <category>OpenMM</category>
   <guid>https://vuqv.github.io/posts/openMM/cosmo_tutorial.html</guid>
-  <pubDate>Sat, 04 Feb 2023 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 04 Feb 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Implementation of Mpipi model in OpenMM</title>
@@ -3357,7 +3357,7 @@ font-style: inherit;">self</span>.bonded_exclusions_index)</span></code></pre></
   <category>IDP</category>
   <category>OpenMM</category>
   <guid>https://vuqv.github.io/posts/openMM/mpipi_model.html</guid>
-  <pubDate>Wed, 11 Jan 2023 00:00:00 GMT</pubDate>
+  <pubDate>Wed, 11 Jan 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Make a beautiful plot using Matplotlib</title>
@@ -5715,7 +5715,7 @@ if (IPython.notebook.kernel !== null) {
   <category>Python</category>
   <category>Visualization</category>
   <guid>https://vuqv.github.io/posts/python/Beautiful-plot-with-Matplotlib.html</guid>
-  <pubDate>Sat, 24 Dec 2022 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 24 Dec 2022 05:00:00 GMT</pubDate>
   <media:content url="https://vuqv.github.io/posts/python/Demo_matplotlib.png" medium="image" type="image/png" height="90" width="144"/>
 </item>
 <item>
@@ -5736,7 +5736,7 @@ if (IPython.notebook.kernel !== null) {
  ]]></description>
   <category>Python</category>
   <guid>https://vuqv.github.io/posts/python/Problems-regarding-ipywidgets.html</guid>
-  <pubDate>Sun, 11 Dec 2022 00:00:00 GMT</pubDate>
+  <pubDate>Sun, 11 Dec 2022 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Some Linux commands frequently used</title>
@@ -6159,7 +6159,7 @@ This will extract rpm file to folder name ./usr . Move this folder to desired fo
  ]]></description>
   <category>Linux</category>
   <guid>https://vuqv.github.io/posts/linux-tips/linux_tips.html</guid>
-  <pubDate>Fri, 09 Dec 2022 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 09 Dec 2022 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Openmm Coarse-grained Simulations</title>
@@ -6339,7 +6339,7 @@ font-style: inherit;">-f</span> control.cntrl</span></code></pre></div>
   <category>Slurm</category>
   <category>OpenMM</category>
   <guid>https://vuqv.github.io/posts/Create-env-for-openmm-cg-simulations/Openmm-coarse-grained-simulations.html</guid>
-  <pubDate>Fri, 09 Dec 2022 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 09 Dec 2022 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Slurm scripts and commands to submit jobs on clusters</title>
@@ -6576,7 +6576,7 @@ font-style: inherit;">-o</span> ./</span></code></pre></div>
   <category>HPC</category>
   <category>Slurm</category>
   <guid>https://vuqv.github.io/posts/Running-jobs-on-clusters/running-jobs-on-cluster.html</guid>
-  <pubDate>Sat, 26 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 26 Nov 2022 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Amino acid table</title>
@@ -6600,7 +6600,7 @@ font-style: inherit;">-o</span> ./</span></code></pre></div>
  ]]></description>
   <category>Protein</category>
   <guid>https://vuqv.github.io/posts/Amino-acid-table/</guid>
-  <pubDate>Fri, 25 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 25 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://vuqv.github.io/posts/Amino-acid-table/ProteinogenicAminoAcids.svg.png" medium="image" type="image/png" height="115" width="144"/>
 </item>
 </channel>
