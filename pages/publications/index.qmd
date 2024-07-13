@@ -19,6 +19,12 @@ title-block-banner: true
 <!--
 Open link in new tab: add {target="_blank"}
 -->
+1) Lan, P. D., Nissley, D. A., Sitarik, I., <u>Vu, Q. V.</u>, Jiang, Y., To, P., Xia, Y., Fried, S. D., Li, M. S., & OBrien, E. P.
+`Synonymous Mutations Can Alter Protein Dimerization Through Localized Interface Misfolding Involving Self-entanglements.`
+Journal of Molecular Biology 2024, 436(6), 168487
+[Read more](https://doi.org/10.1016/j.jmb.2024.168487){target="_blank"}
+
+
 1) Halder, R.; Nissley, D. A.; Sitarik, I.; Jiang, Y.; Rao, Y.; <u>Vu, Q. V</u>; Li, M. S.; Pritchard, J.; O’Brien, E. P.
 `How Soluble Misfolded Proteins Bypass Chaperones at the Molecular Level.`
 Nat. Commun. 2023, 14 (1), 3689.

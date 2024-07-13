@@ -4,7 +4,6 @@
     "items": [
       "/posts/2023/October/download_PED_entries.html",
       "/posts/2023/October/Extracting_disorder_regions_from_MobiDB.html",
-      "/posts/2023/October/IDP_classifications.html",
       "/posts/Research/All-Atom_simulations_IDPs.html",
       "/posts/python/conda-commands.html",
       "/posts/openMM/openmm_code_snippet.html",
@@ -14,8 +13,6 @@
       "/posts/python/Problems-regarding-ipywidgets.html",
       "/posts/linux-tips/linux_tips.html",
       "/posts/Create-env-for-openmm-cg-simulations/Openmm-coarse-grained-simulations.html",
-      "/posts/Research/IDP.html",
-      "/posts/linux-tips/test-2-post-same-folder.html",
       "/posts/Running-jobs-on-clusters/running-jobs-on-cluster.html",
       "/posts/Amino-acid-table/index.html"
     ]

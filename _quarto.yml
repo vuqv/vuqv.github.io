@@ -4,7 +4,7 @@ project:
 
 website:
 
-  title: "<b>Home</b>"
+  title: ""
   site-url: "https://vuqv.github.io/"
   description: "My blog"
   page-navigation: true

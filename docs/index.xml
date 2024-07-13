@@ -5,7 +5,7 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>&lt;b&gt;Home&lt;/b&gt;</title>
+<title>Home</title>
 <link>https://vuqv.github.io/</link>
 <atom:link href="https://vuqv.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>My blog</description>
@@ -2391,18 +2391,6 @@ Necci, Marco, Damiano Piovesan, and Silvio C. E. Tosatto. 2016. <span>“<span c
   <category>MobiDB</category>
   <category>DisProt</category>
   <guid>https://vuqv.github.io/posts/2023/October/Extracting_disorder_regions_from_MobiDB.html</guid>
-  <pubDate>Sun, 01 Oct 2023 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <dc:creator>Quyen Vu</dc:creator>
-  <link>https://vuqv.github.io/posts/2023/October/IDP_classifications.html</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>IDP</category>
-  <category>PED</category>
-  <category>MobiDB</category>
-  <category>DisProt</category>
-  <guid>https://vuqv.github.io/posts/2023/October/IDP_classifications.html</guid>
   <pubDate>Sun, 01 Oct 2023 04:00:00 GMT</pubDate>
 </item>
 <item>
@@ -6351,26 +6339,6 @@ font-style: inherit;">-f</span> control.cntrl</span></code></pre></div>
   <category>Slurm</category>
   <category>OpenMM</category>
   <guid>https://vuqv.github.io/posts/Create-env-for-openmm-cg-simulations/Openmm-coarse-grained-simulations.html</guid>
-  <pubDate>Fri, 09 Dec 2022 05:00:00 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <dc:creator>Quyen Vu</dc:creator>
-  <link>https://vuqv.github.io/posts/Research/IDP.html</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>Research</category>
-  <category>IDP</category>
-  <category>LLPS</category>
-  <guid>https://vuqv.github.io/posts/Research/IDP.html</guid>
-  <pubDate>Fri, 09 Dec 2022 05:00:00 GMT</pubDate>
-</item>
-<item>
-  <title></title>
-  <dc:creator>Quyen Vu</dc:creator>
-  <link>https://vuqv.github.io/posts/linux-tips/test-2-post-same-folder.html</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>Linux</category>
-  <guid>https://vuqv.github.io/posts/linux-tips/test-2-post-same-folder.html</guid>
   <pubDate>Fri, 09 Dec 2022 05:00:00 GMT</pubDate>
 </item>
 <item>
