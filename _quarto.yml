@@ -18,6 +18,8 @@ website:
     search: true
     pinned: true
     right:
+      - icon: house
+        href: https://vuqv.github.io
       - pages/news/index.qmd
       - pages/team/index.qmd
       - pages/publications/index.qmd
@@ -31,7 +33,7 @@ website:
 
   page-footer:
     center:
-      - text: "Copyright 2023, Quyen Vu"
+      - text: "Copyright 2024, Quyen Vu"
         href: pages/about/index.qmd
 
 
