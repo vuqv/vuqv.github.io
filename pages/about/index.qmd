@@ -20,16 +20,20 @@ title-block-banner: true
 
 Postdoctoral Scholar in O’Brien Group.
 
-Department of Chemistry, Pennsylvania State University
+Department of Chemistry, Pennsylvania State University.
+
+`I am nowhere and I am everywhere.`
 
  (`vuqv.phys@gmail.com`).
 
-I am nowhere and I am everywhere.
-
-[Full CV (PDF)](Curriculum_Vitae.pdf){target="_blank"}
+[{{< ai google-scholar size=2x >}}](https://scholar.google.com/citations?user=T2l5tc0AAAAJ&hl=en){target="_blank"}
+<span style="font-size:2em;">|</span>
+[{{< ai researchgate size=2x >}}](https://www.researchgate.net/profile/Quyen-Vu-2?ev=hdr_xprf){target="_blank"}
+<span style="font-size:2em;">|</span>
+[{{< ai cv size=2x >}}](Curriculum_Vitae.pdf){target="_blank"}
 
 ##### Favourite quote:
-```We all fear what we do not understand.```
+> ```We all fear what we do not understand.```
 
 ― Dan Brown, The Lost Symbol
 
