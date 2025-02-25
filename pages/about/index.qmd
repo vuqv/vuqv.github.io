@@ -25,11 +25,16 @@ Department of Chemistry, Pennsylvania State University.
 `I am nowhere and I am everywhere.`
 
  (`vuqv.phys@gmail.com`).
+[<i class="fas fa-graduation-cap fa-2x"></i>](https://scholar.google.com/citations?user=T2l5tc0AAAAJ&hl=en){target="_blank"}
+<span style="font-size:2em;">|</span>
 
-[{{< fa brands google-scholar size=2x >}}](https://scholar.google.com/citations?user=T2l5tc0AAAAJ&hl=en){target="_blank"}
+[{{< fa google-scholar size=2x >}}](https://scholar.google.com/citations?user=T2l5tc0AAAAJ&hl=en){target="_blank"}
 <span style="font-size:2em;">|</span>
 
 [<i class="fab fa-google-scholar fa-2x"></i>](https://scholar.google.com/citations?user=T2l5tc0AAAAJ&hl=en){target="_blank"}
+<a href="https://scholar.google.com/citations?user=T2l5tc0AAAAJ&hl=en" target="_blank">
+  <i class="fab fa-google-scholar fa-2x"></i>
+</a> |
 
 
 [{{< fa brands researchgate size=2x >}}](https://www.researchgate.net/profile/Quyen-Vu-2?ev=hdr_xprf){target="_blank"}
