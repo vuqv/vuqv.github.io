@@ -28,6 +28,10 @@ Department of Chemistry, Pennsylvania State University.
 
 [{{< fa brands google-scholar size=2x >}}](https://scholar.google.com/citations?user=T2l5tc0AAAAJ&hl=en){target="_blank"}
 <span style="font-size:2em;">|</span>
+
+[<i class="fab fa-google-scholar fa-2x"></i>](https://scholar.google.com/citations?user=T2l5tc0AAAAJ&hl=en){target="_blank"}
+
+
 [{{< fa brands researchgate size=2x >}}](https://www.researchgate.net/profile/Quyen-Vu-2?ev=hdr_xprf){target="_blank"}
 <span style="font-size:2em;">|</span>
 [<span style="font-size:2em; font-weight:bold">CV</span>](Curriculum_Vitae.pdf){target="_blank"}
