@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Quyen Vu">
-<meta name="dcterms.date" content="2022-12-09">
+<meta name="dcterms.date" content="2025-06-12">
 
-<title>Some Linux commands frequently used</title>
+<title>Simulateing Aging using a simple model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
@@ -103,7 +103,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../theme.scss">
 </head>
@@ -171,9 +204,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page">
-      <h1 class="title">Some Linux commands frequently used</h1>
+      <h1 class="title">Simulateing Aging using a simple model</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Linux</div>
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Visualization</div>
               </div>
                   </div>
   </div>
@@ -191,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 9, 2022</p>
+        <p class="date">June 12, 2025</p>
       </div>
     </div>
     
@@ -210,114 +244,156 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This post contains some <code>bash</code> code-snippet to make my daily work easier.</p>
-<section id="loop-through-array" class="level1">
-<h1>Loop through array</h1>
-<p>In case of looping through an continous list of number:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash numberLines lineAnchors code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">100</span><span class="dt">}</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="cf">do</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>    <span class="co"># DO SOMETHING</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If the list to loop is not continous, used the following form:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash numberLines lineAnchors code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="va">arr</span><span class="op">=</span><span class="va">(</span> 3 4 9 10<span class="va">)</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="st">"</span><span class="va">${arr</span><span class="op">[@]</span><span class="va">}</span><span class="st">"</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="cf">do</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>    <span class="bu">echo</span> <span class="va">$i</span>       </span>
-<span id="cb2-6"><a href="#cb2-6"></a>    <span class="co">#DONE SOMETHING HERE</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that <code>arr</code> definition is without whitespace.</p>
-</section>
-<section id="counting-number-of-lines-in-file" class="level1">
-<h1>Counting number of lines in file</h1>
-<p>Sometime, after perform a long analysis of many simulations. We want to make sure if the analysis is done automatically, instead of looking into single file one-by-one, we can use <code>bash</code> script to do so.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash numberLines lineAnchors code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">100</span><span class="dt">}</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="cf">do</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>        <span class="co">#echo "$i"</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a>        <span class="va">nl</span><span class="op">=</span><span class="va">$(</span><span class="fu">wc</span> <span class="at">-l</span> <span class="op">&lt;</span> <span class="va">$i</span>/G_traj_<span class="va">${i}</span>.dat<span class="va">)</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>        <span class="cf">if</span> <span class="bu">[</span> <span class="va">$nl</span> <span class="ot">-eq</span> 400008 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>                <span class="bu">echo</span> <span class="st">"traj </span><span class="va">$i</span><span class="st"> :  </span><span class="va">$nl</span><span class="st"> --- DONE"</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>        <span class="cf">else</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>                <span class="bu">echo</span> <span class="st">"traj </span><span class="va">$i</span><span class="st"> :  </span><span class="va">$nl</span><span class="st"> --- Has not been DONE"</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a>        <span class="cf">fi</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this example, we loop through all simulations (1 to 100) and use command: <code>wc -l &lt; $i/G_traj_${i}.dat</code> to count the number of lines in file. we assign the output from this command to <code>nl</code> variable by packing previous command by <code>$(command)</code></p>
-</section>
-<section id="search-and-replace-in-file" class="level1">
-<h1>Search and replace in file</h1>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash numberLines lineAnchors code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="va">cur_dir</span><span class="op">=</span><span class="kw">`</span><span class="bu">pwd</span><span class="kw">`</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">100</span><span class="dt">}</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="cf">do</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>        <span class="cf">if</span> <span class="bu">[</span> <span class="ot">-f</span> <span class="st">"/net/people/plgqvuvan/plggligroup/qvuvan/10proj/synthesize/cat3/wt/</span><span class="va">$i</span><span class="st">/traj/1/prot_l213_dissociation_final.cor"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a>                <span class="bu">echo</span> <span class="st">"copy cor and vel file for run </span><span class="va">$i</span><span class="st">"</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>                <span class="fu">rm</span> <span class="at">-rf</span> <span class="va">$i</span> <span class="kw">&amp;&amp;</span> <span class="fu">mkdir</span> <span class="va">$i</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>                <span class="fu">cp</span> /net/people/plgqvuvan/plggligroup/qvuvan/10proj/synthesize/cat3/wt/<span class="va">$i</span>/traj/1/prot_l213_dissociation_final.cor <span class="va">$i</span>/</span>
-<span id="cb4-9"><a href="#cb4-9"></a>                <span class="fu">cp</span> /net/people/plgqvuvan/plggligroup/qvuvan/10proj/synthesize/cat3/wt/<span class="va">$i</span>/traj/1/prot_l213_dissociation_final.vel <span class="va">$i</span>/</span>
-<span id="cb4-10"><a href="#cb4-10"></a>                <span class="fu">cp</span> template/<span class="pp">*</span> <span class="va">$i</span>/</span>
-<span id="cb4-11"><a href="#cb4-11"></a>                <span class="fu">sed</span> <span class="st">"s/SETINDEX/</span><span class="va">${i}</span><span class="st">/g"</span> <span class="at">-i</span> <span class="va">${i}</span>/job_plgrid_gpu.sh</span>
-<span id="cb4-12"><a href="#cb4-12"></a>                <span class="fu">sed</span> <span class="st">"s/SETINDEX/</span><span class="va">${i}</span><span class="st">/g"</span> <span class="at">-i</span> <span class="va">${i}</span>/control.cntrl</span>
-<span id="cb4-13"><a href="#cb4-13"></a>        <span class="cf">else</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>                <span class="bu">echo</span> <span class="st">"simulation </span><span class="va">$i</span><span class="st"> is not finished"</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>        <span class="cf">fi</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="state-variables" class="level3">
+<h3 class="anchored" data-anchor-id="state-variables">State Variables</h3>
 <ul>
-<li>line 5: check if file <code>prot_l213_dissociation_final.cor</code> in specified directory existed. If yes, then run the code block.</li>
-<li>line 11-12: <code>sed</code> command used to search and replace pattern <code>SETINDEX</code> in file <code>${i}/job_plgrid_gpu.sh</code> by value of variable <code>$i</code></li>
+<li>( F(t) ): Functional chaperone concentration<br>
+</li>
+<li>( U(t) ): Non-functional chaperone concentration<br>
+</li>
+<li>( D(t) ): Degraded (dead) protein concentration</li>
 </ul>
 </section>
-<section id="sync-data-between-local-and-cluster-computer" class="level1">
-<h1>Sync data between local and cluster computer</h1>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash numberLines lineAnchors code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">rsync</span> <span class="at">-avzhP</span> plgqvuvan@pro.cyfronet.pl:/net/people/plgqvuvan/plggligroup/qvuvan/10proj/post_trans/cat3/stride_by5/combine_trajs/ post_trans/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The above command sync the data from cluster pro.cyfronet.pl to local computer. To exclude files (e.g xtc file), add this: –exclude=*.xtc</p>
+<section id="parameters" class="level3">
+<h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
+<ul>
+<li><p><span class="math inline">\(N\)</span>: Number of proteins produced</p></li>
+<li><p>$k_{} $: Chaperone synthesis rate per cell</p></li>
+<li><p>$ f_1 $: Fraction of synthesized chaperones that are functional</p></li>
+<li><p>$ f_2 $: Refolding rate constant (U → F)</p></li>
+<li><p>$ f_3 $: Misfolding rate constant (F → U)</p></li>
+<li><p>$ k_d $: Degradation rate of both F and U</p></li>
+</ul>
 </section>
-<section id="install-package-on-roar-cluster-without-root-permission" class="level1">
-<h1>Install package on Roar cluster without Root permission</h1>
-<p>Roar cluster runs RedHat Linux version 8.9</p>
-<p>To install rpm file without root permission: <code>rpm2cpio the_file_name.rpm | cpio -idv</code></p>
-<p>Example on install ATOM Code editor:</p>
-<pre><code>1. `rpm2cpio atom.x86_64.rpm | cpio -idv`
-This will extract rpm file to folder name ./usr . Move this folder to desired folder, e.g ~/programs:
-2. `mv usr ~/programs/Atom`
-3. Create Desktop link to application:
-    Go to ~/.local/share/applications/
-    create a desktop file: `Atom.desktop` with content:
-    ```
-    [Desktop Entry]
-    Name=Atom Editor
-    Comment=Code Editing. Redefined.
-    GenericName=Text Editor
-    Exec=/storage/home/qzv5006/programs/Atom/bin/atom %F
-    Icon=/storage/home/qzv5006/programs/Atom/share/icons/hicolor/32x32/apps/atom.png
-    Type=Application
-    StartupNotify=false
-    StartupWMClass=Code
-    Categories=TextEditor;Development;IDE;
-    MimeType=application/x-code-workspace;
-    Actions=new-empty-window;
-    Keywords=vscode;
-    
-    [Desktop Action new-empty-window]
-    Name=New Empty Window
-    Name[de]=Neues leeres Fenster
-    Name[es]=Nueva ventana vacÃ­a
-    Name[fr]=Nouvelle fenÃªtre vide
-    Name[it]=Nuova finestra vuota
-    Name[ja]=\u65b0\u3057\u3044\u7a7a\u306e\u30a6\u30a3\u30f3\u30c9\u30a6
-    Name[ko]=\uc0c8 \ube48 \ucc3d
-    Name[ru]=\u041d\u043e\u0432\u043e\u0435 \u043f\u0443\u0441\u0442\u043e\u0435 \u043e\u043a\u043d\u043e
-    Name[zh_CN]=\u65b0\u5efa\u7a7a\u7a97\u53e3
-    Name[zh_TW]=\u958b\u65b0\u7a7a\u8996\u7a97
-    Exec=/storage/home/qzv5006/programs/Atom/bin/atom --new-window %F
-    Icon=/storage/home/qzv5006/programs/Atom/share/icons/hicolor/32x32/apps/atom.png
-    ```
-4. Give executable permission for Desktop file: `chmod +x Atom.desktop`</code></pre>
-<div id="7b660e76a67111d9" class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="system-of-odes" class="level3">
+<h3 class="anchored" data-anchor-id="system-of-odes">System of ODEs</h3>
+$
+<span class="math display">\[\begin{aligned}
+\frac{dF}{dt} &amp;= f_1 \cdot k_{\text{syn}} \cdot N + f_2 \cdot F \cdot U - f_3 \cdot F - k_d \cdot F \\
+\frac{dU}{dt} &amp;= (1 - f_1) \cdot k_{\text{syn}} \cdot N + f_3 \cdot F - f_2 \cdot F \cdot U - k_d \cdot U \\
+\frac{dD}{dt} &amp;= k_d \cdot F + k_d \cdot U
+\end{aligned}\]</span>
+<p>$</p>
+<div id="3aae677b" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interactive, FloatSlider, IntSlider, VBox, Label, HBox, Layout, interactive_output</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> odeint</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  ODE system</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> chaperone_dynamics(y, t, N, k_syn, f1, f2, f3, kd):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    F, U, D <span class="op">=</span> y</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    dFdt <span class="op">=</span> f1 <span class="op">*</span> k_syn<span class="op">*</span>N <span class="op">+</span> f2 <span class="op">*</span> F <span class="op">*</span> U <span class="op">-</span> kd <span class="op">*</span> F <span class="op">-</span> f3 <span class="op">*</span> F</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    dUdt <span class="op">=</span> (<span class="dv">1</span> <span class="op">-</span> f1) <span class="op">*</span> k_syn<span class="op">*</span>N <span class="op">+</span> f3 <span class="op">*</span> F <span class="op">-</span> f2 <span class="op">*</span> F <span class="op">*</span> U <span class="op">-</span> kd <span class="op">*</span> U</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    dDdt <span class="op">=</span> kd <span class="op">*</span> F <span class="op">+</span> kd <span class="op">*</span> U</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [dFdt, dUdt, dDdt]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting function</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_chaperone_dynamics(N, k_syn, f1, f2, f3, kd, t_max):</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    F0 <span class="op">=</span> f1 <span class="op">*</span> N</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    U0 <span class="op">=</span> (<span class="dv">1</span> <span class="op">-</span> f1) <span class="op">*</span> N</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    y0 <span class="op">=</span> [F0, U0, <span class="fl">0.0</span>]</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> np.linspace(<span class="dv">0</span>, t_max, <span class="dv">50000</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    solution <span class="op">=</span> odeint(chaperone_dynamics, y0, t, args<span class="op">=</span>(N, k_syn, f1, f2, f3, kd))</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    F, U, D <span class="op">=</span> solution.T</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    plt.plot(t, F, label<span class="op">=</span><span class="st">'Functional (F)'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    plt.plot(t, U, label<span class="op">=</span><span class="st">'Non-functional (U)'</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Time (s)'</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Chaperone Level'</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Chaperone Dynamics (Interactive)'</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    plt.grid()</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="4b5bb14c" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> param_box(slider, text):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> VBox([slider, Label(text)], layout<span class="op">=</span>Layout(width<span class="op">=</span><span class="st">'350px'</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>N_slider <span class="op">=</span> param_box(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">1</span>, <span class="bu">max</span><span class="op">=</span><span class="dv">100</span>, step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">1</span>, description<span class="op">=</span><span class="st">'N'</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Number of proteins synthesis at once"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>k_syn_slider <span class="op">=</span> param_box(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    FloatSlider(<span class="bu">min</span><span class="op">=</span><span class="fl">0.01</span>, <span class="bu">max</span><span class="op">=</span><span class="dv">1</span>, step<span class="op">=</span><span class="fl">0.01</span>, value<span class="op">=</span><span class="fl">0.1</span>, description<span class="op">=</span><span class="st">'k_syn'</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Rate of chaperone synthesis."</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>f1_slider <span class="op">=</span> param_box(</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    FloatSlider(<span class="bu">min</span><span class="op">=</span><span class="fl">0.01</span>, <span class="bu">max</span><span class="op">=</span><span class="fl">1.0</span>, step<span class="op">=</span><span class="fl">0.01</span>, value<span class="op">=</span><span class="fl">0.1</span>, description<span class="op">=</span><span class="st">'f1'</span>),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Frac. of synthesized that are functional."</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>f2_slider <span class="op">=</span> param_box(</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    FloatSlider(</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="bu">min</span><span class="op">=</span><span class="fl">0.0</span>, <span class="bu">max</span><span class="op">=</span><span class="fl">0.005</span>, step<span class="op">=</span><span class="fl">0.0001</span>, value<span class="op">=</span><span class="fl">0.0005</span>, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'f2'</span>, </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        readout<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        readout_format<span class="op">=</span><span class="st">'.4f'</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Refolding eff. (U → F)."</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>f3_slider <span class="op">=</span> param_box(</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    FloatSlider(</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">min</span><span class="op">=</span><span class="fl">0.0</span>, <span class="bu">max</span><span class="op">=</span><span class="fl">0.01</span>, step<span class="op">=</span><span class="fl">0.0001</span>, value<span class="op">=</span><span class="fl">0.001</span>, </span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'f3'</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        readout<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        readout_format<span class="op">=</span><span class="st">'.4f'</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Misfolding rate (F → U)."</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>kd_slider <span class="op">=</span> param_box(</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    FloatSlider(</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        <span class="bu">min</span><span class="op">=</span><span class="fl">0.0</span>, <span class="bu">max</span><span class="op">=</span><span class="fl">0.01</span>, step<span class="op">=</span><span class="fl">0.0001</span>, value<span class="op">=</span><span class="fl">0.005</span>, </span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">'kd'</span>,</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        readout<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        readout_format<span class="op">=</span><span class="st">'.4f'</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Degradation rate for F and U."</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>tmax_slider <span class="op">=</span> param_box(</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="fl">1e4</span>, step<span class="op">=</span><span class="dv">100</span>, value<span class="op">=</span><span class="dv">2000</span>, description<span class="op">=</span><span class="st">'t_max'</span>),</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Max value of time to simulate."</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>controls <span class="op">=</span> HBox([</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    VBox([N_slider, k_syn_slider, f1_slider],layout<span class="op">=</span>Layout(border<span class="op">=</span><span class="st">'1px solid gray'</span>, padding<span class="op">=</span><span class="st">'10px'</span>)),</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    VBox([f2_slider, f3_slider, kd_slider],layout<span class="op">=</span>Layout(border<span class="op">=</span><span class="st">'1px solid gray'</span>, padding<span class="op">=</span><span class="st">'10px'</span>)),</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    VBox([tmax_slider],layout<span class="op">=</span>Layout(border<span class="op">=</span><span class="st">'1px solid gray'</span>, padding<span class="op">=</span><span class="st">'10px'</span>))</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>widget <span class="op">=</span> interactive_output(</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    plot_chaperone_dynamics,</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">'N'</span>: N_slider.children[<span class="dv">0</span>],</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        <span class="st">'k_syn'</span>: k_syn_slider.children[<span class="dv">0</span>],</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>        <span class="st">'f1'</span>: f1_slider.children[<span class="dv">0</span>],</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>        <span class="st">'f2'</span>: f2_slider.children[<span class="dv">0</span>],</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        <span class="st">'f3'</span>: f3_slider.children[<span class="dv">0</span>],</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>        <span class="st">'kd'</span>: kd_slider.children[<span class="dv">0</span>],</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>        <span class="st">'t_max'</span>: tmax_slider.children[<span class="dv">0</span>]</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>display(controls, widget)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ab9d775b88d84a72876efa32aeca1687","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"b7608bab86a94641a0b56cc22c9d5f17","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
 </div>
 
 

@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/python/Simple-model-simulations.html",
       "/posts/2023/October/download_PED_entries.html",
       "/posts/2023/October/Extracting_disorder_regions_from_MobiDB.html",
       "/posts/Research/All-Atom_simulations_IDPs.html",
