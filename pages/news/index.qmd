@@ -25,6 +25,14 @@ title-block-banner: true
     </tr>
   </thead>
   <tbody>
+    <tr >
+      <td scope="row" class="text-center align-middle">
+        08/08/2025
+      </td>
+      <td class="text-center align-middle">
+        Our new article “Non-­native entanglement protein misfolding observed in all-­atom simulations and supported by experimental structural ensembles” has been out in Science Advances. [Read more](https://www.science.org/doi/10.1126/sciadv.adt8974)
+      </td>
+    </tr>
   <tr >
       <td scope="row" class="text-center align-middle">
         25/04/2024

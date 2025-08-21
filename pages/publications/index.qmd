@@ -20,6 +20,11 @@ title-block-banner: true
 Open link in new tab: add {target="_blank"}
 -->
 
+1) <u>Vu, Q. V.</u>, Sitarik, I., Jiang, Y., Xia, Y., Sharma, P., Yadav, D., Song, H., Li, M. S., Fried, S. D., & O’Brien, E. P. (2025).
+`Non-native entanglement protein misfolding observed in all-atom simulations and supported by experimental structural ensembles.`
+Science Advances, 11(32).
+[Read more](https://doi.org/10.1126/sciadv.adt8974)
+
 1) <u>Vu, Q. V.</u>, Sitarik, I., Li, M. S., & O’Brien, E. P.
 `Noncovalent Lasso Entanglements are Common in Experimentally Derived Intrinsically Disordered Protein Ensembles and Strongly Influenced by Protein Length and Charge.`
 The Journal of Physical Chemistry B (2025).

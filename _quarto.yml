@@ -33,7 +33,7 @@ website:
 
   page-footer:
     center:
-      - text: "Copyright 2024, Quyen Vu"
+      - text: "Copyright 2025, Quyen Vu"
         href: pages/about/index.qmd
 
 

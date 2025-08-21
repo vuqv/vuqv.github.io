@@ -63,7 +63,7 @@ Department of Chemistry, Pennsylvania State University.
         O’Brien Group, Department of Chemistry, Pennsylvania State University
        </td>
       <td class="text-center align-middle">
-        [`Prof. Edward P. O'Brien`](https://obrien22.vmhost.psu.edu/){target="_blank"}
+        [`Prof. Edward P. O'Brien`](https://obrien-lab.github.io/){target="_blank"}
       </td>
     </tr>
 
@@ -78,7 +78,7 @@ Department of Chemistry, Pennsylvania State University.
         Institute of Physics, Polish Academy of Sciences <br/> [Thesis](../../resources/Quyen_V__Vu_Thesis_2023.pdf){target="_blank"}
        </td>
       <td class="text-center align-middle">
-        [`Prof. Edward P. O'Brien`](https://obrien22.vmhost.psu.edu/){target="_blank"},<br/> and <br/> [`Prof. Mai Suan Li`](http://info.ifpan.edu.pl/~masli/index.html){target="_blank"}
+        [`Prof. Edward P. O'Brien`](https://obrien-lab.github.io/){target="_blank"},<br/> and <br/> [`Prof. Mai Suan Li`](http://info.ifpan.edu.pl/~masli/index.html){target="_blank"}
       </td>
     </tr>
 
