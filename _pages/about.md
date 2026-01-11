@@ -7,7 +7,7 @@ subtitle: <a href='#'>Ph.D</a>. Penn State University
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image_circular: true # crops the image to make it circular. true/false
   more_info: >
     <p>407 Benkovic Building</p>
     <p>Penn State University</p>
