@@ -119,7 +119,9 @@
         "Protein Misfolding",
         "Coarse Grained Simulations",
         "All Atom Simulations",
-        "Statistical Mechanics"
+        "Statistical Mechanics",
+        "Gromacs",
+        "OpenMM"
       ]
     },
     {
