@@ -25,6 +25,7 @@
   "work": [
     {
       "name": "Department of Chemistry, Penn State University",
+      "location": "University Park, Pennsylvania",
       "position": "Postdoctoral Scholar",
       "url": "https://www.psu.edu",
       "startDate": "2024-04-01",
@@ -34,6 +35,7 @@
     },
     {
       "name": "Institute of Physics, Polish Academy of Sciences, Warsaw, Poland",
+      "location": "Warsaw, Poland",
       "position": "Physicist",
       "url": "https://www.ifpan.edu.pl/en/",
       "startDate": "2022-01-01",
