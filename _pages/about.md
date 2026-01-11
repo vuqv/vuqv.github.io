@@ -1,8 +1,8 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: <a href='#'>Ph.D</a>. Penn State University
 
 profile:
   align: right
@@ -12,6 +12,7 @@ profile:
     <p>407 Benkovic Building</p>
     <p>Penn State University</p>
     <p>PA 16802</p>
+    <p> Email: qzv5006@psu.edu </p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
