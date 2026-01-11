@@ -39,7 +39,7 @@ ninja.data = [{
           },
         },{id: "nav-cv",
           title: "CV",
-          description: "This is a description of the page. You can modify it in &#39;_pages/cv.md&#39;. You can also change or remove the top pdf download button.",
+          description: "Short Introduction about myself",
           section: "Navigation",
           handler: () => {
             window.location.href = "/cv/";
@@ -504,6 +504,13 @@ ninja.data = [{
           window.open("https://www.linkedin.com/in/quyen-vu-b57b42110", "_blank");
         },
       },{
+        id: 'social-orcid',
+        title: 'ORCID',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://orcid.org/0000-0002-9863-0486", "_blank");
+        },
+      },{
         id: 'social-researchgate',
         title: 'ResearchGate',
         section: 'Socials',
@@ -516,6 +523,13 @@ ninja.data = [{
         section: 'Socials',
         handler: () => {
           window.open("https://scholar.google.com/citations?user=T2l5tc0AAAAJ", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/qvv5013", "_blank");
         },
       },{
       id: 'light-theme',
