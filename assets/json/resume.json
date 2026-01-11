@@ -27,7 +27,7 @@
       "name": "Department of Chemistry, Penn State University",
       "position": "Postdoctoral Scholar",
       "url": "https://www.psu.edu",
-      "startDate": "2024-01-01",
+      "startDate": "2024-04-01",
       "endDate": "present",
       "summary": "Computational biophysics and molecular dynamics simulations of protein folding and misfolding mechanisms.",
       "highlights": ["Computational biophysics", "Molecular dynamics simulations", "Protein folding", "Protein misfolding"]
@@ -53,6 +53,26 @@
       "endDate": "2023-12-23",
       "score": "Dictinction",
       "courses": ["Computational Biophysics", "Molecular Dynamics Simulations", "Protein Folding", "Protein Misfolding"]
+    },
+    {
+      "institution": "Hanoi University of Science, Vietnam National University",
+      "location": "Hanoi, Vietnam",
+      "url": "https://www.hus.vnu.edu.vn/",
+      "area": "Physics",
+      "studyType": "Master of Science",
+      "startDate": "2015-09-01",
+      "endDate": "2017-05-01",
+      "score": "Excellent"
+    },
+    {
+      "institution": "Hanoi University of Science, Vietnam National University",
+      "location": "Hanoi, Vietnam",
+      "url": "https://www.hus.vnu.edu.vn/",
+      "area": "Physics",
+      "studyType": "Bachelor of Science",
+      "startDate": "2011-09-01",
+      "endDate": "2015-05-01",
+      "score": "Very Good"
     }
   ],
   "awards": [
@@ -198,5 +218,24 @@
       "endDate": "2020-05-01",
       "url": "https://vuqv.github.io/projects/electrostatic-interactions-govern-extreme-nascent-protein-ejection-times-from-ribosomes-and-can-delay-ribosome-recycling-in-e-coli/"
     }
+  ],
+  "presentations": [
+    {
+      "title": "Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
+      "date": "2026-01-03",
+      "awarder": "Gordon Research Conference on Protein Folding Dynamics (GRS)",
+      "type": "oral",
+      "summary": "Presentation on the Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
+      "url": "https://vuqv.github.io/presentations/native-non-covalent-lasso-entanglement-promotes-misfolding-and-contributes-to-age-related-structural-change-in-the-saccharomyces-cerevisiae-proteome/"
+    },
+    {
+      "title": "Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
+      "date": "2026-01-04 - 2026-01-09",
+      "awarder": "Gordon Research Conference on Protein Folding Dynamics (GRC)",
+      "type": "Poster",
+      "summary": "Presentation on the Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
+      "url": "https://vuqv.github.io/presentations/native-non-covalent-lasso-entanglement-promotes-misfolding-and-contributes-to-age-related-structural-change-in-the-saccharomyces-cerevisiae-proteome/"
+    }
   ]
 }
+
