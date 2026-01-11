@@ -88,12 +88,26 @@
       "level": "Master",
       "icon": "fa-solid fa-hashtag",
       "keywords": [
+        "Statistical Mechanics",
         "Molecular Dynamics Simulations",
-        "Protein Folding",
-        "Protein Misfolding",
-        "Coarse Grained Simulations",
-        "All Atom Simulations",
-        "Statistical Mechanics"
+        "Protein Folding/Misfolding",
+        "Coarse Grained/ All Atom Simulations",
+        "Cotranslational Protein Folding",
+        "Ribosome-protein interaction",
+        "Ribosome modeling"
+      ]
+    },
+    {
+      "name": "Tools and Programming Languages",
+      "level": "Master",
+      "icon": "fa-solid fa-hashtag",
+      "keywords": [
+        "Gromacs",
+        "OpenMM",
+        "Python",
+        "Julia",
+        "C/C++",
+        "MDAnalysis"
       ]
     }
   ],
@@ -119,9 +133,7 @@
         "Protein Misfolding",
         "Coarse Grained Simulations",
         "All Atom Simulations",
-        "Statistical Mechanics",
-        "Gromacs",
-        "OpenMM"
+        "Statistical Mechanics"
       ]
     },
     {
