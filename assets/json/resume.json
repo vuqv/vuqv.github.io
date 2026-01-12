@@ -190,7 +190,7 @@
   "projects": [
     {
       "name": "Entanglement protein misfolding and Aging ",
-      "summary": "With age, at the proteome level, many proteins exhibit age-associated structural changes (~15% in Yeast). We are interested in why are some proteins is more susceptible to age-associated structural changes? Is there a pre-existing condition for failure? We found that entangled protein misfolding could contribute to age-associated structural changes.",
+      "summary": "With age, at the proteome level, many proteins exhibit age-associated structural changes (~15% in Yeast). We are interested in why are some proteins more susceptible to age-associated structural changes? Is there a pre-existing condition for failure? We found that entangled protein misfolding could contribute to age-associated structural changes.",
       "highlights": ["Entanglement Protein Misfolding", "Age-Associated Structural Changes", "Non-Covalent Lasso Entanglements"],
       "startDate": "2025-01-01",
       "endDate": "2025-12-01",
@@ -198,7 +198,7 @@
     },
     {
       "name": "Molecular mechanisms of entanglement protein misfolding and Diseases",
-      "summary": "Molecular mechanisms of entanglement protein misfolding and Diseases is a study of the molecular mechanisms of entanglement protein misfolding and diseases. It is a study of the molecular mechanisms of entanglement protein misfolding and diseases.",
+      "summary": "A study of the molecular mechanisms of entanglement protein misfolding and diseases. ",
       "highlights": ["Entanglement Protein Misfolding", "Diseases", "Non-Covalent Lasso Entanglements", "Age-Associated Structural Changes", "Cotranslational Protein Folding"],
       "startDate": "2024-04-01",
       "endDate": "2026-05-01",
@@ -214,7 +214,7 @@
     },
     {
       "name": "Electrostatic interactions govern extreme nascent protein ejection times from ribosomes and can delay ribosome recycling in E. coli",
-      "summary": "Electrostatic interactions govern extreme nascent protein ejection times from ribosomes and can delay ribosome recycling in E. coli is a study of the electrostatic interactions govern extreme nascent protein ejection times from ribosomes and can delay ribosome recycling in E. coli. It is a study of the electrostatic interactions govern extreme nascent protein ejection times from ribosomes and can delay ribosome recycling in E. coli.",
+      "summary": "Electrostatic interactions govern extreme nascent protein ejection times from ribosomes and can delay ribosome recycling in E. coli",
       "highlights": ["Electrostatic interactions", "Nascent Protein Ejection Times", "Ribosome Recycling", "Electrostatic Interactions", "Nascent Protein Ejection Times", "Ribosome Recycling"],
       "startDate": "2018-12-01",
       "endDate": "2020-05-01",

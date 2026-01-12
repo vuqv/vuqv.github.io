@@ -15,6 +15,6 @@ nav_order: 2
 
 <div class="publications">
 
-{% bibliography %}
+{% bibliography --query @* --sort_by year,month --group_by year --group_order descending %}
 
 </div>
