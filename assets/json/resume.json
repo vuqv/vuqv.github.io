@@ -223,8 +223,24 @@
   ],
   "presentations": [
     {
+      "title": "Protein folding on the ribosome",
+      "date": "2020-12-23",
+      "awarder": "Theoretical Physics Seminar, Institute of Physics, Polish Academy of Sciences, Warsaw, Poland",
+      "type": "Oral",
+      "summary": ""
+      // "url": "http://info.ifpan.edu.pl/~masli/events/6thVietnamesestudentInPoland/index.html"
+    },
+    {
+      "title": "The driving force for co-translational protein folding is weaker in the Ribosome Vestibule due to greater water ordering",
+      "date": "2021-11-21",
+      "awarder": "The sixth Workshop of Vietnamese Students in Poland",
+      "type": "Special Oral",
+      "summary": "",
+      "url": "http://info.ifpan.edu.pl/~masli/events/6thVietnamesestudentInPoland/index.html"
+    },
+    {
       "title": "Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
-      "date": "2026-01-03",
+      "date": "2026-01-03 - 2026-01-04",
       "awarder": "Gordon Research Conference on Protein Folding Dynamics (GRS)",
       "type": "oral",
       "summary": "Presentation on the Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
