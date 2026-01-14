@@ -225,7 +225,8 @@
     {
       "title": "Protein folding on the ribosome",
       "date": "2020-12-23",
-      "awarder": "Theoretical Physics Seminar, Institute of Physics, Polish Academy of Sciences, Warsaw, Poland",
+      "event": "Theoretical Physics Seminar at Institute of Physics, Polish Academy of Sciences",
+      "location": "Warsaw, Poland",
       "type": "Oral",
       "summary": ""
       // "url": "http://info.ifpan.edu.pl/~masli/events/6thVietnamesestudentInPoland/index.html"
@@ -233,23 +234,35 @@
     {
       "title": "The driving force for co-translational protein folding is weaker in the Ribosome Vestibule due to greater water ordering",
       "date": "2021-11-21",
-      "awarder": "The sixth Workshop of Vietnamese Students in Poland",
+      "location": "Warsaw, Poland",
+      "event": "The sixth Workshop of Vietnamese Students in Poland",
       "type": "Special Oral",
       "summary": "",
       "url": "http://info.ifpan.edu.pl/~masli/events/6thVietnamesestudentInPoland/index.html"
     },
     {
+      "title": "A new class of protein misfolding revealed by all-atom simulations and supported by experiments",
+      "date": "2025-05-29 - 2025-05-31",
+      "event": "55th Midwest Theoretical Chemistry Conference (MWTCC55)",
+      "type": "Poster",
+      "location": "Wayne State University, Detroit, MI, United States"
+      // "summary": "Presentation on the Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
+      // "url": "https://vuqv.github.io/presentations/native-non-covalent-lasso-entanglement-promotes-misfolding-and-contributes-to-age-related-structural-change-in-the-saccharomyces-cerevisiae-proteome/"
+    },
+    {
       "title": "Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
       "date": "2026-01-03 - 2026-01-04",
-      "awarder": "Gordon Research Conference on Protein Folding Dynamics (GRS)",
-      "type": "oral",
+      "event": "Gordon Research Conference on Protein Folding Dynamics",
+      "location": "Pomona, California, United States",
+      "type": "Oral",
       "summary": "Presentation on the Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
       "url": "https://vuqv.github.io/presentations/native-non-covalent-lasso-entanglement-promotes-misfolding-and-contributes-to-age-related-structural-change-in-the-saccharomyces-cerevisiae-proteome/"
     },
     {
       "title": "Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
       "date": "2026-01-04 - 2026-01-09",
-      "awarder": "Gordon Research Conference on Protein Folding Dynamics (GRC)",
+      "event": "Gordon Research Conference on Protein Folding Dynamics",
+      "location": "Pomona, California, United States",
       "type": "Poster",
       "summary": "Presentation on the Native Non-covalent Lasso Entanglement Promotes Misfolding and Contributes to Age-related Structural Change in the Saccharomyces Cerevisiae Proteome",
       "url": "https://vuqv.github.io/presentations/native-non-covalent-lasso-entanglement-promotes-misfolding-and-contributes-to-age-related-structural-change-in-the-saccharomyces-cerevisiae-proteome/"
