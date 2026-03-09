@@ -1,8 +1,8 @@
 metadata:
-  last_updated: '2026-02-23'
+  last_updated: '2026-03-09'
 papers:
   T2l5tc0AAAAJ:2osOgNQ5qMEC:
-    citations: 28
+    citations: 29
     title: Ribosome elongation kinetics of consecutively charged residues are coupled to electrostatic force
     year: '2021'
   T2l5tc0AAAAJ:9yKSN-GCB0IC:
@@ -14,11 +14,11 @@ papers:
     title: A widespread protein misfolding mechanism is differentially rescued in vitro by chaperones based on gene essentiality
     year: '2025'
   T2l5tc0AAAAJ:W7OEmFMy1HYC:
-    citations: 18
+    citations: 19
     title: How soluble misfolded proteins bypass chaperones at the molecular level
     year: '2023'
   T2l5tc0AAAAJ:WF5omc3nYNoC:
-    citations: 7
+    citations: 8
     title: Non-native entanglement protein misfolding observed in all-atom simulations and supported by experimental structural ensembles
     year: '2025'
   T2l5tc0AAAAJ:Y0pCki6q_DkC:
@@ -26,7 +26,7 @@ papers:
     title: 'Is Posttranslational Folding More Efficient Than Refolding from a Denatured State: A Computational Study'
     year: '2023'
   T2l5tc0AAAAJ:YsMSGLbcyi4C:
-    citations: 12
+    citations: 14
     title: Synonymous mutations can alter protein dimerization through localized interface misfolding involving self-entanglements
     year: '2024'
   T2l5tc0AAAAJ:eQOLeE2rZwMC:
@@ -34,7 +34,7 @@ papers:
     title: Noncovalent Lasso Entanglements are Common in Experimentally Derived Intrinsically Disordered Protein Ensembles and Strongly Influenced by Protein Length and Charge
     year: '2025'
   T2l5tc0AAAAJ:u-x6o8ySG0sC:
-    citations: 54
+    citations: 55
     title: Electrostatic interactions govern extreme nascent protein ejection times from ribosomes and can delay ribosome recycling
     year: '2020'
   T2l5tc0AAAAJ:u5HHmVD_uO8C:
