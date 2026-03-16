@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-03-09'
+  last_updated: '2026-03-16'
 papers:
   T2l5tc0AAAAJ:2osOgNQ5qMEC:
     citations: 29
@@ -14,7 +14,7 @@ papers:
     title: A widespread protein misfolding mechanism is differentially rescued in vitro by chaperones based on gene essentiality
     year: '2025'
   T2l5tc0AAAAJ:W7OEmFMy1HYC:
-    citations: 19
+    citations: 20
     title: How soluble misfolded proteins bypass chaperones at the molecular level
     year: '2023'
   T2l5tc0AAAAJ:WF5omc3nYNoC:
@@ -34,7 +34,7 @@ papers:
     title: Noncovalent Lasso Entanglements are Common in Experimentally Derived Intrinsically Disordered Protein Ensembles and Strongly Influenced by Protein Length and Charge
     year: '2025'
   T2l5tc0AAAAJ:u-x6o8ySG0sC:
-    citations: 55
+    citations: 56
     title: Electrostatic interactions govern extreme nascent protein ejection times from ribosomes and can delay ribosome recycling
     year: '2020'
   T2l5tc0AAAAJ:u5HHmVD_uO8C:
