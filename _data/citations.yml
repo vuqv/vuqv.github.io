@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-03-16'
+  last_updated: '2026-04-17'
 papers:
   T2l5tc0AAAAJ:2osOgNQ5qMEC:
     citations: 29
@@ -30,7 +30,7 @@ papers:
     title: Synonymous mutations can alter protein dimerization through localized interface misfolding involving self-entanglements
     year: '2024'
   T2l5tc0AAAAJ:eQOLeE2rZwMC:
-    citations: 0
+    citations: 1
     title: Noncovalent Lasso Entanglements are Common in Experimentally Derived Intrinsically Disordered Protein Ensembles and Strongly Influenced by Protein Length and Charge
     year: '2025'
   T2l5tc0AAAAJ:u-x6o8ySG0sC:
