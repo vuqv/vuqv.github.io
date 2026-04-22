@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-04-20'
+  last_updated: '2026-04-22'
 papers:
   T2l5tc0AAAAJ:2osOgNQ5qMEC:
     citations: 29
@@ -10,15 +10,15 @@ papers:
     title: The driving force for co-translational protein folding is weaker in the ribosome vestibule due to greater water ordering
     year: '2021'
   T2l5tc0AAAAJ:UebtZRa9Y70C:
-    citations: 2
+    citations: 4
     title: A widespread protein misfolding mechanism is differentially rescued in vitro by chaperones based on gene essentiality
     year: '2025'
   T2l5tc0AAAAJ:W7OEmFMy1HYC:
-    citations: 21
+    citations: 23
     title: How soluble misfolded proteins bypass chaperones at the molecular level
     year: '2023'
   T2l5tc0AAAAJ:WF5omc3nYNoC:
-    citations: 9
+    citations: 10
     title: Non-native entanglement protein misfolding observed in all-atom simulations and supported by experimental structural ensembles
     year: '2025'
   T2l5tc0AAAAJ:Y0pCki6q_DkC:
@@ -26,11 +26,11 @@ papers:
     title: 'Is Posttranslational Folding More Efficient Than Refolding from a Denatured State: A Computational Study'
     year: '2023'
   T2l5tc0AAAAJ:YsMSGLbcyi4C:
-    citations: 15
+    citations: 16
     title: Synonymous mutations can alter protein dimerization through localized interface misfolding involving self-entanglements
     year: '2024'
   T2l5tc0AAAAJ:eQOLeE2rZwMC:
-    citations: 1
+    citations: 2
     title: Noncovalent Lasso Entanglements are Common in Experimentally Derived Intrinsically Disordered Protein Ensembles and Strongly Influenced by Protein Length and Charge
     year: '2025'
   T2l5tc0AAAAJ:u-x6o8ySG0sC:
