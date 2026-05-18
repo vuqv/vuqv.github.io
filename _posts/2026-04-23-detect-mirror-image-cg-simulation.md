@@ -1,5 +1,6 @@
 ---
-layout: post
+
+## layout: post
 title: Detecting Mirror Images in Coarse-Grained Simulations
 date: 2026-04-23 10:00:00-0400
 description: A practical checklist to identify mirror-image structures in CG trajectories.
@@ -7,7 +8,6 @@ tags: coarse-grained-simulation protein-folding chirality analysis
 categories: research-notes
 giscus_comments: true
 related_posts: false
----
 
 In coarse-grained structure-based folding simulations, a protein can sometimes fold into a global mirror-image structure rather than the physically correct native fold. These mirror-image states are typically artifacts for an all-L polypeptide and should be removed from downstream analysis.
 
@@ -56,7 +56,7 @@ Use the same late-time window for all time-averaged quantities below (for exampl
 
 For each trajectory, compute late-window mean `⟨Q⟩_last` and keep:
 
-`⟨Q⟩_last > 0.6`
+`⟨Q⟩_last > 0.5`
 
 ### Step 2: Compute global chirality agreement
 
@@ -67,7 +67,7 @@ Compute a scalar chirality agreement score against the native chirality structur
 
 Threshold used here:
 
-`chirality < 0.2`
+`chirality < 0.3`
 
 ### Step 3: Build reflected native reference
 
@@ -86,7 +86,7 @@ Important: use proper rotations only (`det = +1`). Reflection should enter throu
 
 Classify trajectory as mirror-image artifact if and only if:
 
-`(⟨Q⟩_last > 0.6) and (chirality < 0.2) and (RMSD_reflected < RMSD_native)`
+`(⟨Q⟩_last > 0.5) and (chirality < 0.3) and (RMSD_reflected < 0.9*RMSD_native)`
 
 This three-way AND is important to reduce false positives from any single metric.
 
@@ -98,13 +98,13 @@ Define:
 
 and add a stricter cutoff such as:
 
-`mirror_score < 0.8`
+`mirror_score < 0.9`
 
 to remove borderline cases.
 
 ## What this intentionally keeps
 
-- Unfolded trajectories (`⟨Q⟩_last <= 0.6`)
+- Unfolded trajectories (`⟨Q⟩_last <= 0.5`)
 - Local chirality defects (not global inversion)
 - Near-native misfolded states closer to native than reflected native
 
@@ -114,6 +114,6 @@ These classes can still contain meaningful physics and should remain available f
 
 Mirror-image folds can look folded in CG simulations, so filtering should not rely on `Q` alone. A robust practical filter is the joint rule:
 
-`(⟨Q⟩_last > 0.6) and (chirality < 0.2) and (RMSD_reflected < RMSD_native)`
+`(⟨Q⟩_last > 0.5) and (chirality < 0.3) and (RMSD_reflected < 0.9RMSD_native)`
 
 This removes global mirror artifacts while preserving informative non-mirror misfolded states.
