@@ -1,6 +1,5 @@
 ---
-
-## layout: post
+layout: post
 title: Detecting Mirror Images in Coarse-Grained Simulations
 date: 2026-04-23 10:00:00-0400
 description: A practical checklist to identify mirror-image structures in CG trajectories.
@@ -8,6 +7,7 @@ tags: coarse-grained-simulation protein-folding chirality analysis
 categories: research-notes
 giscus_comments: true
 related_posts: false
+---
 
 In coarse-grained structure-based folding simulations, a protein can sometimes fold into a global mirror-image structure rather than the physically correct native fold. These mirror-image states are typically artifacts for an all-L polypeptide and should be removed from downstream analysis.
 
