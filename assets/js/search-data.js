@@ -51,11 +51,11 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
-        },{id: "post-detect-mirror-image-cg-simulation",
+        },{id: "post-detecting-mirror-images-in-coarse-grained-simulations",
         
-          title: "Detect Mirror Image Cg Simulation",
+          title: "Detecting Mirror Images in Coarse-Grained Simulations",
         
-        description: "",
+        description: "A practical checklist to identify mirror-image structures in CG trajectories.",
         section: "Posts",
         handler: () => {
           
