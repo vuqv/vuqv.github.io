@@ -422,15 +422,21 @@ ninja.data = [{
             },},{id: "news-a-simple-inline-announcement",
           title: 'A simple inline announcement.',
           description: "",
-          section: "News",},{id: "news-a-long-announcement-with-details",
-          title: 'A long announcement with details',
+          section: "News",},{id: "news-quyen-vu-has-successfully-defended-his-ph-d-in-physics-at-the-institute-of-physics-polish-academy-of-sciences-congratulations-on-this-significant-accomplishment-quyen",
+          title: 'Quyen Vu has successfully defended his Ph.D. in Physics at the Institute of...',
+          description: "",
+          section: "News",},{id: "news-quyen-vu-has-started-his-job-as-a-postdoc-in-o-brien-lab-at-department-of-chemistry-pennsylvania-state-university",
+          title: 'Quyen Vu has started his job as a postdoc in O’Brien Lab at...',
+          description: "",
+          section: "News",},{id: "news-quyen-vu-s-phd-thesis-has-been-selected-for-the-best-phd-thesis-in-2023-of-institute-of-physics-polish-academy-of-sciences-smile",
+          title: 'Quyen Vu’s PhD thesis has been selected for the Best PhD thesis in...',
+          description: "",
+          section: "News",},{id: "news-new-science-advances-article-on-non-native-entanglement-protein-misfolding",
+          title: 'New Science Advances article on non-native entanglement protein misfolding',
           description: "",
           section: "News",handler: () => {
-              window.location.href = "/news/announcement_2/";
-            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
-          title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
-          description: "",
-          section: "News",},{id: "projects-native-entanglement-and-aging",
+              window.location.href = "/news/new_paper/";
+            },},{id: "projects-native-entanglement-and-aging",
           title: 'Native entanglement and aging',
           description: "with background image",
           section: "Projects",handler: () => {
