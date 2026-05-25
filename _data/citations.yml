@@ -1,8 +1,8 @@
 metadata:
-  last_updated: '2026-04-27'
+  last_updated: '2026-05-25'
 papers:
   T2l5tc0AAAAJ:2osOgNQ5qMEC:
-    citations: 29
+    citations: 30
     title: Ribosome elongation kinetics of consecutively charged residues are coupled to electrostatic force
     year: '2021'
   T2l5tc0AAAAJ:9yKSN-GCB0IC:
@@ -10,7 +10,7 @@ papers:
     title: The driving force for co-translational protein folding is weaker in the ribosome vestibule due to greater water ordering
     year: '2021'
   T2l5tc0AAAAJ:UebtZRa9Y70C:
-    citations: 5
+    citations: 6
     title: A widespread protein misfolding mechanism is differentially rescued in vitro by chaperones based on gene essentiality
     year: '2025'
   T2l5tc0AAAAJ:W7OEmFMy1HYC:
@@ -34,7 +34,7 @@ papers:
     title: Noncovalent Lasso Entanglements are Common in Experimentally Derived Intrinsically Disordered Protein Ensembles and Strongly Influenced by Protein Length and Charge
     year: '2025'
   T2l5tc0AAAAJ:u-x6o8ySG0sC:
-    citations: 58
+    citations: 59
     title: Electrostatic interactions govern extreme nascent protein ejection times from ribosomes and can delay ribosome recycling
     year: '2020'
   T2l5tc0AAAAJ:u5HHmVD_uO8C:
