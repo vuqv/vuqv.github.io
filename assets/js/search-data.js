@@ -436,51 +436,16 @@ ninja.data = [{
           description: "",
           section: "News",handler: () => {
               window.location.href = "/news/new_paper/";
-            },},{id: "projects-native-entanglement-and-aging",
-          title: 'Native entanglement and aging',
-          description: "with background image",
+            },},{id: "projects-native-entanglement-misfolding-and-aging",
+          title: 'Native entanglement misfolding and aging',
+          description: "Protein topology in age-associated yeast proteome remodeling",
           section: "Projects",handler: () => {
-              window.location.href = "/projects/1_project/";
-            },},{id: "projects-protein-misfolding-and-cognitive-declined-in-rat",
-          title: 'Protein misfolding and cognitive declined in Rat',
-          description: "a project with a background image and giscus comments",
+              window.location.href = "/projects/1_project_entanglement_misfolding_and_aging/";
+            },},{id: "projects-cosmo-for-idp-simulations",
+          title: 'COSMO for IDP simulations',
+          description: "An OpenMM-based package for coarse-grained simulations of intrinsically disordered proteins",
           section: "Projects",handler: () => {
-              window.location.href = "/projects/2_project/";
-            },},{id: "projects-software-for-cg-idp-simulatiuons",
-          title: 'Software for CG IDP simulatiuons',
-          description: "a project that redirects to another website",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/3_project/";
-            },},{id: "projects-protein-misfolding-and-diseases",
-          title: 'Protein misfolding and diseases',
-          description: "another without an image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/4_project/";
-            },},{id: "projects-project-5",
-          title: 'project 5',
-          description: "a project with a background image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/5_project/";
-            },},{id: "projects-project-6",
-          title: 'project 6',
-          description: "a project with no image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/6_project/";
-            },},{id: "projects-project-7",
-          title: 'project 7',
-          description: "with background image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/7_project/";
-            },},{id: "projects-project-8",
-          title: 'project 8',
-          description: "an other project with a background image and giscus comments",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/8_project/";
-            },},{id: "projects-project-9",
-          title: 'project 9',
-          description: "another project with an image 🎉",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/9_project/";
+              window.location.href = "/projects/2_project_cosmo_IDP/";
             },},{
         id: 'social-cv',
         title: 'CV',
