@@ -51,7 +51,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
-        },{id: "post-detecting-mirror-images-in-coarse-grained-simulations",
+        },{id: "post-glink-entanglement-tutorial",
+        
+          title: "GLink Entanglement Tutorial",
+        
+        description: "A practical tutorial for detecting and clustering Gaussian-linking entanglements in protein structures.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/glink-entanglement-tutorial/";
+          
+        },
+      },{id: "post-detecting-mirror-images-in-coarse-grained-simulations",
         
           title: "Detecting Mirror Images in Coarse-Grained Simulations",
         
