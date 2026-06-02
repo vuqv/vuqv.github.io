@@ -19,4 +19,8 @@ profiles:
       <p>University Park, PA 16802</p>
       <p>Contact: <a href="mailto:qzv5006@psu.edu" style="color: #2c3e50; font-weight: bold;">qzv5006@psu.edu</a></p>
       <p>Google Scholar: <a href="https://scholar.google.com/citations?user=T2l5tc0AAAAJ&hl=en" style="color: #2c3e50; font-weight: bold;" target="_blank">Profile</a></p>
+  - align: left
+    image: profile/Chi.png
+    content: team/about_Chi.md
+    image_circular: true
 ---

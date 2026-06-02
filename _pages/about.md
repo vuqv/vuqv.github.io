@@ -25,7 +25,16 @@ announcements:
 latest_posts:
   enabled: true
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  limit: 5 # leave blank to include all the blog posts
 ---
 
-PhD in Computational Biophysics, specializing in protein folding and misfolding, coarse grained and all atom molecular simulations, and statistical mechanics, with a focus on cotranslational folding on the ribosome and age associated structural changes in proteins. Experienced in studying non covalent lasso entanglements and their role in protein structure and dynamics.
+I am a computational biophysicist seeking the next stage of my career, including assistant professor and tenure-track faculty positions, as well as scientist, research scientist, and computational biology roles in academia, industry, or research institutes.
+
+My expertise is in computational protein biophysics, with a focus on:
+
+- Protein folding and misfolding mechanisms
+- Coarse-grained and all-atom molecular simulations
+- Statistical mechanics and structural analysis of biomolecules
+- Cotranslational folding and nascent-chain behavior on the ribosome
+- Protein entanglement, especially non-covalent lasso entanglements
+- Links between protein topology, aging-related proteome changes, disease risk, and intrinsically disordered protein ensembles
