@@ -457,6 +457,11 @@ ninja.data = [{
           description: "An OpenMM-based package for coarse-grained simulations of intrinsically disordered proteins",
           section: "Projects",handler: () => {
               window.location.href = "/projects/2_project_cosmo_IDP/";
+            },},{id: "projects-glink-entanglement",
+          title: 'GLink entanglement',
+          description: "A Python command-line tool for calculating and clustering Gaussian-linking protein entanglements",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_project_glink_entanglement/";
             },},{
         id: 'social-cv',
         title: 'CV',
