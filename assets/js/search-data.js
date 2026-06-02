@@ -55,7 +55,7 @@ ninja.data = [{
         
           title: "GLink Entanglement Tutorial",
         
-        description: "A practical tutorial for detecting and clustering Gaussian-linking entanglements in protein structures.",
+        description: "A practical tutorial for detecting, confirming, and clustering Gaussian-linking entanglements in protein structures.",
         section: "Posts",
         handler: () => {
           
