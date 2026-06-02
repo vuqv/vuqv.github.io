@@ -8,6 +8,7 @@ categories: research-notes
 giscus_comments: true
 related_posts: false
 ---
+
 `glink-entanglement` is a Python workflow for finding candidate loop-threading entanglements in all-atom protein structures. It starts from heavy-atom residue contacts, scores each contact with partial Gaussian linking values, confirms the retained candidates with Topoly crossing residues, and then clusters many contact-level hits into representative entanglements.
 
 The package currently exposes two command-line programs:
