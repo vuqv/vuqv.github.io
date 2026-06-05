@@ -39,7 +39,7 @@ ninja.data = [{
           },
         },{id: "nav-cv",
           title: "CV",
-          description: "Short Introduction about myself",
+          description: "Computational biophysicist studying protein folding, misfolding, and entanglement mechanisms with molecular simulation.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/cv/";
@@ -447,6 +447,11 @@ ninja.data = [{
           description: "",
           section: "News",handler: () => {
               window.location.href = "/news/new_paper/";
+            },},{id: "news-new-biorxiv-preprint-on-native-entanglement-misfolding-and-yeast-proteome-aging",
+          title: 'New bioRxiv preprint on native entanglement misfolding and yeast proteome aging',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/native_entanglement_aging_preprint/";
             },},{id: "projects-native-entanglement-misfolding-and-aging",
           title: 'Native entanglement misfolding and aging',
           description: "Protein topology in age-associated yeast proteome remodeling",
