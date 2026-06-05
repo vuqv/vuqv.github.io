@@ -3,6 +3,8 @@ layout: post
 title: GLink Entanglement Tutorial
 date: 2026-05-31 12:00:00-0400
 description: A practical tutorial for detecting, confirming, and clustering Gaussian-linking entanglements in protein structures.
+thumbnail: assets/img/posts/glink-entanglement/Fig1.png
+thumbnail_fit: contain
 tags: protein-entanglement gaussian-linking topology python structural-biology
 categories: research-notes
 giscus_comments: true
@@ -17,6 +19,8 @@ The package currently exposes two command-line programs:
 - `glink-cluster` converts the raw contact table into a smaller representative table.
 
 The workflow is CSV based. The raw table is the audit trail; the clustered table is usually the table to compare across structures.
+
+{% include figure.liquid loading="eager" path="assets/img/posts/glink-entanglement/Fig1.png" title="Visualization of protein entanglement" class="img-fluid rounded z-depth-1" caption="Visualization of an entangled protein topology analyzed by GLink entanglement." %}
 
 ## When to use it
 
