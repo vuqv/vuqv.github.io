@@ -2,9 +2,8 @@
   {% if site.news != blank %}
     {% assign news_size = site.news | size %}
     <div
-      class="table-responsive"
       {% if include.limit and page.announcements.scrollable and news_size > 3 %}
-        style="max-height: 60vw"
+        style="max-height: 60vw; overflow-y: auto"
       {% endif %}
     >
       <table class="table table-sm table-borderless news-table">
@@ -17,21 +16,19 @@
         {% for item in news limit: news_limit %}
           <tr>
             <th class="news-date" scope="row">{{ item.date | date: '%b %d, %Y' }}</th>
-            <td>
-              <div class="{% if item.thumbnail %}news-item-with-thumbnail{% endif %}">
-                <div class="news-item-content">
-                  {% if item.inline %}
-                    {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
-                  {% else %}
-                    <a class="news-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
-                  {% endif %}
-                </div>
-                {% if item.thumbnail %}
-                  <a class="news-thumbnail" href="{{ item.url | relative_url }}" aria-label="{{ item.title }}">
-                    <img src="{{ item.thumbnail | relative_url }}" alt="{{ item.title }}">
-                  </a>
-                {% endif %}
-              </div>
+            <td class="news-content">
+              {% if item.inline %}
+                {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
+              {% else %}
+                <a class="news-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+              {% endif %}
+            </td>
+            <td class="news-thumbnail-cell">
+              {% if item.thumbnail %}
+                <a class="news-thumbnail" href="{{ item.url | relative_url }}" aria-label="{{ item.title }}">
+                  <img src="{{ item.thumbnail | relative_url }}" alt="{{ item.title }}">
+                </a>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}

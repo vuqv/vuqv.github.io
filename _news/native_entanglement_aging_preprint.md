@@ -2,7 +2,7 @@
 layout: post
 title: New bioRxiv preprint on native entanglement misfolding and yeast proteome aging
 date: 2026-04-17 12:00:00-0400
-thumbnail: assets/img/publication_preview/yeast_aging.png
+# thumbnail: assets/img/publication_preview/yeast_aging.png
 inline: false
 related_posts: false
 ---
