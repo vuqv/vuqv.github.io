@@ -430,8 +430,8 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-a-simple-inline-announcement",
-          title: 'A simple inline announcement.',
+            },},{id: "news-received-the-creative-youth-award",
+          title: 'Received the Creative Youth Award 🎉',
           description: "",
           section: "News",},{id: "news-quyen-vu-has-successfully-defended-his-ph-d-in-physics-at-the-institute-of-physics-polish-academy-of-sciences-congratulations-on-this-significant-accomplishment-quyen",
           title: 'Quyen Vu has successfully defended his Ph.D. in Physics at the Institute of...',
