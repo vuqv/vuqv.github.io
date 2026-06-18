@@ -793,6 +793,38 @@ footer.sticky-bottom {
 
 // Publications
 
+.pub-sort-header {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--global-divider-color);
+  padding-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+// Sort toggle (inline in first year header)
+.sort-year-toggle {
+  padding: 0.15rem 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--global-text-color-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: normal;
+  line-height: 1.4;
+
+  &:hover {
+    border-color: var(--global-theme-color);
+    color: var(--global-theme-color);
+  }
+
+  .sort-arrow {
+    font-size: 0.75rem;
+  }
+}
+
 .publications {
   margin-top: 2rem;
 
@@ -818,6 +850,19 @@ footer.sticky-bottom {
     padding-top: 1rem;
     margin-top: 2rem;
     text-align: right;
+
+    &:first-of-type {
+      border-top: none;
+      margin-top: 1rem;
+      padding-top: 0;
+    }
+
+    &.sort-header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.75rem;
+    }
   }
 
   ol.bibliography {
@@ -827,6 +872,20 @@ footer.sticky-bottom {
 
     li {
       margin-bottom: 1rem;
+      position: relative;
+      padding-left: 2.5rem;
+
+      &[data-pub-number]::before {
+        content: attr(data-pub-number) ".";
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--global-text-color-light);
+        width: 2rem;
+        text-align: right;
+      }
 
       .preview {}
 
