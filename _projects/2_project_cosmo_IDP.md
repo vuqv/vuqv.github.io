@@ -9,13 +9,28 @@ category: fun
 
 {% include figure.liquid loading="eager" path="assets/img/publication_preview/NCLE_IDP.png" title="COSMO coarse-grained IDP simulations" class="img-fluid rounded z-depth-1" caption="COSMO supports coarse-grained simulations of intrinsically disordered proteins and related biomolecular systems." %}
 
-[COSMO](https://github.com/vuqv/cosmo) is a Python package for coarse-grained molecular simulations of intrinsically disordered proteins (IDPs) and related biomolecules. The project was developed to make IDP simulations easier to set up, run, restart, and analyze using the OpenMM simulation engine.
+**COSMO** (*COarse-grained Simulation of intrinsically disordered prOteins*) is a Python library and command-line toolkit for coarse-grained molecular dynamics of intrinsically disordered proteins (IDPs) and related biomolecules such as RNA and DNA, built on [OpenMM](https://openmm.org/). From a sequence, it builds a one-bead-per-residue, sequence-based model and runs Langevin dynamics — interactions come from the sequence, not from a folded structure, so COSMO is built for disordered chains.
 
-The package implements several residue-level models commonly used for disordered proteins and biomolecular condensates, including HPS variants and Mpipi-style interactions. COSMO currently supports `hps_urry`, `hps_kr`, `hps_ss`, and `mpipi`, with model parameters organized so that additional force-field definitions can be added through the package parameter files.
+**The model**
 
-At the workflow level, COSMO provides a high-level model builder for PDB/CIF structures, OpenMM force construction, control-file based simulation setup, CPU/GPU execution, checkpoint restart, trajectory output, and final structure export. These pieces are designed for practical simulation projects, where the same system may need to be equilibrated, extended, restarted, or run across many conditions on a cluster.
+- One bead per residue, built directly from the sequence (a CA/P PDB).
+- Hydropathy-scale **HPS** (Ashbaugh–Hatch) or **Mpipi** (Wang–Frenkel) force field, plus Debye–Hückel electrostatics.
+- Additional force fields can be added through the package parameter files.
 
-This software has been used in projects involving IDP conformational ensembles, phase-separation-related models, and coarse-grained studies of protein topology. The package also includes examples for standard single-chain simulations, periodic-box simulations, slab simulations, RNA/protein systems, and growing nascent-chain simulations.
+**Workflow A — IDP simulation**
+
+- Single-chain dimensions (radius of gyration) from a sequence.
+- Periodic box with temperature and pressure coupling.
+- Slab simulations of liquid–liquid phase separation (LLPS).
+- Protein–RNA complexes and mixtures.
+- Checkpoint restart, trajectory output, and final-structure export; CPU/GPU execution.
+
+**Workflow B — Protein synthesis**
+
+- Grow the nascent chain N→C, one residue at a time, timed by each mRNA codon (O'Brien Continuous Synthesis Protocol).
+- `cosmo-cylinder` — fast analytic cylindrical exit tunnel (no explicit ribosome beads).
+- `cosmo-csp` — growth through an explicit coarse-grained ribosome with codon-timed sub-stages.
+- Per-codon dwell-time tables and ribosome preparation.
 
 Code and documentation:
 

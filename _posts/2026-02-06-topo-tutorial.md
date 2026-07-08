@@ -1,499 +1,230 @@
 ---
 layout: post
-title: TOPO tutorial
-date: 2026-02-06 15:09:00
-description: an example of a blog post with some code
-tags: formatting code
-categories: sample-posts
-featured: true
+title: "TOPO tutorial, Part A — simulating folded proteins"
+date: 2026-02-06 15:09:00-0500
+description: A hands-on walkthrough of TOPO's coarse-grained folded-protein workflow — from a single-domain quickstart to multidomain scaling, nscale optimization, and temperature annealing.
+thumbnail: assets/img/publication_preview/topo_folded.gif
+thumbnail_fit: contain
+tags: topo coarse-grained molecular-dynamics protein-folding openmm structural-biology
+categories: research-notes
+giscus_comments: true
+related_posts: false
 ---
 
-# Step-by-Step Tutorial: Setting Up TOPO Coarse-Grained Simulations
+`TOPO` (*TOPOlogy-based coarse-grained model for folded prOteins*) turns a folded-protein structure into a one-bead-per-residue, structure-based (Gō-like) model and runs it in [OpenMM](https://openmm.org/). Because the native structure you supply *defines* the energy minimum, TOPO is well suited to folding and unfolding, domain motions, and thermal or mechanical stability.
 
-This tutorial provides a comprehensive guide for setting up and running coarse-grained molecular dynamics simulations using the TOPO model, based on the example setup in the `testing/Quyen` folder.
+This is Part A of a two-part tutorial. It covers the folded-protein workflow — running a protein in isolation. [Part B]({% post_url 2026-07-07-topo-tutorial-translation %}) covers protein synthesis, where the chain grows on a ribosome and folds co-translationally. Work through Part A first; Part B builds on the same model. Everything here mirrors the [official TOPO tutorials](https://vuqv.github.io/topo/main/tutorials/index.html) (tutorials 1–6).
 
-## Table of Contents
+## The model in one minute
 
-1. [Prerequisites](#prerequisites)
-2. [Understanding the Required Files](#understanding-the-required-files)
-3. [Step-by-Step Setup](#step-by-step-setup)
-4. [Configuration File Details](#configuration-file-details)
-5. [Running the Simulation](#running-the-simulation)
-6. [Output Files](#output-files)
-7. [Troubleshooting](#troubleshooting)
+TOPO keeps only the alpha-carbon (Cα) of each residue, so a 106-residue protein becomes 106 beads. The force field combines:
 
----
+- **Bonds, angles, torsions** — the CA-chain geometry. Bonds are rigid constraints by default, which allows a large 15 fs (`dt = 0.015`) timestep.
+- **Yukawa electrostatics** — Debye–Hückel screened Coulomb between charged residues (ASP/GLU carry −1, ARG/LYS carry +1).
+- **Structure-based contacts** — the heart of the model. Residue pairs in contact in your input structure get attractive wells at their native distances; every other pair gets soft excluded-volume repulsion.
+
+The full functional forms and constants are documented in [The TOPO model: theory and force field](https://vuqv.github.io/topo/main/usage/model_theory.html).
 
 ## Prerequisites
 
-Before starting, ensure you have the following installed:
+- **Python** with **TOPO** and **OpenMM** installed, plus NumPy, ParmEd, MDAnalysis, mdtraj, pandas, and PyYAML.
+- **STRIDE** on your `PATH` — TOPO calls it to detect backbone hydrogen bonds for the contact potential.
+- **(Optional) a CUDA GPU** — the tutorials default to CPU so they run anywhere.
 
-- **Python 3.x** (with required packages: `openmm`, `numpy`, `parmed`, `topo`)
-- **OpenMM** library for molecular dynamics simulations
-- **STRIDE** (optional, for secondary structure analysis)
-- **CUDA** (optional, for GPU acceleration)
-
-Install the TOPO package and dependencies:
+The dependencies install cleanly from `conda-forge`:
 
 ```bash
-pip install openmm numpy parmed
-# Install topo package (adjust path as needed)
-pip install -e /path/to/topo
+mamba create -n topo -c conda-forge python">=3.9" openmm parmed \
+    mdanalysis mdtraj numpy pandas pyyaml
+mamba activate topo
+pip install -e .          # from the repo root
 ```
 
----
-
-## Understanding the Required Files
-
-The simulation setup requires several input files:
-
-### 1. **PDB Structure File** (`P0CX28_clean.pdb`)
-   - Contains the atomic coordinates of your protein structure
-   - Must be a valid PDB format file
-   - Should contain alpha-carbon (CA) atoms or full atom structure (CA atoms will be extracted automatically)
-   - **Important**: Ensure there are no missing residues in the structure
-
-### 2. **Configuration File** (`md.ini`)
-   - Contains all simulation parameters
-   - Uses INI format with an `[OPTIONS]` section
-   - Controls simulation length, temperature, pressure, output frequency, etc.
-
-### 3. **Domain Definition File** (`domain.yaml`) - Optional
-   - Defines protein domains for contact-based interactions
-   - YAML format specifying residue ranges and interaction strengths
-   - Used to scale non-bonded interactions between different domains
-
-### 4. **STRIDE Output File** (`stride.dat`) - Optional
-   - Contains secondary structure assignments from STRIDE analysis
-   - Used to identify hydrogen bonds and secondary structure elements
-   - Can be generated by running STRIDE on your PDB file
-
-### 5. **Simulation Script** (`run_simulation.py`)
-   - Main Python script that reads the configuration and runs the simulation
-   - Handles model building, force field setup, and MD integration
-
----
-
-## Step-by-Step Setup
-
-### Step 1: Prepare Your Protein Structure
-
-1. **Obtain or prepare your PDB file**
-   ```bash
-   # Example: Your structure file should be named appropriately
-   # e.g., P0CX28_clean.pdb
-   ```
-
-2. **Verify the structure**
-   - Check that the PDB file is valid
-   - Ensure no missing residues (the code will warn but not fix this)
-   - Verify the structure contains the residues you want to simulate
-
-### Step 2: Generate STRIDE Output (Optional but Recommended)
-
-If you want to use secondary structure information for contact detection:
+Confirm your environment:
 
 ```bash
-# Run STRIDE on your PDB file
-stride P0CX28_clean.pdb > stride.dat
+python -c "import topo, openmm; print('OpenMM', openmm.__version__)"
+which stride              # should print a path
 ```
 
-The STRIDE output will contain:
-- Secondary structure assignments (helix, strand, coil, turns)
-- Hydrogen bond information
-- Detailed residue-by-residue structure assignments
+If `stride_output_file` is not set, TOPO runs `stride -h` for you and caches the result next to the PDB as `<prefix>_stride.dat`. If STRIDE is not installed, precompute the file once (`stride -h protein.pdb > stride.dat`) and point `stride_output_file` at it.
 
-**Note**: If you don't provide `stride_output_file` in the config, the system may attempt to run STRIDE automatically, but it's better to provide a pre-generated file.
+## 1. The single-domain quickstart
 
-### Step 3: Create Domain Definition File (Optional)
+The minimal workflow needs four files: an input structure, a `domain.yaml`, an `md.ini` config, and the runner script.
 
-If your protein has multiple domains with different interaction strengths:
+| File | Role |
+| --- | --- |
+| `P0CX28_clean.pdb` | Input structure (all-atom PDB; TOPO keeps only CA atoms). |
+| `domain.yaml` | Defines the domain and its calibrated contact `nscale`. |
+| `md.ini` | Simulation configuration (steps, temperature, I/O, hardware). |
+| `run_simulation.py` | The runner (reads `md.ini`, builds the model, runs MD). |
 
-1. **Create `domain.yaml`**:
-   ```yaml
-   n_residues: 106
-   intra_domains:
-     A:
-       residues: [1-106]
-       strength: 2.5044
-   ```
-
-2. **Format explanation**:
-   - `n_residues`: Total number of residues in the protein
-   - `intra_domains`: Define domains (A, B, C, etc.)
-     - `residues`: Residue range for the domain (can be `[1-50]` or `[1-50, 60-100]`)
-     - `strength`: Scaling factor for intra-domain contacts
-
-3. **For multi-domain proteins**, you can define multiple domains:
-   ```yaml
-   n_residues: 200
-   intra_domains:
-     Domain1:
-       residues: [1-100]
-       strength: 2.5
-     Domain2:
-       residues: [101-200]
-       strength: 2.5
-   ```
-
-### Step 4: Create Configuration File (`md.ini`)
-
-Create or modify `md.ini` with your simulation parameters:
+The important lines in `md.ini`:
 
 ```ini
-[OPTIONS]
-# Simulation parameters
-md_steps = 100_000          # Total number of MD steps
-dt = 0.015                  # Time step in picoseconds
-nstxout = 5000              # Steps between writing coordinates/checkpoint
-nstlog = 5000               # Steps between writing log file
-nstcomm = 100               # Frequency for center of mass motion removal
-
-# Model selection
-model = topo                # Currently only 'topo' is supported
-
-# Temperature coupling
-tcoupl = yes                # Enable temperature coupling
-ref_t = 300                 # Reference temperature in Kelvin
-tau_t = 0.05                # Temperature coupling time constant (ps^-1)
-
-# Pressure coupling (requires PBC)
-pcoupl = no                 # Enable pressure coupling
-ref_p = 1                   # Reference pressure in bar
-frequency_p = 25            # Pressure coupling frequency
-
-# Periodic boundary conditions
-pbc = no                    # Enable periodic boundary conditions
-box_dimension = 30          # Box size in nm (can be single value or [x, y, z])
-
-# Input files
-protein_code = P0CX28_clean # Prefix for output files
-pdb_file = P0CX28_clean.pdb # Input structure file
-domain_def = domain.yaml    # Domain definition file (optional)
-stride_output_file = stride.dat  # STRIDE output file (optional)
-
-# Output files
-checkpoint = P0CX28_clean.chk  # Checkpoint file name
-
-# Hardware settings
-device = GPU                # Use 'GPU' or 'CPU'
-ppn = 4                     # Number of threads (only for CPU)
-
-# Simulation control
-restart = no                # Restart from checkpoint
-minimize = no               # Perform energy minimization (ignored if restart=yes)
+md_steps = 5000          # how long to run (short, for a demo)
+ref_t = 300              # temperature in Kelvin
+pbc = no                 # no periodic box (single protein, implicit solvent)
+pdb_file = P0CX28_clean.pdb
+domain_def = domain.yaml # single domain with the calibrated contact nscale
+device = CPU             # switch to GPU if you have CUDA
+minimize = no            # native structure is already the energy minimum
 ```
 
-### Step 5: Verify File Structure
-
-Your working directory should contain:
-
-```
-working_directory/
-├── P0CX28_clean.pdb        # Input structure
-├── md.ini                   # Configuration file
-├── domain.yaml              # Domain definition (optional)
-├── stride.dat               # STRIDE output (optional)
-└── run_simulation.py        # Simulation script
-```
-
----
-
-## Configuration File Details
-
-### Simulation Parameters
-
-| Parameter | Description | Default | Units |
-|-----------|-------------|---------|-------|
-| `md_steps` | Total number of MD steps | 1000 | steps |
-| `dt` | Integration time step | 0.01 | ps |
-| `nstxout` | Steps between coordinate/checkpoint writes | 10 | steps |
-| `nstlog` | Steps between log file writes | 10 | steps |
-| `nstcomm` | Frequency of COM motion removal | 100 | steps |
-
-### Temperature and Pressure
-
-| Parameter | Description | Default | Units |
-|-----------|-------------|---------|-------|
-| `tcoupl` | Enable temperature coupling | True | boolean |
-| `ref_t` | Reference temperature | 300.0 | K |
-| `tau_t` | Temperature coupling time constant | 0.01 | ps^-1 |
-| `pcoupl` | Enable pressure coupling | False | boolean |
-| `ref_p` | Reference pressure | 1.0 | bar |
-| `frequency_p` | Pressure coupling frequency | 25 | steps |
-
-**Important Notes**:
-- If `pcoupl = yes`, then `pbc` must also be `yes`
-- `box_dimension` can be a single number (cubic box) or `[x, y, z]` (rectangular box)
-- Pressure coupling requires periodic boundary conditions
-
-### File Paths
-
-| Parameter | Description | Required |
-|-----------|-------------|----------|
-| `pdb_file` | Input PDB structure file | Yes |
-| `protein_code` | Prefix for all output files | Yes |
-| `domain_def` | Domain definition YAML file | No |
-| `stride_output_file` | STRIDE output file | No |
-| `checkpoint` | Checkpoint file name | Yes |
-
-### Hardware Settings
-
-| Parameter | Description | Options |
-|-----------|-------------|---------|
-| `device` | Compute device | `GPU` or `CPU` |
-| `ppn` | Number of CPU threads | Integer (only used if `device=CPU`) |
-
-### Simulation Control
-
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `restart` | Restart from checkpoint | False |
-| `minimize` | Energy minimization | True (if not restarting) |
-
----
-
-## Running the Simulation
-
-### Basic Execution
-
-Run the simulation using the configuration file:
+Run it:
 
 ```bash
 python run_simulation.py -f md.ini
+# equivalently:
+topo-mdrun -f md.ini
+python -m topo.mdrun -f md.ini
 ```
 
-Or using the shorter flag:
+TOPO builds the model (prints the chain count, adds each force term, runs STRIDE, builds the contact matrices), steps the dynamics, and ends with `--- Finished in … seconds ---`. On a CPU this finishes in about two seconds.
+
+### The nscale calibration parameter
+
+Even for a single domain, `domain.yaml` carries an `nscale` — the global scale factor on the sidechain–sidechain contact energies. It is tuned so the model reproduces a target stability at 300 K. For `P0CX28` the calibrated value is **2.5044**; the raw unscaled value (1.0) would leave the protein only marginally folded. Tutorial 5 (below) shows how to find this value automatically.
+
+### The outputs
+
+Everything lands in the `traj/` run folder:
+
+| File | What it is |
+| --- | --- |
+| `traj/traj.log` | Fixed-width energy/temperature log (one line every `nstlog` steps). |
+| `traj/traj.dcd` | Trajectory — open with VMD or MDAnalysis. |
+| `traj/traj.chk` | Binary checkpoint (positions + velocities) for restarting. |
+| `traj/traj.psf` | Topology of the CA model, for loading the DCD in analysis tools. |
+| `traj/traj_final.pdb` | Last conformation; reuse as `init_position` to seed a follow-up run. |
+| `traj/traj_runinfo.log` | Run provenance: package versions, hardware, timing. |
+
+A stable temperature near 300 K and a non-exploding potential energy mean the run is healthy:
 
 ```bash
-python run_simulation.py -input md.ini
+head traj/traj.log
 ```
 
-### What Happens During Execution
+## 2. Multidomain proteins & per-domain scaling
 
-1. **Reading Configuration**: The script reads `md.ini` and parses all parameters
-2. **Model Building**: 
-   - Loads the PDB structure
-   - Extracts alpha-carbon atoms only
-   - Builds bonds, angles, and torsions
-   - Sets up force field parameters
-   - Adds non-bonded interactions (contacts, electrostatics)
-3. **System Setup**:
-   - Adds center of mass motion remover
-   - Sets up integrator (Langevin dynamics)
-   - Configures platform (GPU/CPU)
-4. **Initialization**:
-   - Sets initial positions (shifted to origin)
-   - Initializes velocities at reference temperature
-   - Optionally performs energy minimization
-5. **Simulation**:
-   - Runs MD steps
-   - Writes coordinates, checkpoints, and log files at specified intervals
-6. **Finalization**:
-   - Writes final structure
-   - Saves checkpoint
+In a structure-based model every native contact gets an attractive well, and by default all wells share the same relative strength. A multidomain protein often needs *different* stabilities per domain and per interface. `domain.yaml` sets a scale factor on the sidechain–sidechain contact energy **within** each domain (`intra_domains[...].nscale`) and **between** domains (`inter_domains`).
 
-### Monitoring Progress
+The instructive case is a **discontiguous domain**. Adenylate kinase (`1AKE` chain A, 214 residues) has a CORE domain made of two separate sequence segments — residues 1–117 and 166–214 — folding around an inserted NMP-binding domain (118–165). One domain can list multiple ranges:
 
-The script prints progress information:
-
-```
-Reading simulation parameters from md.ini file...
-Setting number of simulation steps to: 100000
-Setting timestep for integration of equations of motion to: 0.015 ps
-...
-Model built successfully...
-Simulation started
---- Finished in X seconds ---
+```yaml
+n_residues: 214
+intra_domains:
+  A:
+    residues: [1-117, 166-214]   # ONE domain, TWO sequence segments
+    nscale: 1.1556
+  B:
+    residues: [118-165]
+    nscale: 1.6871
+inter_domains:
+  A-B: 1.8611
 ```
 
----
+The only change needed in `md.ini` is the single line `domain_def = domain.yaml`, which switches on domain-aware scaling. A few rules worth remembering:
 
-## Output Files
+- Set `n_residues` to the true residue count; any residue you forget is auto-assigned to a fallback domain at `nscale` 1.0.
+- Every domain needs a numeric `nscale` (a blank value errors).
+- An unspecified interface defaults to 1.0 (native contacts kept, unscaled). To intentionally **decouple** two domains, set their pair to `0.0` explicitly.
 
-After running the simulation, you'll get several output files:
+## 3. Restarting a run
 
-### 1. **Initial Structure** (`{protein_code}_init.pdb`)
-   - PDB file of the initial structure after model building
-   - Useful for visualization and verification
+Long production runs restart cleanly from a checkpoint. Set `restart = yes` and point at the checkpoint, then set `md_steps` to the *total* desired step count — the remaining steps are computed from the checkpoint:
 
-### 2. **Topology File** (`{protein_code}.psf`)
-   - PSF format topology file
-   - Contains atom, bond, angle, and dihedral information
-
-### 3. **Trajectory File** (`{protein_code}.dcd`)
-   - Binary trajectory file containing coordinates at each `nstxout` step
-   - Can be analyzed with MD analysis tools (VMD, MDAnalysis, etc.)
-
-### 4. **Log File** (`{protein_code}.log`)
-   - Text file with simulation progress
-   - Contains: step, time, potential energy, kinetic energy, total energy, temperature, speed, remaining time
-   - Tab-separated format for easy parsing
-
-### 5. **Checkpoint File** (`{protein_code}.chk`)
-   - Binary checkpoint file for restarting simulations
-   - Saved every `nstxout` steps
-   - Contains complete simulation state
-
-### 6. **Final Structure** (`{protein_code}_final.pdb`)
-   - PDB file of the final frame
-   - Last structure from the simulation
-
-### Example Output Files (for `protein_code = P0CX28_clean`):
-
-```
-P0CX28_clean_init.pdb    # Initial structure
-P0CX28_clean.psf         # Topology
-P0CX28_clean.dcd         # Trajectory
-P0CX28_clean.log         # Log file
-P0CX28_clean.chk         # Checkpoint
-P0CX28_clean_final.pdb   # Final structure
+```ini
+restart = yes
+checkpoint = traj.chk
+md_steps = 1000000       # total, not additional
 ```
 
----
+When restarting, `minimize` is forced off, the run continues from the checkpoint step, and the log and trajectory are **appended** rather than overwritten.
 
-## Restarting Simulations
+## 4. Many copies in one run
 
-To continue a simulation from a checkpoint:
+A single CA chain of a few hundred beads barely uses a GPU. Set `n_copies > 1` to pack that many **independent, non-interacting** copies into one run and collect one trajectory per copy:
 
-1. **Set restart parameters in `md.ini`**:
-   ```ini
-   restart = yes
-   checkpoint = P0CX28_clean.chk
-   ```
+```ini
+n_copies = 10          # independent chains in one simulation
+copy_shift = 5.0       # nm, initial x-offset between copies
+```
 
-2. **Update `md_steps`**:
-   - Set to the total number of steps you want (including previous steps)
-   - The script will calculate remaining steps automatically
-
-3. **Run normally**:
-   ```bash
-   python run_simulation.py -f md.ini
-   ```
-
-**Important**: When restarting:
-- `minimize` is automatically set to `False`
-- The simulation continues from the checkpoint step
-- Trajectory and log files are appended (not overwritten)
-
----
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Missing Dependencies**
-   ```
-   ImportError: No module named 'topo'
-   ```
-   **Solution**: Install the topo package or add it to your Python path
-
-2. **Invalid PDB File**
-   ```
-   Error reading PDB file
-   ```
-   **Solution**: Verify your PDB file is valid and contains CA atoms
-
-3. **GPU Not Available**
-   ```
-   CUDA error or GPU not found
-   ```
-   **Solution**: 
-   - Check CUDA installation
-   - Set `device = CPU` in `md.ini`
-   - Verify GPU is accessible: `nvidia-smi`
-
-4. **Missing Residues Warning**
-   ```
-   Warning: Missing residues detected
-   ```
-   **Solution**: The code will warn but not fix missing residues. Manually fix your PDB file before running
-
-5. **STRIDE Not Found**
-   ```
-   STRIDE executable not found
-   ```
-   **Solution**: 
-   - Install STRIDE and add to PATH, or
-   - Provide pre-generated `stride_output_file` in config, or
-   - Set `stride_output_file` to empty/None
-
-6. **Domain Definition Errors**
-   ```
-   Error parsing domain.yaml
-   ```
-   **Solution**: 
-   - Verify YAML syntax
-   - Check residue ranges match your protein
-   - Ensure `n_residues` matches actual residue count
-
-7. **Pressure Coupling Without PBC**
-   ```
-   AssertionError: Pressure coupling requires PBC
-   ```
-   **Solution**: Set `pbc = yes` and provide `box_dimension` when using pressure coupling
-
-### Performance Tips
-
-1. **GPU Acceleration**: Use `device = GPU` for faster simulations (if available)
-2. **Time Step**: Larger `dt` values (0.015-0.02 ps) are typically stable for coarse-grained models
-3. **Output Frequency**: Reduce `nstxout` and `nstlog` for shorter simulations to save disk space
-4. **Checkpoint Frequency**: Set `nstxout` appropriately to balance restart capability and I/O overhead
-
----
-
-## Example Workflow Summary
-
-Here's a complete example workflow:
+The copies never interact — the total potential energy is exactly `n_copies ×` the single-chain energy. After the run, split the combined trajectory into per-chain DCDs:
 
 ```bash
-# 1. Prepare structure
-# (Ensure P0CX28_clean.pdb exists)
-
-# 2. Generate STRIDE output
-stride P0CX28_clean.pdb > stride.dat
-
-# 3. Create domain.yaml (if needed)
-# Edit domain.yaml with your domain definitions
-
-# 4. Create/edit md.ini
-# Set all parameters appropriately
-
-# 5. Run simulation
-python run_simulation.py -f md.ini
-
-# 6. Check outputs
-ls -lh P0CX28_clean.*
-tail -f P0CX28_clean.log  # Monitor progress
-
-# 7. Analyze results (using your preferred tools)
-# VMD, MDAnalysis, custom scripts, etc.
+python split_chains.py -f md.ini
+# or: python -m topo.utils.multichain -f combined.dcd -n 10 -o out/
 ```
 
----
+## 5. Optimizing the contact nscale automatically
 
-## Additional Resources
+Choosing an `nscale` by hand is tedious and not reproducible, especially for a multidomain protein that needs a separate value per domain and per interface. The `topo-optimize` optimizer searches for the **smallest** `nscale`, drawn from a small discrete ladder, at which each domain and interface stays folded across many independent trajectories.
 
-- **TOPO Documentation**: See `docs/` folder for detailed API documentation
-- **Examples**: Check `examples/` folder for more simulation setups
-- **OpenMM Documentation**: https://openmm.org/documentation
-- **STRIDE**: http://webclu.bio.wzw.tum.de/stride/
+The algorithm, per round: write the current `nscale` values, run `ntraj` independent trajectories at 310 K (a multi-copy run), score the fraction of native contacts *Q* per frame for every domain and interface, then decide. A unit is *stable* when all `ntraj` trajectories keep its *Q* above **0.6688** for at least **98%** of frames. Any unit that fails climbs one ladder level while the stable ones freeze; the test repeats until everything is stable (or a median fallback is used after level 5).
 
----
+Each domain declares its structural `class` (α, β, or α/β), which picks the ladder it climbs:
 
-## Quick Reference: Minimal Setup
+```yaml
+n_residues: 139
+intra_domains:
+  A:
+    residues: [1-90]
+    class: beta            # alpha | beta | alpha-beta — selects the ladder
+    nscale: 1.1556       # placeholder — overwritten each round
+  B:
+    residues: [91-139]
+    class: alpha
+    nscale: 1.6871
+inter_domains:
+  A-B: 1.8611              # placeholder too
+```
 
-For a minimal working setup, you only need:
+Run it with a minimal `optimize.ini`:
 
-1. **PDB file**: Your protein structure
-2. **md.ini** with minimal options:
-   ```ini
-   [OPTIONS]
-   pdb_file = your_protein.pdb
-   protein_code = your_protein
-   checkpoint = your_protein.chk
-   device = CPU
-   ```
+```bash
+topo-optimize -f optimize.ini -o opt_out
+```
 
-All other parameters will use defaults. Add optional files (`domain.yaml`, `stride.dat`) as needed for your specific simulation requirements.
+The result is `opt_out/domain_optimized.yaml` — a ready-to-use `domain.yaml`. Point a production run straight at it:
 
+```ini
+domain_def = domain_optimized.yaml
+```
+
+## 6. Temperature annealing & quenching
+
+Instead of a single constant temperature, you can drive the run through a **temperature protocol**: hold the protein hot enough to unfold, then bring it back to `ref_t` to watch it refold. Turn it on with `anneal = yes`, which splits the run into two phases that each write their own trajectory and log:
+
+| Phase | What it does | Output files |
+| --- | --- | --- |
+| **Quench** | Hold at `t_high` (the protein unfolds here). | `<outname>_quench.dcd`, `<outname>_quench.log` |
+| **Production** | Run at `ref_t` (the protein refolds; you collect the equilibrium ensemble). | `<outname>.dcd`, `<outname>.log` |
+
+`anneal_steps` is separate from `md_steps`, so the grand total is their sum. Because the quench writes to `_quench.*`, the hot part never contaminates your production trajectory. The quench writes no checkpoint and the production clock resets to zero, so restarting an annealed run is identical to restarting a normal one.
+
+There are two ways down from `t_high` to `ref_t`, set by `anneal_ramp`:
+
+- **`jump`** (default) — the thermostat drops to `ref_t` instantaneously at the phase boundary. Use it for **folding kinetics and mechanism**; folding happens at one well-defined temperature, mirroring an experimental T-jump.
+- **`linear`** — the temperature cools gradually over `anneal_ramp_steps`. Use it for **refolding yield** (classic simulated annealing toward the native minimum); not for clean kinetics, since cooling and folding overlap.
+
+One physical caveat: a Langevin thermostat relaxes toward a new setpoint over roughly `1/tau_t`, so `anneal_steps` must be many relaxation times — long enough that the protein genuinely unfolds (*Q* → 0 in `traj_quench.dcd`). The tutorial configs use `tau_t = 1.0` for speed; production runs typically use `tau_t ≈ 0.05`, which needs a proportionally longer hold.
+
+## Where to go next
+
+That is the full folded-protein workflow: build a model, scale its domains, calibrate it, and drive it through temperature protocols. From here:
+
+- Measure how folded each domain is with [native-contact (*Q*) analysis](https://vuqv.github.io/topo/main/usage/native_contacts.html).
+- Script the model directly with the [Python API](https://vuqv.github.io/topo/main/usage/python_api.html).
+- Continue to [Part B]({% post_url 2026-07-07-topo-tutorial-translation %}) to grow the protein on a ribosome and watch it fold co-translationally.
+
+The ready-to-run input files for every tutorial live under [`tutorials/`](https://github.com/vuqv/topo/tree/main/tutorials) in the repository.
+
+## Resources
+
+- **TOPO documentation**: <https://vuqv.github.io/topo/main/index.html>
+- **GitHub repository**: <https://github.com/vuqv/topo>
+- **OpenMM**: <https://openmm.org/documentation>
+- **STRIDE**: <http://webclu.bio.wzw.tum.de/stride/>
