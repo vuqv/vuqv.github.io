@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://vuqv.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://vuqv.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-06-18T17:22:20+00:00</updated><id>https://vuqv.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">GLink Entanglement Tutorial</title><link href="https://vuqv.github.io/blog/2026/glink-entanglement-tutorial/" rel="alternate" type="text/html" title="GLink Entanglement Tutorial"/><published>2026-05-31T16:00:00+00:00</published><updated>2026-05-31T16:00:00+00:00</updated><id>https://vuqv.github.io/blog/2026/glink-entanglement-tutorial</id><content type="html" xml:base="https://vuqv.github.io/blog/2026/glink-entanglement-tutorial/"><![CDATA[<p><code class="language-plaintext highlighter-rouge">glink-entanglement</code> is a Python workflow for finding candidate loop-threading entanglements in all-atom protein structures. It starts from heavy-atom residue contacts, scores each contact with partial Gaussian linking values, confirms the retained candidates with Topoly crossing residues, and then clusters many contact-level hits into representative entanglements.</p> <p>The package currently exposes two command-line programs:</p> <ul> <li><code class="language-plaintext highlighter-rouge">glink</code> calculates contact-level Gaussian-linking entanglements from a PDB file.</li> <li><code class="language-plaintext highlighter-rouge">glink-cluster</code> converts the raw contact table into a smaller representative table.</li> </ul> <p>The workflow is CSV based. The raw table is the audit trail; the clustered table is usually the table to compare across structures.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/glink-entanglement/Fig1-480.webp 480w,/assets/img/posts/glink-entanglement/Fig1-800.webp 800w,/assets/img/posts/glink-entanglement/Fig1-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/posts/glink-entanglement/Fig1.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Visualization of protein entanglement" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> <figcaption class="caption">Visualization of an entangled protein topology analyzed by GLink entanglement.</figcaption> </figure> <h2 id="when-to-use-it">When to use it</h2> <p>Use this workflow when you have an all-atom protein PDB and want a residue-level screen for native-contact loop entanglements. Typical inputs include experimental PDB structures, AlphaFold-style PDB models, or representative structures extracted from a molecular dynamics trajectory.</p> <p>The method analyzes protein chains separately. For each chain, the package selects:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>protein and not name H*
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://vuqv.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://vuqv.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-07-08T03:15:43+00:00</updated><id>https://vuqv.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">TOPO tutorial, Part B — co-translational protein synthesis</title><link href="https://vuqv.github.io/blog/2026/topo-tutorial-translation/" rel="alternate" type="text/html" title="TOPO tutorial, Part B — co-translational protein synthesis"/><published>2026-07-07T16:00:00+00:00</published><updated>2026-07-07T16:00:00+00:00</updated><id>https://vuqv.github.io/blog/2026/topo-tutorial-translation</id><content type="html" xml:base="https://vuqv.github.io/blog/2026/topo-tutorial-translation/"><![CDATA[<p>This is Part B of the TOPO tutorial. <a href="/blog/2026/topo-tutorial/">Part A</a> covered simulating a folded protein in isolation. Here the protein is not pre-folded — it is <strong>synthesized</strong>, growing one residue at a time out of a ribosome while the nascent chain folds <em>as it emerges</em>. This reproduces co-translational folding under codon-resolved kinetics, and it builds directly on the Part A structure-based model. Everything below mirrors the <a href="https://vuqv.github.io/topo/main/tutorials/index.html">official TOPO tutorials</a> (tutorials 7–8) and the <a href="https://vuqv.github.io/topo/main/usage/synthesis_overview.html">protein-synthesis overview</a>.</p> <h2 id="the-biology-in-one-minute">The biology in one minute</h2> <p>A ribosome builds a protein one residue at a time, N-terminus first, threading the growing (nascent) chain out through the roughly 80 Å <strong>exit tunnel</strong>, where it begins to fold before the full sequence even exists. How long the ribosome dwells on each codon sets how much time each segment has to sample conformations before the next residue arrives — slow, rare codons act as translational pauses that can change folding outcomes.</p> <p>Each residue is added through one elongation cycle: codon-dependent tRNA <strong>decoding</strong> (usually rate-limiting), <strong>peptidyl transfer</strong> at the peptidyl-transferase centre (PTC), and <strong>translocation</strong>. TOPO times each residue from its mRNA codon using the O’Brien Continuous Synthesis Protocol.</p> <h2 id="two-ribosome-models">Two ribosome models</h2> <p>Both models grow the same structure-based (Gō-like) Cα nascent chain from Part A, and both use the same codon kinetics. They differ only in <strong>how the exit tunnel is represented</strong>:</p> <table> <thead> <tr> <th> </th> <th>Analytic cylinder</th> <th>Explicit CG ribosome</th> </tr> </thead> <tbody> <tr> <td><strong>Runner</strong></td> <td><code class="language-plaintext highlighter-rouge">topo-cylinder</code></td> <td><code class="language-plaintext highlighter-rouge">topo-csp</code></td> </tr> <tr> <td><strong>Tunnel</strong></td> <td>an analytic cylindrical bore through an infinite wall</td> <td>a real truncated, coarse-grained large subunit (~4,600 rigid beads)</td> </tr> <tr> <td><strong>Interactions</strong></td> <td>geometric confinement only</td> <td>ribosome↔chain excluded volume + electrostatics; tRNA tether; A→P translocation</td> </tr> <tr> <td><strong>Needs a structure?</strong></td> <td>no</td> <td>yes — a <code class="language-plaintext highlighter-rouge">ribosome_trunc.pdb</code></td> </tr> <tr> <td><strong>Per residue</strong></td> <td>one MD segment</td> <td>three MD sub-stages</td> </tr> <tr> <td><strong>Cost / robustness</strong></td> <td>fast; never jams</td> <td>heavier; realistic tunnel wall</td> </tr> </tbody> </table> <p>Reach for the <strong>cylinder</strong> for fast exploration of how tunnel geometry and codon kinetics shape folding, or when you have no ribosome structure. Reach for the <strong>explicit ribosome</strong> when the tunnel-wall charge, the real tunnel shape (constriction site, vestibule), or translocation-coupled forces matter to your question.</p> <blockquote> <p><strong>A caveat before comparing runs.</strong> The two models are comparable only in the <em>mean</em> per-residue dwell time, not in confinement chemistry. The cylinder omits the ribosome’s electrostatics and surface excluded volume and uses a uniform straight bore. Do not compare folding observables (folding order, <em>Q</em>-vs-length, radius of gyration) across the two models without accounting for those missing terms.</p> </blockquote> <h2 id="tutorial-7--synthesis-through-an-analytic-exit-tunnel">Tutorial 7 — synthesis through an analytic exit tunnel</h2> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/publication_preview/cylinder-480.webp 480w,/assets/img/publication_preview/cylinder-800.webp 800w,/assets/img/publication_preview/cylinder-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/publication_preview/cylinder.gif" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Protein synthesis through an analytic exit tunnel" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> <figcaption class="caption">The nascent chain grows from the PTC and extrudes N-terminus-first down the analytic cylindrical bore, then folds once it clears the exit-face wall.</figcaption> </figure> <p>Here the exit tunnel is modelled analytically: a cylindrical <strong>bore</strong> of radius <code class="language-plaintext highlighter-rouge">r</code> along the X-axis, drilled through an <strong>infinite wall</strong> at <code class="language-plaintext highlighter-rouge">x_exit</code> — essentially a “hole in a wall.” There are no ribosome beads, so the system is the nascent chain only. That makes it fast and means it never jams. The chain is a folded protein built with TOPO’s structure-based contacts, so it can fold co-translationally as it extrudes and once it clears the bore.</p> <p>A bead is penalized by how far it penetrates the forbidden solid region (everything outside the bore, plus the closed PTC end), escaping via whichever face is nearer — the bore wall pushes it radially inward, keeping the chain extended, while the exit face pushes it in <code class="language-plaintext highlighter-rouge">+x</code>. The C-terminus is seeded and position-restrained on the tunnel axis at the PTC, and each new residue is seeded there too.</p> <p>Run it from the tutorial folder:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>tutorials/07_translation_cylinder
+topo-cylinder <span class="nt">-f</span> cylinder.ini
+<span class="c"># or: python -m topo.csp.cylinder -f cylinder.ini</span>
+</code></pre></div></div> <p>All parameters live in <code class="language-plaintext highlighter-rouge">cylinder.ini</code>. The demo nascent chain is the 106-residue P0CX28, with its <code class="language-plaintext highlighter-rouge">domain.yaml</code> and precomputed STRIDE for the contact map, and <code class="language-plaintext highlighter-rouge">P0CX28_mrna.txt</code> for the codon kinetics. The tunnel defaults are a bore radius of 0.9 nm and length 10.0 nm along X. The kinetics keys (<code class="language-plaintext highlighter-rouge">mrna</code>, <code class="language-plaintext highlighter-rouge">scale_factor</code>, <code class="language-plaintext highlighter-rouge">time_stage_1/2</code>, <code class="language-plaintext highlighter-rouge">max_steps_per_stage</code>) are the same as the explicit-ribosome runner; the demo caps each residue at 2000 steps, which you would remove for production.</p> <h3 id="ejection-and-dissociation">Ejection and dissociation</h3> <p>Once the chain reaches full length, two optional post-synthesis free runs continue from the finished structure, both releasing the C-terminus restraint so the completed protein can diffuse. The analytic tunnel stays on, so the only way out is <code class="language-plaintext highlighter-rouge">+x</code> through the exit — this tests whether the protein diffuses out and folds in the cytosol:</p> <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">ejection_steps</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">300_000   # long enough for the protein to clear the tunnel</span>
+<span class="py">dissociation_steps</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">0         # 0 -&gt; skip</span>
+</code></pre></div></div> <p>Stitch the per-length trajectories into a movie that also draws the analytic tunnel:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python make_movie_cylinder.py <span class="nt">-o</span> synth_out <span class="nt">-f</span> cylinder.ini
+vmd <span class="nt">-e</span> synth_out/movie.tcl
+</code></pre></div></div> <h2 id="tutorial-8--synthesis-on-a-coarse-grained-ribosome">Tutorial 8 — synthesis on a coarse-grained ribosome</h2> <p>This is the ribosome-based counterpart. Everything is standalone TOPO: the ribosome is a truncated CG bead model (<code class="language-plaintext highlighter-rouge">ribosome_trunc.pdb</code>) — no external CHARMM <code class="language-plaintext highlighter-rouge">.cor</code>/<code class="language-plaintext highlighter-rouge">.psf</code>/<code class="language-plaintext highlighter-rouge">.prm</code> files. The nascent chain grows N→C through the exit region and is ejected once complete. Four organisms ship ready-made, so you don’t have to build the ribosome yourself.</p> <p>Two systems are worked out:</p> <table> <thead> <tr> <th>System</th> <th>Residues</th> <th>Notes</th> </tr> </thead> <tbody> <tr> <td><code class="language-plaintext highlighter-rouge">4c5c/</code></td> <td>306, multidomain</td> <td>Full-length synthesis <code class="language-plaintext highlighter-rouge">L = 1 → 306</code>, then ejection. The main validation case.</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">P0CX28/</code></td> <td>106, single-domain</td> <td>The protein from Part A, <code class="language-plaintext highlighter-rouge">L = 1 → 106</code>, <code class="language-plaintext highlighter-rouge">nscale = 2.5044</code>.</td> </tr> </tbody> </table> <p>Each system folder holds the target folded structure (<code class="language-plaintext highlighter-rouge">*_clean.pdb</code>, which defines the native contacts), precomputed STRIDE, a <code class="language-plaintext highlighter-rouge">domain.yaml</code>, the mRNA codon sequence (<code class="language-plaintext highlighter-rouge">*_mrna.txt</code>), per-codon translation times (<code class="language-plaintext highlighter-rouge">trans_times.txt</code>), the ribosome (<code class="language-plaintext highlighter-rouge">ribosome_trunc.pdb</code>), and the run config (<code class="language-plaintext highlighter-rouge">csp_val.ini</code>).</p> <p>Run it from a system folder:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>tutorials/08_ribosome_synthesis/4c5c
+topo-csp <span class="nt">-f</span> csp_val.ini        <span class="c"># -&gt; synth_out/</span>
+</code></pre></div></div> <p>The runner uses codon-resolved kinetics with each elongation cycle split into three kinetic sub-stages, a per-stage timestep-halving stability guard, rigid <code class="language-plaintext highlighter-rouge">AllBonds</code>, and always-on equilibrium-PTC seeding — each new residue is placed one peptide bond from the previous C-terminus, clear of the ribosome, so the rigid bonds seed cleanly. A clean full-length run shows no <code class="language-plaintext highlighter-rouge">[stability]</code> lines in the log.</p> <h3 id="what-it-produces-and-validating">What it produces, and validating</h3> <p>The run writes one folder per chain length (<code class="language-plaintext highlighter-rouge">synth_out/L_001/ … L_306/</code>), each with the MD trajectory and the nascent structure at that length, plus <code class="language-plaintext highlighter-rouge">synth_out/ejection/</code> for the post-synthesis release. A validation script checks the run:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python analyze_standalone.py
+</code></pre></div></div> <p>It confirms that per-stage potential energy stays finite (no blow-ups) and that the ejected chain diffuses cleanly out of the tunnel without penetrating the ribosome.</p> <h2 id="which-to-reach-for">Which to reach for</h2> <p>Start with the <strong>cylinder</strong> (Tutorial 7) — it is the simplest entry point, needs no ribosome structure, and never jams, so it is ideal for exploring how tunnel geometry and codon timing shape folding. Move to the <strong>explicit ribosome</strong> (Tutorial 8) when the physical tunnel — its wall charge, its shape, its translocation-coupled forces — is central to the question you are asking.</p> <h2 id="resources">Resources</h2> <ul> <li><strong>Protein synthesis overview</strong>: <a href="https://vuqv.github.io/topo/main/usage/synthesis_overview.html">https://vuqv.github.io/topo/main/usage/synthesis_overview.html</a></li> <li><strong>Codon dwell-time tables</strong>: <a href="https://vuqv.github.io/topo/main/usage/codon_dwell_times.html">https://vuqv.github.io/topo/main/usage/codon_dwell_times.html</a></li> <li><strong>The ribosome structure</strong>: <a href="https://vuqv.github.io/topo/main/usage/ribosome_preparation.html">https://vuqv.github.io/topo/main/usage/ribosome_preparation.html</a></li> <li><strong>TOPO documentation</strong>: <a href="https://vuqv.github.io/topo/main/index.html">https://vuqv.github.io/topo/main/index.html</a></li> <li><strong>GitHub repository</strong>: <a href="https://github.com/vuqv/topo">https://github.com/vuqv/topo</a></li> </ul>]]></content><author><name></name></author><category term="research-notes"/><category term="topo"/><category term="coarse-grained"/><category term="molecular-dynamics"/><category term="protein-synthesis"/><category term="co-translational-folding"/><category term="ribosome"/><category term="openmm"/><summary type="html"><![CDATA[Growing a protein residue by residue on the ribosome with TOPO — the analytic cylinder tunnel and the explicit coarse-grained ribosome, under codon-resolved kinetics.]]></summary></entry><entry><title type="html">GLink Entanglement Tutorial</title><link href="https://vuqv.github.io/blog/2026/glink-entanglement-tutorial/" rel="alternate" type="text/html" title="GLink Entanglement Tutorial"/><published>2026-05-31T16:00:00+00:00</published><updated>2026-05-31T16:00:00+00:00</updated><id>https://vuqv.github.io/blog/2026/glink-entanglement-tutorial</id><content type="html" xml:base="https://vuqv.github.io/blog/2026/glink-entanglement-tutorial/"><![CDATA[<p><code class="language-plaintext highlighter-rouge">glink-entanglement</code> is a Python workflow for finding candidate loop-threading entanglements in all-atom protein structures. It starts from heavy-atom residue contacts, scores each contact with partial Gaussian linking values, confirms the retained candidates with Topoly crossing residues, and then clusters many contact-level hits into representative entanglements.</p> <p>The package currently exposes two command-line programs:</p> <ul> <li><code class="language-plaintext highlighter-rouge">glink</code> calculates contact-level Gaussian-linking entanglements from a PDB file.</li> <li><code class="language-plaintext highlighter-rouge">glink-cluster</code> converts the raw contact table into a smaller representative table.</li> </ul> <p>The workflow is CSV based. The raw table is the audit trail; the clustered table is usually the table to compare across structures.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/posts/glink-entanglement/Fig1-480.webp 480w,/assets/img/posts/glink-entanglement/Fig1-800.webp 800w,/assets/img/posts/glink-entanglement/Fig1-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/posts/glink-entanglement/Fig1.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Visualization of protein entanglement" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> <figcaption class="caption">Visualization of an entangled protein topology analyzed by GLink entanglement.</figcaption> </figure> <h2 id="when-to-use-it">When to use it</h2> <p>Use this workflow when you have an all-atom protein PDB and want a residue-level screen for native-contact loop entanglements. Typical inputs include experimental PDB structures, AlphaFold-style PDB models, or representative structures extracted from a molecular dynamics trajectory.</p> <p>The method analyzes protein chains separately. For each chain, the package selects:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>protein and not name H*
 </code></pre></div></div> <p>Hydrogens are ignored for contact detection. C-alpha atoms define the curve used for the Gaussian-linking calculation and for Topoly.</p> <h2 id="installation">Installation</h2> <p>Clone the package and install it in the active Python environment:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/vuqv/glink_entanglement.git
 <span class="nb">cd </span>glink_entanglement
 pip <span class="nb">install</span> <span class="nb">.</span>
@@ -164,125 +174,56 @@ done</span>
 which glink
 which glink-cluster
 </code></pre></div></div> <p>After reinstalling in the same environment, refresh the shell’s command cache:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">hash</span> <span class="nt">-r</span>
-</code></pre></div></div> <h2 id="summary">Summary</h2> <p><code class="language-plaintext highlighter-rouge">glink-entanglement</code> turns one all-atom protein PDB into two practical tables: a raw contact-level entanglement table from <code class="language-plaintext highlighter-rouge">glink</code>, and a representative entanglement table from <code class="language-plaintext highlighter-rouge">glink-cluster</code>. Optional scripts can then remove slipknot crossing pairs or batch the workflow across many PDB files. The current output contract is centered on readable contact labels such as <code class="language-plaintext highlighter-rouge">ALA10-GLY42</code>, zero-based C-alpha contact indices <code class="language-plaintext highlighter-rouge">i</code> and <code class="language-plaintext highlighter-rouge">j</code>, side-specific Topoly crossing columns <code class="language-plaintext highlighter-rouge">crossingsN</code> and <code class="language-plaintext highlighter-rouge">crossingsC</code>, and semicolon-delimited raw-contact membership in the clustered output.</p>]]></content><author><name></name></author><category term="research-notes"/><category term="protein-entanglement"/><category term="gaussian-linking"/><category term="topology"/><category term="python"/><category term="structural-biology"/><summary type="html"><![CDATA[A practical tutorial for detecting, confirming, and clustering Gaussian-linking entanglements in protein structures.]]></summary></entry><entry><title type="html">Detecting Mirror Images in Coarse-Grained Simulations</title><link href="https://vuqv.github.io/blog/2026/detect-mirror-image-cg-simulation/" rel="alternate" type="text/html" title="Detecting Mirror Images in Coarse-Grained Simulations"/><published>2026-04-23T14:00:00+00:00</published><updated>2026-04-23T14:00:00+00:00</updated><id>https://vuqv.github.io/blog/2026/detect-mirror-image-cg-simulation</id><content type="html" xml:base="https://vuqv.github.io/blog/2026/detect-mirror-image-cg-simulation/"><![CDATA[<p>In coarse-grained structure-based folding simulations, a protein can sometimes fold into a global mirror-image structure rather than the physically correct native fold. These mirror-image states are typically artifacts for an all-L polypeptide and should be removed from downstream analysis.</p> <h2 id="purpose">Purpose</h2> <p>This workflow is designed to:</p> <ul> <li>Flag trajectories trapped in a global mirror-image basin</li> <li>Distinguish them from native-like and non-mirror misfolded trajectories</li> <li>Remove only global mirror-image artifacts</li> </ul> <h2 id="why-mirror-image-states-appear-in-cg-models">Why mirror-image states appear in CG models</h2> <p>In many structure-based CG models:</p> <ul> <li>Native contact topology is preserved</li> <li>Global fold geometry is approximated</li> <li>Chirality is not strictly enforced</li> </ul> <p>As a result, a mirrored fold can still be compact, stable, and even have high <code class="language-plaintext highlighter-rouge">Q</code>, despite being physically invalid for all-L proteins.</p> <h2 id="detection-principle">Detection principle</h2> <p>A global mirror-image trajectory is expected to satisfy all of the following:</p> <ul> <li>Folded or near-folded (<code class="language-plaintext highlighter-rouge">Q</code> is high)</li> <li>Low agreement with native chirality (inverted handedness)</li> <li>Geometrically closer to reflected native than to native</li> </ul> <p>So detection combines:</p> <ul> <li><code class="language-plaintext highlighter-rouge">Q</code> (folded-state filter)</li> <li>Global chirality agreement score vs native</li> <li><code class="language-plaintext highlighter-rouge">RMSD_native</code></li> <li><code class="language-plaintext highlighter-rouge">RMSD_reflected</code></li> </ul> <h2 id="why-q-alone-is-not-enough">Why <code class="language-plaintext highlighter-rouge">Q</code> alone is not enough</h2> <p><code class="language-plaintext highlighter-rouge">Q</code> measures native-contact similarity but does not encode handedness. Therefore, mirror-image conformations can still show high <code class="language-plaintext highlighter-rouge">Q</code>.</p> <h2 id="recommended-workflow">Recommended workflow</h2> <p>Use the same late-time window for all time-averaged quantities below (for example, last 10 ns).</p> <h3 id="step-1-keep-folded-trajectories">Step 1: Keep folded trajectories</h3> <p>For each trajectory, compute late-window mean <code class="language-plaintext highlighter-rouge">⟨Q⟩_last</code> and keep:</p> <p><code class="language-plaintext highlighter-rouge">⟨Q⟩_last &gt; 0.5</code></p> <h3 id="step-2-compute-global-chirality-agreement">Step 2: Compute global chirality agreement</h3> <p>Compute a scalar chirality agreement score against the native chirality structure:</p> <ul> <li>Larger values: better native handedness agreement</li> <li>Smaller values: mirror-like inversion</li> </ul> <p>Threshold used here:</p> <p><code class="language-plaintext highlighter-rouge">chirality &lt; 0.3</code></p> <h3 id="step-3-build-reflected-native-reference">Step 3: Build reflected native reference</h3> <p>Reflect the native structure by flipping one coordinate axis (for example, <code class="language-plaintext highlighter-rouge">x -&gt; -x</code>). One axis flip is sufficient because reflections differ only by rotation.</p> <h3 id="step-4-compare-rmsd-to-both-references">Step 4: Compare RMSD to both references</h3> <p>Compute late-window means of:</p> <ul> <li><code class="language-plaintext highlighter-rouge">RMSD_native</code> (rotation-only alignment to native)</li> <li><code class="language-plaintext highlighter-rouge">RMSD_reflected</code> (rotation-only alignment to reflected native)</li> </ul> <p>Important: use proper rotations only (<code class="language-plaintext highlighter-rouge">det = +1</code>). Reflection should enter through the reflected reference structure, not through allowing improper alignment transforms.</p> <h2 id="final-classification-rule">Final classification rule</h2> <p>Classify trajectory as mirror-image artifact if and only if:</p> <p><code class="language-plaintext highlighter-rouge">(⟨Q⟩_last &gt; 0.5) and (chirality &lt; 0.3) and (RMSD_reflected &lt; 0.9*RMSD_native)</code></p> <p>This three-way AND is important to reduce false positives from any single metric.</p> <h2 id="optional-refinement">Optional refinement</h2> <p>Define:</p> <p><code class="language-plaintext highlighter-rouge">mirror_score = RMSD_reflected / RMSD_native</code></p> <p>and add a stricter cutoff such as:</p> <p><code class="language-plaintext highlighter-rouge">mirror_score &lt; 0.9</code></p> <p>to remove borderline cases.</p> <h2 id="what-this-intentionally-keeps">What this intentionally keeps</h2> <ul> <li>Unfolded trajectories (<code class="language-plaintext highlighter-rouge">⟨Q⟩_last &lt;= 0.5</code>)</li> <li>Local chirality defects (not global inversion)</li> <li>Near-native misfolded states closer to native than reflected native</li> </ul> <p>These classes can still contain meaningful physics and should remain available for analysis.</p> <h2 id="summary">Summary</h2> <p>Mirror-image folds can look folded in CG simulations, so filtering should not rely on <code class="language-plaintext highlighter-rouge">Q</code> alone. A robust practical filter is the joint rule:</p> <p><code class="language-plaintext highlighter-rouge">(⟨Q⟩_last &gt; 0.5) and (chirality &lt; 0.3) and (RMSD_reflected &lt; 0.9RMSD_native)</code></p> <p>This removes global mirror artifacts while preserving informative non-mirror misfolded states.</p>]]></content><author><name></name></author><category term="research-notes"/><category term="coarse-grained-simulation"/><category term="protein-folding"/><category term="chirality"/><category term="analysis"/><summary type="html"><![CDATA[A practical checklist to identify mirror-image structures in CG trajectories.]]></summary></entry><entry><title type="html">TOPO tutorial</title><link href="https://vuqv.github.io/blog/2026/topo-tutorial/" rel="alternate" type="text/html" title="TOPO tutorial"/><published>2026-02-06T15:09:00+00:00</published><updated>2026-02-06T15:09:00+00:00</updated><id>https://vuqv.github.io/blog/2026/topo-tutorial</id><content type="html" xml:base="https://vuqv.github.io/blog/2026/topo-tutorial/"><![CDATA[<h1 id="step-by-step-tutorial-setting-up-topo-coarse-grained-simulations">Step-by-Step Tutorial: Setting Up TOPO Coarse-Grained Simulations</h1> <p>This tutorial provides a comprehensive guide for setting up and running coarse-grained molecular dynamics simulations using the TOPO model, based on the example setup in the <code class="language-plaintext highlighter-rouge">testing/Quyen</code> folder.</p> <h2 id="table-of-contents">Table of Contents</h2> <ol> <li><a href="#prerequisites">Prerequisites</a></li> <li><a href="#understanding-the-required-files">Understanding the Required Files</a></li> <li><a href="#step-by-step-setup">Step-by-Step Setup</a></li> <li><a href="#configuration-file-details">Configuration File Details</a></li> <li><a href="#running-the-simulation">Running the Simulation</a></li> <li><a href="#output-files">Output Files</a></li> <li><a href="#troubleshooting">Troubleshooting</a></li> </ol> <hr/> <h2 id="prerequisites">Prerequisites</h2> <p>Before starting, ensure you have the following installed:</p> <ul> <li><strong>Python 3.x</strong> (with required packages: <code class="language-plaintext highlighter-rouge">openmm</code>, <code class="language-plaintext highlighter-rouge">numpy</code>, <code class="language-plaintext highlighter-rouge">parmed</code>, <code class="language-plaintext highlighter-rouge">topo</code>)</li> <li><strong>OpenMM</strong> library for molecular dynamics simulations</li> <li><strong>STRIDE</strong> (optional, for secondary structure analysis)</li> <li><strong>CUDA</strong> (optional, for GPU acceleration)</li> </ul> <p>Install the TOPO package and dependencies:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>openmm numpy parmed
-<span class="c"># Install topo package (adjust path as needed)</span>
-pip <span class="nb">install</span> <span class="nt">-e</span> /path/to/topo
-</code></pre></div></div> <hr/> <h2 id="understanding-the-required-files">Understanding the Required Files</h2> <p>The simulation setup requires several input files:</p> <h3 id="1-pdb-structure-file-p0cx28_cleanpdb">1. <strong>PDB Structure File</strong> (<code class="language-plaintext highlighter-rouge">P0CX28_clean.pdb</code>)</h3> <ul> <li>Contains the atomic coordinates of your protein structure</li> <li>Must be a valid PDB format file</li> <li>Should contain alpha-carbon (CA) atoms or full atom structure (CA atoms will be extracted automatically)</li> <li><strong>Important</strong>: Ensure there are no missing residues in the structure</li> </ul> <h3 id="2-configuration-file-mdini">2. <strong>Configuration File</strong> (<code class="language-plaintext highlighter-rouge">md.ini</code>)</h3> <ul> <li>Contains all simulation parameters</li> <li>Uses INI format with an <code class="language-plaintext highlighter-rouge">[OPTIONS]</code> section</li> <li>Controls simulation length, temperature, pressure, output frequency, etc.</li> </ul> <h3 id="3-domain-definition-file-domainyaml---optional">3. <strong>Domain Definition File</strong> (<code class="language-plaintext highlighter-rouge">domain.yaml</code>) - Optional</h3> <ul> <li>Defines protein domains for contact-based interactions</li> <li>YAML format specifying residue ranges and interaction strengths</li> <li>Used to scale non-bonded interactions between different domains</li> </ul> <h3 id="4-stride-output-file-stridedat---optional">4. <strong>STRIDE Output File</strong> (<code class="language-plaintext highlighter-rouge">stride.dat</code>) - Optional</h3> <ul> <li>Contains secondary structure assignments from STRIDE analysis</li> <li>Used to identify hydrogen bonds and secondary structure elements</li> <li>Can be generated by running STRIDE on your PDB file</li> </ul> <h3 id="5-simulation-script-run_simulationpy">5. <strong>Simulation Script</strong> (<code class="language-plaintext highlighter-rouge">run_simulation.py</code>)</h3> <ul> <li>Main Python script that reads the configuration and runs the simulation</li> <li>Handles model building, force field setup, and MD integration</li> </ul> <hr/> <h2 id="step-by-step-setup">Step-by-Step Setup</h2> <h3 id="step-1-prepare-your-protein-structure">Step 1: Prepare Your Protein Structure</h3> <ol> <li><strong>Obtain or prepare your PDB file</strong> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Example: Your structure file should be named appropriately</span>
-<span class="c"># e.g., P0CX28_clean.pdb</span>
-</code></pre></div> </div> </li> <li><strong>Verify the structure</strong> <ul> <li>Check that the PDB file is valid</li> <li>Ensure no missing residues (the code will warn but not fix this)</li> <li>Verify the structure contains the residues you want to simulate</li> </ul> </li> </ol> <h3 id="step-2-generate-stride-output-optional-but-recommended">Step 2: Generate STRIDE Output (Optional but Recommended)</h3> <p>If you want to use secondary structure information for contact detection:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Run STRIDE on your PDB file</span>
-stride P0CX28_clean.pdb <span class="o">&gt;</span> stride.dat
-</code></pre></div></div> <p>The STRIDE output will contain:</p> <ul> <li>Secondary structure assignments (helix, strand, coil, turns)</li> <li>Hydrogen bond information</li> <li>Detailed residue-by-residue structure assignments</li> </ul> <p><strong>Note</strong>: If you don’t provide <code class="language-plaintext highlighter-rouge">stride_output_file</code> in the config, the system may attempt to run STRIDE automatically, but it’s better to provide a pre-generated file.</p> <h3 id="step-3-create-domain-definition-file-optional">Step 3: Create Domain Definition File (Optional)</h3> <p>If your protein has multiple domains with different interaction strengths:</p> <ol> <li><strong>Create <code class="language-plaintext highlighter-rouge">domain.yaml</code></strong>: <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">n_residues</span><span class="pi">:</span> <span class="m">106</span>
+</code></pre></div></div> <h2 id="summary">Summary</h2> <p><code class="language-plaintext highlighter-rouge">glink-entanglement</code> turns one all-atom protein PDB into two practical tables: a raw contact-level entanglement table from <code class="language-plaintext highlighter-rouge">glink</code>, and a representative entanglement table from <code class="language-plaintext highlighter-rouge">glink-cluster</code>. Optional scripts can then remove slipknot crossing pairs or batch the workflow across many PDB files. The current output contract is centered on readable contact labels such as <code class="language-plaintext highlighter-rouge">ALA10-GLY42</code>, zero-based C-alpha contact indices <code class="language-plaintext highlighter-rouge">i</code> and <code class="language-plaintext highlighter-rouge">j</code>, side-specific Topoly crossing columns <code class="language-plaintext highlighter-rouge">crossingsN</code> and <code class="language-plaintext highlighter-rouge">crossingsC</code>, and semicolon-delimited raw-contact membership in the clustered output.</p>]]></content><author><name></name></author><category term="research-notes"/><category term="protein-entanglement"/><category term="gaussian-linking"/><category term="topology"/><category term="python"/><category term="structural-biology"/><summary type="html"><![CDATA[A practical tutorial for detecting, confirming, and clustering Gaussian-linking entanglements in protein structures.]]></summary></entry><entry><title type="html">Detecting Mirror Images in Coarse-Grained Simulations</title><link href="https://vuqv.github.io/blog/2026/detect-mirror-image-cg-simulation/" rel="alternate" type="text/html" title="Detecting Mirror Images in Coarse-Grained Simulations"/><published>2026-04-23T14:00:00+00:00</published><updated>2026-04-23T14:00:00+00:00</updated><id>https://vuqv.github.io/blog/2026/detect-mirror-image-cg-simulation</id><content type="html" xml:base="https://vuqv.github.io/blog/2026/detect-mirror-image-cg-simulation/"><![CDATA[<p>In coarse-grained structure-based folding simulations, a protein can sometimes fold into a global mirror-image structure rather than the physically correct native fold. These mirror-image states are typically artifacts for an all-L polypeptide and should be removed from downstream analysis.</p> <h2 id="purpose">Purpose</h2> <p>This workflow is designed to:</p> <ul> <li>Flag trajectories trapped in a global mirror-image basin</li> <li>Distinguish them from native-like and non-mirror misfolded trajectories</li> <li>Remove only global mirror-image artifacts</li> </ul> <h2 id="why-mirror-image-states-appear-in-cg-models">Why mirror-image states appear in CG models</h2> <p>In many structure-based CG models:</p> <ul> <li>Native contact topology is preserved</li> <li>Global fold geometry is approximated</li> <li>Chirality is not strictly enforced</li> </ul> <p>As a result, a mirrored fold can still be compact, stable, and even have high <code class="language-plaintext highlighter-rouge">Q</code>, despite being physically invalid for all-L proteins.</p> <h2 id="detection-principle">Detection principle</h2> <p>A global mirror-image trajectory is expected to satisfy all of the following:</p> <ul> <li>Folded or near-folded (<code class="language-plaintext highlighter-rouge">Q</code> is high)</li> <li>Low agreement with native chirality (inverted handedness)</li> <li>Geometrically closer to reflected native than to native</li> </ul> <p>So detection combines:</p> <ul> <li><code class="language-plaintext highlighter-rouge">Q</code> (folded-state filter)</li> <li>Global chirality agreement score vs native</li> <li><code class="language-plaintext highlighter-rouge">RMSD_native</code></li> <li><code class="language-plaintext highlighter-rouge">RMSD_reflected</code></li> </ul> <h2 id="why-q-alone-is-not-enough">Why <code class="language-plaintext highlighter-rouge">Q</code> alone is not enough</h2> <p><code class="language-plaintext highlighter-rouge">Q</code> measures native-contact similarity but does not encode handedness. Therefore, mirror-image conformations can still show high <code class="language-plaintext highlighter-rouge">Q</code>.</p> <h2 id="recommended-workflow">Recommended workflow</h2> <p>Use the same late-time window for all time-averaged quantities below (for example, last 10 ns).</p> <h3 id="step-1-keep-folded-trajectories">Step 1: Keep folded trajectories</h3> <p>For each trajectory, compute late-window mean <code class="language-plaintext highlighter-rouge">⟨Q⟩_last</code> and keep:</p> <p><code class="language-plaintext highlighter-rouge">⟨Q⟩_last &gt; 0.5</code></p> <h3 id="step-2-compute-global-chirality-agreement">Step 2: Compute global chirality agreement</h3> <p>Compute a scalar chirality agreement score against the native chirality structure:</p> <ul> <li>Larger values: better native handedness agreement</li> <li>Smaller values: mirror-like inversion</li> </ul> <p>Threshold used here:</p> <p><code class="language-plaintext highlighter-rouge">chirality &lt; 0.3</code></p> <h3 id="step-3-build-reflected-native-reference">Step 3: Build reflected native reference</h3> <p>Reflect the native structure by flipping one coordinate axis (for example, <code class="language-plaintext highlighter-rouge">x -&gt; -x</code>). One axis flip is sufficient because reflections differ only by rotation.</p> <h3 id="step-4-compare-rmsd-to-both-references">Step 4: Compare RMSD to both references</h3> <p>Compute late-window means of:</p> <ul> <li><code class="language-plaintext highlighter-rouge">RMSD_native</code> (rotation-only alignment to native)</li> <li><code class="language-plaintext highlighter-rouge">RMSD_reflected</code> (rotation-only alignment to reflected native)</li> </ul> <p>Important: use proper rotations only (<code class="language-plaintext highlighter-rouge">det = +1</code>). Reflection should enter through the reflected reference structure, not through allowing improper alignment transforms.</p> <h2 id="final-classification-rule">Final classification rule</h2> <p>Classify trajectory as mirror-image artifact if and only if:</p> <p><code class="language-plaintext highlighter-rouge">(⟨Q⟩_last &gt; 0.5) and (chirality &lt; 0.3) and (RMSD_reflected &lt; 0.9*RMSD_native)</code></p> <p>This three-way AND is important to reduce false positives from any single metric.</p> <h2 id="optional-refinement">Optional refinement</h2> <p>Define:</p> <p><code class="language-plaintext highlighter-rouge">mirror_score = RMSD_reflected / RMSD_native</code></p> <p>and add a stricter cutoff such as:</p> <p><code class="language-plaintext highlighter-rouge">mirror_score &lt; 0.9</code></p> <p>to remove borderline cases.</p> <h2 id="what-this-intentionally-keeps">What this intentionally keeps</h2> <ul> <li>Unfolded trajectories (<code class="language-plaintext highlighter-rouge">⟨Q⟩_last &lt;= 0.5</code>)</li> <li>Local chirality defects (not global inversion)</li> <li>Near-native misfolded states closer to native than reflected native</li> </ul> <p>These classes can still contain meaningful physics and should remain available for analysis.</p> <h2 id="summary">Summary</h2> <p>Mirror-image folds can look folded in CG simulations, so filtering should not rely on <code class="language-plaintext highlighter-rouge">Q</code> alone. A robust practical filter is the joint rule:</p> <p><code class="language-plaintext highlighter-rouge">(⟨Q⟩_last &gt; 0.5) and (chirality &lt; 0.3) and (RMSD_reflected &lt; 0.9RMSD_native)</code></p> <p>This removes global mirror artifacts while preserving informative non-mirror misfolded states.</p>]]></content><author><name></name></author><category term="research-notes"/><category term="coarse-grained-simulation"/><category term="protein-folding"/><category term="chirality"/><category term="analysis"/><summary type="html"><![CDATA[A practical checklist to identify mirror-image structures in CG trajectories.]]></summary></entry><entry><title type="html">TOPO tutorial, Part A — simulating folded proteins</title><link href="https://vuqv.github.io/blog/2026/topo-tutorial/" rel="alternate" type="text/html" title="TOPO tutorial, Part A — simulating folded proteins"/><published>2026-02-06T20:09:00+00:00</published><updated>2026-02-06T20:09:00+00:00</updated><id>https://vuqv.github.io/blog/2026/topo-tutorial</id><content type="html" xml:base="https://vuqv.github.io/blog/2026/topo-tutorial/"><![CDATA[<p><code class="language-plaintext highlighter-rouge">TOPO</code> (<em>TOPOlogy-based coarse-grained model for folded prOteins</em>) turns a folded-protein structure into a one-bead-per-residue, structure-based (Gō-like) model and runs it in <a href="https://openmm.org/">OpenMM</a>. Because the native structure you supply <em>defines</em> the energy minimum, TOPO is well suited to folding and unfolding, domain motions, and thermal or mechanical stability.</p> <p>This is Part A of a two-part tutorial. It covers the folded-protein workflow — running a protein in isolation. <a href="/blog/2026/topo-tutorial-translation/">Part B</a> covers protein synthesis, where the chain grows on a ribosome and folds co-translationally. Work through Part A first; Part B builds on the same model. Everything here mirrors the <a href="https://vuqv.github.io/topo/main/tutorials/index.html">official TOPO tutorials</a> (tutorials 1–6).</p> <h2 id="the-model-in-one-minute">The model in one minute</h2> <p>TOPO keeps only the alpha-carbon (Cα) of each residue, so a 106-residue protein becomes 106 beads. The force field combines:</p> <ul> <li><strong>Bonds, angles, torsions</strong> — the CA-chain geometry. Bonds are rigid constraints by default, which allows a large 15 fs (<code class="language-plaintext highlighter-rouge">dt = 0.015</code>) timestep.</li> <li><strong>Yukawa electrostatics</strong> — Debye–Hückel screened Coulomb between charged residues (ASP/GLU carry −1, ARG/LYS carry +1).</li> <li><strong>Structure-based contacts</strong> — the heart of the model. Residue pairs in contact in your input structure get attractive wells at their native distances; every other pair gets soft excluded-volume repulsion.</li> </ul> <p>The full functional forms and constants are documented in <a href="https://vuqv.github.io/topo/main/usage/model_theory.html">The TOPO model: theory and force field</a>.</p> <h2 id="prerequisites">Prerequisites</h2> <ul> <li><strong>Python</strong> with <strong>TOPO</strong> and <strong>OpenMM</strong> installed, plus NumPy, ParmEd, MDAnalysis, mdtraj, pandas, and PyYAML.</li> <li><strong>STRIDE</strong> on your <code class="language-plaintext highlighter-rouge">PATH</code> — TOPO calls it to detect backbone hydrogen bonds for the contact potential.</li> <li><strong>(Optional) a CUDA GPU</strong> — the tutorials default to CPU so they run anywhere.</li> </ul> <p>The dependencies install cleanly from <code class="language-plaintext highlighter-rouge">conda-forge</code>:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mamba create <span class="nt">-n</span> topo <span class="nt">-c</span> conda-forge python<span class="s2">"&gt;=3.9"</span> openmm parmed <span class="se">\</span>
+    mdanalysis mdtraj numpy pandas pyyaml
+mamba activate topo
+pip <span class="nb">install</span> <span class="nt">-e</span> <span class="nb">.</span>          <span class="c"># from the repo root</span>
+</code></pre></div></div> <p>Confirm your environment:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-c</span> <span class="s2">"import topo, openmm; print('OpenMM', openmm.__version__)"</span>
+which stride              <span class="c"># should print a path</span>
+</code></pre></div></div> <p>If <code class="language-plaintext highlighter-rouge">stride_output_file</code> is not set, TOPO runs <code class="language-plaintext highlighter-rouge">stride -h</code> for you and caches the result next to the PDB as <code class="language-plaintext highlighter-rouge">&lt;prefix&gt;_stride.dat</code>. If STRIDE is not installed, precompute the file once (<code class="language-plaintext highlighter-rouge">stride -h protein.pdb &gt; stride.dat</code>) and point <code class="language-plaintext highlighter-rouge">stride_output_file</code> at it.</p> <h2 id="1-the-single-domain-quickstart">1. The single-domain quickstart</h2> <p>The minimal workflow needs four files: an input structure, a <code class="language-plaintext highlighter-rouge">domain.yaml</code>, an <code class="language-plaintext highlighter-rouge">md.ini</code> config, and the runner script.</p> <table> <thead> <tr> <th>File</th> <th>Role</th> </tr> </thead> <tbody> <tr> <td><code class="language-plaintext highlighter-rouge">P0CX28_clean.pdb</code></td> <td>Input structure (all-atom PDB; TOPO keeps only CA atoms).</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">domain.yaml</code></td> <td>Defines the domain and its calibrated contact <code class="language-plaintext highlighter-rouge">nscale</code>.</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">md.ini</code></td> <td>Simulation configuration (steps, temperature, I/O, hardware).</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">run_simulation.py</code></td> <td>The runner (reads <code class="language-plaintext highlighter-rouge">md.ini</code>, builds the model, runs MD).</td> </tr> </tbody> </table> <p>The important lines in <code class="language-plaintext highlighter-rouge">md.ini</code>:</p> <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">md_steps</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">5000          # how long to run (short, for a demo)</span>
+<span class="py">ref_t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">300              # temperature in Kelvin</span>
+<span class="py">pbc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">no                 # no periodic box (single protein, implicit solvent)</span>
+<span class="py">pdb_file</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">P0CX28_clean.pdb</span>
+<span class="py">domain_def</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">domain.yaml # single domain with the calibrated contact nscale</span>
+<span class="py">device</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">CPU             # switch to GPU if you have CUDA</span>
+<span class="py">minimize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">no            # native structure is already the energy minimum</span>
+</code></pre></div></div> <p>Run it:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python run_simulation.py <span class="nt">-f</span> md.ini
+<span class="c"># equivalently:</span>
+topo-mdrun <span class="nt">-f</span> md.ini
+python <span class="nt">-m</span> topo.mdrun <span class="nt">-f</span> md.ini
+</code></pre></div></div> <p>TOPO builds the model (prints the chain count, adds each force term, runs STRIDE, builds the contact matrices), steps the dynamics, and ends with <code class="language-plaintext highlighter-rouge">--- Finished in … seconds ---</code>. On a CPU this finishes in about two seconds.</p> <h3 id="the-nscale-calibration-parameter">The nscale calibration parameter</h3> <p>Even for a single domain, <code class="language-plaintext highlighter-rouge">domain.yaml</code> carries an <code class="language-plaintext highlighter-rouge">nscale</code> — the global scale factor on the sidechain–sidechain contact energies. It is tuned so the model reproduces a target stability at 300 K. For <code class="language-plaintext highlighter-rouge">P0CX28</code> the calibrated value is <strong>2.5044</strong>; the raw unscaled value (1.0) would leave the protein only marginally folded. Tutorial 5 (below) shows how to find this value automatically.</p> <h3 id="the-outputs">The outputs</h3> <p>Everything lands in the <code class="language-plaintext highlighter-rouge">traj/</code> run folder:</p> <table> <thead> <tr> <th>File</th> <th>What it is</th> </tr> </thead> <tbody> <tr> <td><code class="language-plaintext highlighter-rouge">traj/traj.log</code></td> <td>Fixed-width energy/temperature log (one line every <code class="language-plaintext highlighter-rouge">nstlog</code> steps).</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">traj/traj.dcd</code></td> <td>Trajectory — open with VMD or MDAnalysis.</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">traj/traj.chk</code></td> <td>Binary checkpoint (positions + velocities) for restarting.</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">traj/traj.psf</code></td> <td>Topology of the CA model, for loading the DCD in analysis tools.</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">traj/traj_final.pdb</code></td> <td>Last conformation; reuse as <code class="language-plaintext highlighter-rouge">init_position</code> to seed a follow-up run.</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">traj/traj_runinfo.log</code></td> <td>Run provenance: package versions, hardware, timing.</td> </tr> </tbody> </table> <p>A stable temperature near 300 K and a non-exploding potential energy mean the run is healthy:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">head </span>traj/traj.log
+</code></pre></div></div> <h2 id="2-multidomain-proteins--per-domain-scaling">2. Multidomain proteins &amp; per-domain scaling</h2> <p>In a structure-based model every native contact gets an attractive well, and by default all wells share the same relative strength. A multidomain protein often needs <em>different</em> stabilities per domain and per interface. <code class="language-plaintext highlighter-rouge">domain.yaml</code> sets a scale factor on the sidechain–sidechain contact energy <strong>within</strong> each domain (<code class="language-plaintext highlighter-rouge">intra_domains[...].nscale</code>) and <strong>between</strong> domains (<code class="language-plaintext highlighter-rouge">inter_domains</code>).</p> <p>The instructive case is a <strong>discontiguous domain</strong>. Adenylate kinase (<code class="language-plaintext highlighter-rouge">1AKE</code> chain A, 214 residues) has a CORE domain made of two separate sequence segments — residues 1–117 and 166–214 — folding around an inserted NMP-binding domain (118–165). One domain can list multiple ranges:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">n_residues</span><span class="pi">:</span> <span class="m">214</span>
 <span class="na">intra_domains</span><span class="pi">:</span>
   <span class="na">A</span><span class="pi">:</span>
-    <span class="na">residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1-106</span><span class="pi">]</span>
-    <span class="na">strength</span><span class="pi">:</span> <span class="m">2.5044</span>
-</code></pre></div> </div> </li> <li><strong>Format explanation</strong>: <ul> <li><code class="language-plaintext highlighter-rouge">n_residues</code>: Total number of residues in the protein</li> <li><code class="language-plaintext highlighter-rouge">intra_domains</code>: Define domains (A, B, C, etc.) <ul> <li><code class="language-plaintext highlighter-rouge">residues</code>: Residue range for the domain (can be <code class="language-plaintext highlighter-rouge">[1-50]</code> or <code class="language-plaintext highlighter-rouge">[1-50, 60-100]</code>)</li> <li><code class="language-plaintext highlighter-rouge">strength</code>: Scaling factor for intra-domain contacts</li> </ul> </li> </ul> </li> <li><strong>For multi-domain proteins</strong>, you can define multiple domains: <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">n_residues</span><span class="pi">:</span> <span class="m">200</span>
+    <span class="na">residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1-117</span><span class="pi">,</span> <span class="nv">166-214</span><span class="pi">]</span>   <span class="c1"># ONE domain, TWO sequence segments</span>
+    <span class="na">nscale</span><span class="pi">:</span> <span class="m">1.1556</span>
+  <span class="na">B</span><span class="pi">:</span>
+    <span class="na">residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">118-165</span><span class="pi">]</span>
+    <span class="na">nscale</span><span class="pi">:</span> <span class="m">1.6871</span>
+<span class="na">inter_domains</span><span class="pi">:</span>
+  <span class="na">A-B</span><span class="pi">:</span> <span class="m">1.8611</span>
+</code></pre></div></div> <p>The only change needed in <code class="language-plaintext highlighter-rouge">md.ini</code> is the single line <code class="language-plaintext highlighter-rouge">domain_def = domain.yaml</code>, which switches on domain-aware scaling. A few rules worth remembering:</p> <ul> <li>Set <code class="language-plaintext highlighter-rouge">n_residues</code> to the true residue count; any residue you forget is auto-assigned to a fallback domain at <code class="language-plaintext highlighter-rouge">nscale</code> 1.0.</li> <li>Every domain needs a numeric <code class="language-plaintext highlighter-rouge">nscale</code> (a blank value errors).</li> <li>An unspecified interface defaults to 1.0 (native contacts kept, unscaled). To intentionally <strong>decouple</strong> two domains, set their pair to <code class="language-plaintext highlighter-rouge">0.0</code> explicitly.</li> </ul> <h2 id="3-restarting-a-run">3. Restarting a run</h2> <p>Long production runs restart cleanly from a checkpoint. Set <code class="language-plaintext highlighter-rouge">restart = yes</code> and point at the checkpoint, then set <code class="language-plaintext highlighter-rouge">md_steps</code> to the <em>total</em> desired step count — the remaining steps are computed from the checkpoint:</p> <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">restart</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">yes</span>
+<span class="py">checkpoint</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">traj.chk</span>
+<span class="py">md_steps</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">1000000       # total, not additional</span>
+</code></pre></div></div> <p>When restarting, <code class="language-plaintext highlighter-rouge">minimize</code> is forced off, the run continues from the checkpoint step, and the log and trajectory are <strong>appended</strong> rather than overwritten.</p> <h2 id="4-many-copies-in-one-run">4. Many copies in one run</h2> <p>A single CA chain of a few hundred beads barely uses a GPU. Set <code class="language-plaintext highlighter-rouge">n_copies &gt; 1</code> to pack that many <strong>independent, non-interacting</strong> copies into one run and collect one trajectory per copy:</p> <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">n_copies</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">10          # independent chains in one simulation</span>
+<span class="py">copy_shift</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">5.0       # nm, initial x-offset between copies</span>
+</code></pre></div></div> <p>The copies never interact — the total potential energy is exactly <code class="language-plaintext highlighter-rouge">n_copies ×</code> the single-chain energy. After the run, split the combined trajectory into per-chain DCDs:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python split_chains.py <span class="nt">-f</span> md.ini
+<span class="c"># or: python -m topo.utils.multichain -f combined.dcd -n 10 -o out/</span>
+</code></pre></div></div> <h2 id="5-optimizing-the-contact-nscale-automatically">5. Optimizing the contact nscale automatically</h2> <p>Choosing an <code class="language-plaintext highlighter-rouge">nscale</code> by hand is tedious and not reproducible, especially for a multidomain protein that needs a separate value per domain and per interface. The <code class="language-plaintext highlighter-rouge">topo-optimize</code> optimizer searches for the <strong>smallest</strong> <code class="language-plaintext highlighter-rouge">nscale</code>, drawn from a small discrete ladder, at which each domain and interface stays folded across many independent trajectories.</p> <p>The algorithm, per round: write the current <code class="language-plaintext highlighter-rouge">nscale</code> values, run <code class="language-plaintext highlighter-rouge">ntraj</code> independent trajectories at 310 K (a multi-copy run), score the fraction of native contacts <em>Q</em> per frame for every domain and interface, then decide. A unit is <em>stable</em> when all <code class="language-plaintext highlighter-rouge">ntraj</code> trajectories keep its <em>Q</em> above <strong>0.6688</strong> for at least <strong>98%</strong> of frames. Any unit that fails climbs one ladder level while the stable ones freeze; the test repeats until everything is stable (or a median fallback is used after level 5).</p> <p>Each domain declares its structural <code class="language-plaintext highlighter-rouge">class</code> (α, β, or α/β), which picks the ladder it climbs:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">n_residues</span><span class="pi">:</span> <span class="m">139</span>
 <span class="na">intra_domains</span><span class="pi">:</span>
-  <span class="na">Domain1</span><span class="pi">:</span>
-    <span class="na">residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1-100</span><span class="pi">]</span>
-    <span class="na">strength</span><span class="pi">:</span> <span class="m">2.5</span>
-  <span class="na">Domain2</span><span class="pi">:</span>
-    <span class="na">residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">101-200</span><span class="pi">]</span>
-    <span class="na">strength</span><span class="pi">:</span> <span class="m">2.5</span>
-</code></pre></div> </div> </li> </ol> <h3 id="step-4-create-configuration-file-mdini">Step 4: Create Configuration File (<code class="language-plaintext highlighter-rouge">md.ini</code>)</h3> <p>Create or modify <code class="language-plaintext highlighter-rouge">md.ini</code> with your simulation parameters:</p> <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[OPTIONS]</span><span class="w">
-</span><span class="c"># Simulation parameters
-</span><span class="py">md_steps</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">100_000          # Total number of MD steps</span>
-<span class="py">dt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">0.015                  # Time step in picoseconds</span>
-<span class="py">nstxout</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">5000              # Steps between writing coordinates/checkpoint</span>
-<span class="py">nstlog</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">5000               # Steps between writing log file</span>
-<span class="py">nstcomm</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">100               # Frequency for center of mass motion removal</span>
-<span class="w">
-</span><span class="c"># Model selection
-</span><span class="py">model</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">topo                # Currently only 'topo' is supported</span>
-<span class="w">
-</span><span class="c"># Temperature coupling
-</span><span class="py">tcoupl</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">yes                # Enable temperature coupling</span>
-<span class="py">ref_t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">300                 # Reference temperature in Kelvin</span>
-<span class="py">tau_t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">0.05                # Temperature coupling time constant (ps^-1)</span>
-<span class="w">
-</span><span class="c"># Pressure coupling (requires PBC)
-</span><span class="py">pcoupl</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">no                 # Enable pressure coupling</span>
-<span class="py">ref_p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">1                   # Reference pressure in bar</span>
-<span class="py">frequency_p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">25            # Pressure coupling frequency</span>
-<span class="w">
-</span><span class="c"># Periodic boundary conditions
-</span><span class="py">pbc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">no                    # Enable periodic boundary conditions</span>
-<span class="py">box_dimension</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">30          # Box size in nm (can be single value or [x, y, z])</span>
-<span class="w">
-</span><span class="c"># Input files
-</span><span class="py">protein_code</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">P0CX28_clean # Prefix for output files</span>
-<span class="py">pdb_file</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">P0CX28_clean.pdb # Input structure file</span>
-<span class="py">domain_def</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">domain.yaml    # Domain definition file (optional)</span>
-<span class="py">stride_output_file</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">stride.dat  # STRIDE output file (optional)</span>
-<span class="w">
-</span><span class="c"># Output files
-</span><span class="py">checkpoint</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">P0CX28_clean.chk  # Checkpoint file name</span>
-<span class="w">
-</span><span class="c"># Hardware settings
-</span><span class="py">device</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">GPU                # Use 'GPU' or 'CPU'</span>
-<span class="py">ppn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">4                     # Number of threads (only for CPU)</span>
-<span class="w">
-</span><span class="c"># Simulation control
-</span><span class="py">restart</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">no                # Restart from checkpoint</span>
-<span class="py">minimize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">no               # Perform energy minimization (ignored if restart=yes)</span>
-</code></pre></div></div> <h3 id="step-5-verify-file-structure">Step 5: Verify File Structure</h3> <p>Your working directory should contain:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>working_directory/
-├── P0CX28_clean.pdb        # Input structure
-├── md.ini                   # Configuration file
-├── domain.yaml              # Domain definition (optional)
-├── stride.dat               # STRIDE output (optional)
-└── run_simulation.py        # Simulation script
-</code></pre></div></div> <hr/> <h2 id="configuration-file-details">Configuration File Details</h2> <h3 id="simulation-parameters">Simulation Parameters</h3> <table> <thead> <tr> <th>Parameter</th> <th>Description</th> <th>Default</th> <th>Units</th> </tr> </thead> <tbody> <tr> <td><code class="language-plaintext highlighter-rouge">md_steps</code></td> <td>Total number of MD steps</td> <td>1000</td> <td>steps</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">dt</code></td> <td>Integration time step</td> <td>0.01</td> <td>ps</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">nstxout</code></td> <td>Steps between coordinate/checkpoint writes</td> <td>10</td> <td>steps</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">nstlog</code></td> <td>Steps between log file writes</td> <td>10</td> <td>steps</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">nstcomm</code></td> <td>Frequency of COM motion removal</td> <td>100</td> <td>steps</td> </tr> </tbody> </table> <h3 id="temperature-and-pressure">Temperature and Pressure</h3> <table> <thead> <tr> <th>Parameter</th> <th>Description</th> <th>Default</th> <th>Units</th> </tr> </thead> <tbody> <tr> <td><code class="language-plaintext highlighter-rouge">tcoupl</code></td> <td>Enable temperature coupling</td> <td>True</td> <td>boolean</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">ref_t</code></td> <td>Reference temperature</td> <td>300.0</td> <td>K</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">tau_t</code></td> <td>Temperature coupling time constant</td> <td>0.01</td> <td>ps^-1</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">pcoupl</code></td> <td>Enable pressure coupling</td> <td>False</td> <td>boolean</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">ref_p</code></td> <td>Reference pressure</td> <td>1.0</td> <td>bar</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">frequency_p</code></td> <td>Pressure coupling frequency</td> <td>25</td> <td>steps</td> </tr> </tbody> </table> <p><strong>Important Notes</strong>:</p> <ul> <li>If <code class="language-plaintext highlighter-rouge">pcoupl = yes</code>, then <code class="language-plaintext highlighter-rouge">pbc</code> must also be <code class="language-plaintext highlighter-rouge">yes</code></li> <li><code class="language-plaintext highlighter-rouge">box_dimension</code> can be a single number (cubic box) or <code class="language-plaintext highlighter-rouge">[x, y, z]</code> (rectangular box)</li> <li>Pressure coupling requires periodic boundary conditions</li> </ul> <h3 id="file-paths">File Paths</h3> <table> <thead> <tr> <th>Parameter</th> <th>Description</th> <th>Required</th> </tr> </thead> <tbody> <tr> <td><code class="language-plaintext highlighter-rouge">pdb_file</code></td> <td>Input PDB structure file</td> <td>Yes</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">protein_code</code></td> <td>Prefix for all output files</td> <td>Yes</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">domain_def</code></td> <td>Domain definition YAML file</td> <td>No</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">stride_output_file</code></td> <td>STRIDE output file</td> <td>No</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">checkpoint</code></td> <td>Checkpoint file name</td> <td>Yes</td> </tr> </tbody> </table> <h3 id="hardware-settings">Hardware Settings</h3> <table> <thead> <tr> <th>Parameter</th> <th>Description</th> <th>Options</th> </tr> </thead> <tbody> <tr> <td><code class="language-plaintext highlighter-rouge">device</code></td> <td>Compute device</td> <td><code class="language-plaintext highlighter-rouge">GPU</code> or <code class="language-plaintext highlighter-rouge">CPU</code></td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">ppn</code></td> <td>Number of CPU threads</td> <td>Integer (only used if <code class="language-plaintext highlighter-rouge">device=CPU</code>)</td> </tr> </tbody> </table> <h3 id="simulation-control">Simulation Control</h3> <table> <thead> <tr> <th>Parameter</th> <th>Description</th> <th>Default</th> </tr> </thead> <tbody> <tr> <td><code class="language-plaintext highlighter-rouge">restart</code></td> <td>Restart from checkpoint</td> <td>False</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">minimize</code></td> <td>Energy minimization</td> <td>True (if not restarting)</td> </tr> </tbody> </table> <hr/> <h2 id="running-the-simulation">Running the Simulation</h2> <h3 id="basic-execution">Basic Execution</h3> <p>Run the simulation using the configuration file:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python run_simulation.py <span class="nt">-f</span> md.ini
-</code></pre></div></div> <p>Or using the shorter flag:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python run_simulation.py <span class="nt">-input</span> md.ini
-</code></pre></div></div> <h3 id="what-happens-during-execution">What Happens During Execution</h3> <ol> <li><strong>Reading Configuration</strong>: The script reads <code class="language-plaintext highlighter-rouge">md.ini</code> and parses all parameters</li> <li><strong>Model Building</strong>: <ul> <li>Loads the PDB structure</li> <li>Extracts alpha-carbon atoms only</li> <li>Builds bonds, angles, and torsions</li> <li>Sets up force field parameters</li> <li>Adds non-bonded interactions (contacts, electrostatics)</li> </ul> </li> <li><strong>System Setup</strong>: <ul> <li>Adds center of mass motion remover</li> <li>Sets up integrator (Langevin dynamics)</li> <li>Configures platform (GPU/CPU)</li> </ul> </li> <li><strong>Initialization</strong>: <ul> <li>Sets initial positions (shifted to origin)</li> <li>Initializes velocities at reference temperature</li> <li>Optionally performs energy minimization</li> </ul> </li> <li><strong>Simulation</strong>: <ul> <li>Runs MD steps</li> <li>Writes coordinates, checkpoints, and log files at specified intervals</li> </ul> </li> <li><strong>Finalization</strong>: <ul> <li>Writes final structure</li> <li>Saves checkpoint</li> </ul> </li> </ol> <h3 id="monitoring-progress">Monitoring Progress</h3> <p>The script prints progress information:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading simulation parameters from md.ini file...
-Setting number of simulation steps to: 100000
-Setting timestep for integration of equations of motion to: 0.015 ps
-...
-Model built successfully...
-Simulation started
---- Finished in X seconds ---
-</code></pre></div></div> <hr/> <h2 id="output-files">Output Files</h2> <p>After running the simulation, you’ll get several output files:</p> <h3 id="1-initial-structure-protein_code_initpdb">1. <strong>Initial Structure</strong> (<code class="language-plaintext highlighter-rouge">{protein_code}_init.pdb</code>)</h3> <ul> <li>PDB file of the initial structure after model building</li> <li>Useful for visualization and verification</li> </ul> <h3 id="2-topology-file-protein_codepsf">2. <strong>Topology File</strong> (<code class="language-plaintext highlighter-rouge">{protein_code}.psf</code>)</h3> <ul> <li>PSF format topology file</li> <li>Contains atom, bond, angle, and dihedral information</li> </ul> <h3 id="3-trajectory-file-protein_codedcd">3. <strong>Trajectory File</strong> (<code class="language-plaintext highlighter-rouge">{protein_code}.dcd</code>)</h3> <ul> <li>Binary trajectory file containing coordinates at each <code class="language-plaintext highlighter-rouge">nstxout</code> step</li> <li>Can be analyzed with MD analysis tools (VMD, MDAnalysis, etc.)</li> </ul> <h3 id="4-log-file-protein_codelog">4. <strong>Log File</strong> (<code class="language-plaintext highlighter-rouge">{protein_code}.log</code>)</h3> <ul> <li>Text file with simulation progress</li> <li>Contains: step, time, potential energy, kinetic energy, total energy, temperature, speed, remaining time</li> <li>Tab-separated format for easy parsing</li> </ul> <h3 id="5-checkpoint-file-protein_codechk">5. <strong>Checkpoint File</strong> (<code class="language-plaintext highlighter-rouge">{protein_code}.chk</code>)</h3> <ul> <li>Binary checkpoint file for restarting simulations</li> <li>Saved every <code class="language-plaintext highlighter-rouge">nstxout</code> steps</li> <li>Contains complete simulation state</li> </ul> <h3 id="6-final-structure-protein_code_finalpdb">6. <strong>Final Structure</strong> (<code class="language-plaintext highlighter-rouge">{protein_code}_final.pdb</code>)</h3> <ul> <li>PDB file of the final frame</li> <li>Last structure from the simulation</li> </ul> <h3 id="example-output-files-for-protein_code--p0cx28_clean">Example Output Files (for <code class="language-plaintext highlighter-rouge">protein_code = P0CX28_clean</code>):</h3> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P0CX28_clean_init.pdb    # Initial structure
-P0CX28_clean.psf         # Topology
-P0CX28_clean.dcd         # Trajectory
-P0CX28_clean.log         # Log file
-P0CX28_clean.chk         # Checkpoint
-P0CX28_clean_final.pdb   # Final structure
-</code></pre></div></div> <hr/> <h2 id="restarting-simulations">Restarting Simulations</h2> <p>To continue a simulation from a checkpoint:</p> <ol> <li><strong>Set restart parameters in <code class="language-plaintext highlighter-rouge">md.ini</code></strong>: <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">restart</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">yes</span>
-<span class="py">checkpoint</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">P0CX28_clean.chk</span>
-</code></pre></div> </div> </li> <li><strong>Update <code class="language-plaintext highlighter-rouge">md_steps</code></strong>: <ul> <li>Set to the total number of steps you want (including previous steps)</li> <li>The script will calculate remaining steps automatically</li> </ul> </li> <li><strong>Run normally</strong>: <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python run_simulation.py <span class="nt">-f</span> md.ini
-</code></pre></div> </div> </li> </ol> <p><strong>Important</strong>: When restarting:</p> <ul> <li><code class="language-plaintext highlighter-rouge">minimize</code> is automatically set to <code class="language-plaintext highlighter-rouge">False</code></li> <li>The simulation continues from the checkpoint step</li> <li>Trajectory and log files are appended (not overwritten)</li> </ul> <hr/> <h2 id="troubleshooting">Troubleshooting</h2> <h3 id="common-issues">Common Issues</h3> <ol> <li><strong>Missing Dependencies</strong> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ImportError: No module named 'topo'
-</code></pre></div> </div> <p><strong>Solution</strong>: Install the topo package or add it to your Python path</p> </li> <li><strong>Invalid PDB File</strong> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error reading PDB file
-</code></pre></div> </div> <p><strong>Solution</strong>: Verify your PDB file is valid and contains CA atoms</p> </li> <li><strong>GPU Not Available</strong> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CUDA error or GPU not found
-</code></pre></div> </div> <p><strong>Solution</strong>:</p> <ul> <li>Check CUDA installation</li> <li>Set <code class="language-plaintext highlighter-rouge">device = CPU</code> in <code class="language-plaintext highlighter-rouge">md.ini</code></li> <li>Verify GPU is accessible: <code class="language-plaintext highlighter-rouge">nvidia-smi</code></li> </ul> </li> <li><strong>Missing Residues Warning</strong> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: Missing residues detected
-</code></pre></div> </div> <p><strong>Solution</strong>: The code will warn but not fix missing residues. Manually fix your PDB file before running</p> </li> <li><strong>STRIDE Not Found</strong> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>STRIDE executable not found
-</code></pre></div> </div> <p><strong>Solution</strong>:</p> <ul> <li>Install STRIDE and add to PATH, or</li> <li>Provide pre-generated <code class="language-plaintext highlighter-rouge">stride_output_file</code> in config, or</li> <li>Set <code class="language-plaintext highlighter-rouge">stride_output_file</code> to empty/None</li> </ul> </li> <li><strong>Domain Definition Errors</strong> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error parsing domain.yaml
-</code></pre></div> </div> <p><strong>Solution</strong>:</p> <ul> <li>Verify YAML syntax</li> <li>Check residue ranges match your protein</li> <li>Ensure <code class="language-plaintext highlighter-rouge">n_residues</code> matches actual residue count</li> </ul> </li> <li><strong>Pressure Coupling Without PBC</strong> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AssertionError: Pressure coupling requires PBC
-</code></pre></div> </div> <p><strong>Solution</strong>: Set <code class="language-plaintext highlighter-rouge">pbc = yes</code> and provide <code class="language-plaintext highlighter-rouge">box_dimension</code> when using pressure coupling</p> </li> </ol> <h3 id="performance-tips">Performance Tips</h3> <ol> <li><strong>GPU Acceleration</strong>: Use <code class="language-plaintext highlighter-rouge">device = GPU</code> for faster simulations (if available)</li> <li><strong>Time Step</strong>: Larger <code class="language-plaintext highlighter-rouge">dt</code> values (0.015-0.02 ps) are typically stable for coarse-grained models</li> <li><strong>Output Frequency</strong>: Reduce <code class="language-plaintext highlighter-rouge">nstxout</code> and <code class="language-plaintext highlighter-rouge">nstlog</code> for shorter simulations to save disk space</li> <li><strong>Checkpoint Frequency</strong>: Set <code class="language-plaintext highlighter-rouge">nstxout</code> appropriately to balance restart capability and I/O overhead</li> </ol> <hr/> <h2 id="example-workflow-summary">Example Workflow Summary</h2> <p>Here’s a complete example workflow:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. Prepare structure</span>
-<span class="c"># (Ensure P0CX28_clean.pdb exists)</span>
-
-<span class="c"># 2. Generate STRIDE output</span>
-stride P0CX28_clean.pdb <span class="o">&gt;</span> stride.dat
-
-<span class="c"># 3. Create domain.yaml (if needed)</span>
-<span class="c"># Edit domain.yaml with your domain definitions</span>
-
-<span class="c"># 4. Create/edit md.ini</span>
-<span class="c"># Set all parameters appropriately</span>
-
-<span class="c"># 5. Run simulation</span>
-python run_simulation.py <span class="nt">-f</span> md.ini
-
-<span class="c"># 6. Check outputs</span>
-<span class="nb">ls</span> <span class="nt">-lh</span> P0CX28_clean.<span class="k">*</span>
-<span class="nb">tail</span> <span class="nt">-f</span> P0CX28_clean.log  <span class="c"># Monitor progress</span>
-
-<span class="c"># 7. Analyze results (using your preferred tools)</span>
-<span class="c"># VMD, MDAnalysis, custom scripts, etc.</span>
-</code></pre></div></div> <hr/> <h2 id="additional-resources">Additional Resources</h2> <ul> <li><strong>TOPO Documentation</strong>: See <code class="language-plaintext highlighter-rouge">docs/</code> folder for detailed API documentation</li> <li><strong>Examples</strong>: Check <code class="language-plaintext highlighter-rouge">examples/</code> folder for more simulation setups</li> <li><strong>OpenMM Documentation</strong>: https://openmm.org/documentation</li> <li><strong>STRIDE</strong>: http://webclu.bio.wzw.tum.de/stride/</li> </ul> <hr/> <h2 id="quick-reference-minimal-setup">Quick Reference: Minimal Setup</h2> <p>For a minimal working setup, you only need:</p> <ol> <li><strong>PDB file</strong>: Your protein structure</li> <li><strong>md.ini</strong> with minimal options: <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[OPTIONS]</span><span class="w">
-</span><span class="py">pdb_file</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">your_protein.pdb</span>
-<span class="py">protein_code</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">your_protein</span>
-<span class="py">checkpoint</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">your_protein.chk</span>
-<span class="py">device</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">CPU</span>
-</code></pre></div> </div> </li> </ol> <p>All other parameters will use defaults. Add optional files (<code class="language-plaintext highlighter-rouge">domain.yaml</code>, <code class="language-plaintext highlighter-rouge">stride.dat</code>) as needed for your specific simulation requirements.</p>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="code"/><summary type="html"><![CDATA[an example of a blog post with some code]]></summary></entry><entry><title type="html">a post with plotly.js</title><link href="https://vuqv.github.io/blog/2025/plotly/" rel="alternate" type="text/html" title="a post with plotly.js"/><published>2025-03-26T14:24:00+00:00</published><updated>2025-03-26T14:24:00+00:00</updated><id>https://vuqv.github.io/blog/2025/plotly</id><content type="html" xml:base="https://vuqv.github.io/blog/2025/plotly/"><![CDATA[<p>This is an example post with some <a href="https://plotly.com/javascript/">plotly</a> code.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">plotly
+  <span class="na">A</span><span class="pi">:</span>
+    <span class="na">residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1-90</span><span class="pi">]</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">beta</span>            <span class="c1"># alpha | beta | alpha-beta — selects the ladder</span>
+    <span class="na">nscale</span><span class="pi">:</span> <span class="m">1.1556</span>       <span class="c1"># placeholder — overwritten each round</span>
+  <span class="na">B</span><span class="pi">:</span>
+    <span class="na">residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">91-139</span><span class="pi">]</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">alpha</span>
+    <span class="na">nscale</span><span class="pi">:</span> <span class="m">1.6871</span>
+<span class="na">inter_domains</span><span class="pi">:</span>
+  <span class="na">A-B</span><span class="pi">:</span> <span class="m">1.8611</span>              <span class="c1"># placeholder too</span>
+</code></pre></div></div> <p>Run it with a minimal <code class="language-plaintext highlighter-rouge">optimize.ini</code>:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>topo-optimize <span class="nt">-f</span> optimize.ini <span class="nt">-o</span> opt_out
+</code></pre></div></div> <p>The result is <code class="language-plaintext highlighter-rouge">opt_out/domain_optimized.yaml</code> — a ready-to-use <code class="language-plaintext highlighter-rouge">domain.yaml</code>. Point a production run straight at it:</p> <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">domain_def</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">domain_optimized.yaml</span>
+</code></pre></div></div> <h2 id="6-temperature-annealing--quenching">6. Temperature annealing &amp; quenching</h2> <p>Instead of a single constant temperature, you can drive the run through a <strong>temperature protocol</strong>: hold the protein hot enough to unfold, then bring it back to <code class="language-plaintext highlighter-rouge">ref_t</code> to watch it refold. Turn it on with <code class="language-plaintext highlighter-rouge">anneal = yes</code>, which splits the run into two phases that each write their own trajectory and log:</p> <table> <thead> <tr> <th>Phase</th> <th>What it does</th> <th>Output files</th> </tr> </thead> <tbody> <tr> <td><strong>Quench</strong></td> <td>Hold at <code class="language-plaintext highlighter-rouge">t_high</code> (the protein unfolds here).</td> <td><code class="language-plaintext highlighter-rouge">&lt;outname&gt;_quench.dcd</code>, <code class="language-plaintext highlighter-rouge">&lt;outname&gt;_quench.log</code></td> </tr> <tr> <td><strong>Production</strong></td> <td>Run at <code class="language-plaintext highlighter-rouge">ref_t</code> (the protein refolds; you collect the equilibrium ensemble).</td> <td><code class="language-plaintext highlighter-rouge">&lt;outname&gt;.dcd</code>, <code class="language-plaintext highlighter-rouge">&lt;outname&gt;.log</code></td> </tr> </tbody> </table> <p><code class="language-plaintext highlighter-rouge">anneal_steps</code> is separate from <code class="language-plaintext highlighter-rouge">md_steps</code>, so the grand total is their sum. Because the quench writes to <code class="language-plaintext highlighter-rouge">_quench.*</code>, the hot part never contaminates your production trajectory. The quench writes no checkpoint and the production clock resets to zero, so restarting an annealed run is identical to restarting a normal one.</p> <p>There are two ways down from <code class="language-plaintext highlighter-rouge">t_high</code> to <code class="language-plaintext highlighter-rouge">ref_t</code>, set by <code class="language-plaintext highlighter-rouge">anneal_ramp</code>:</p> <ul> <li><strong><code class="language-plaintext highlighter-rouge">jump</code></strong> (default) — the thermostat drops to <code class="language-plaintext highlighter-rouge">ref_t</code> instantaneously at the phase boundary. Use it for <strong>folding kinetics and mechanism</strong>; folding happens at one well-defined temperature, mirroring an experimental T-jump.</li> <li><strong><code class="language-plaintext highlighter-rouge">linear</code></strong> — the temperature cools gradually over <code class="language-plaintext highlighter-rouge">anneal_ramp_steps</code>. Use it for <strong>refolding yield</strong> (classic simulated annealing toward the native minimum); not for clean kinetics, since cooling and folding overlap.</li> </ul> <p>One physical caveat: a Langevin thermostat relaxes toward a new setpoint over roughly <code class="language-plaintext highlighter-rouge">1/tau_t</code>, so <code class="language-plaintext highlighter-rouge">anneal_steps</code> must be many relaxation times — long enough that the protein genuinely unfolds (<em>Q</em> → 0 in <code class="language-plaintext highlighter-rouge">traj_quench.dcd</code>). The tutorial configs use <code class="language-plaintext highlighter-rouge">tau_t = 1.0</code> for speed; production runs typically use <code class="language-plaintext highlighter-rouge">tau_t ≈ 0.05</code>, which needs a proportionally longer hold.</p> <h2 id="where-to-go-next">Where to go next</h2> <p>That is the full folded-protein workflow: build a model, scale its domains, calibrate it, and drive it through temperature protocols. From here:</p> <ul> <li>Measure how folded each domain is with <a href="https://vuqv.github.io/topo/main/usage/native_contacts.html">native-contact (<em>Q</em>) analysis</a>.</li> <li>Script the model directly with the <a href="https://vuqv.github.io/topo/main/usage/python_api.html">Python API</a>.</li> <li>Continue to <a href="/blog/2026/topo-tutorial-translation/">Part B</a> to grow the protein on a ribosome and watch it fold co-translationally.</li> </ul> <p>The ready-to-run input files for every tutorial live under <a href="https://github.com/vuqv/topo/tree/main/tutorials"><code class="language-plaintext highlighter-rouge">tutorials/</code></a> in the repository.</p> <h2 id="resources">Resources</h2> <ul> <li><strong>TOPO documentation</strong>: <a href="https://vuqv.github.io/topo/main/index.html">https://vuqv.github.io/topo/main/index.html</a></li> <li><strong>GitHub repository</strong>: <a href="https://github.com/vuqv/topo">https://github.com/vuqv/topo</a></li> <li><strong>OpenMM</strong>: <a href="https://openmm.org/documentation">https://openmm.org/documentation</a></li> <li><strong>STRIDE</strong>: <a href="http://webclu.bio.wzw.tum.de/stride/">http://webclu.bio.wzw.tum.de/stride/</a></li> </ul>]]></content><author><name></name></author><category term="research-notes"/><category term="topo"/><category term="coarse-grained"/><category term="molecular-dynamics"/><category term="protein-folding"/><category term="openmm"/><category term="structural-biology"/><summary type="html"><![CDATA[A hands-on walkthrough of TOPO's coarse-grained folded-protein workflow — from a single-domain quickstart to multidomain scaling, nscale optimization, and temperature annealing.]]></summary></entry><entry><title type="html">a post with plotly.js</title><link href="https://vuqv.github.io/blog/2025/plotly/" rel="alternate" type="text/html" title="a post with plotly.js"/><published>2025-03-26T14:24:00+00:00</published><updated>2025-03-26T14:24:00+00:00</updated><id>https://vuqv.github.io/blog/2025/plotly</id><content type="html" xml:base="https://vuqv.github.io/blog/2025/plotly/"><![CDATA[<p>This is an example post with some <a href="https://plotly.com/javascript/">plotly</a> code.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">plotly
 </span><span class="sb">{
   "data": [
     {
@@ -377,16 +318,16 @@ Content 2
 <span class="cp">{%</span><span class="w"> </span><span class="nt">endtab</span><span class="w"> </span><span class="cp">%}</span>
 
 <span class="cp">{%</span><span class="w"> </span><span class="nt">endtabs</span><span class="w"> </span><span class="cp">%}</span>
-</code></pre></div></div> <p>With this you can generate visualizations like:</p> <ul id="log" class="tab" data-tab="825018d7-6df5-4613-9ff8-7db87b4bc782" data-name="log"> <li class="active" id="log-php"> <a href="#">php </a> </li> <li id="log-js"> <a href="#">js </a> </li> <li id="log-ruby"> <a href="#">ruby </a> </li> </ul> <ul class="tab-content" id="825018d7-6df5-4613-9ff8-7db87b4bc782" data-name="log"> <li class="active"> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">var_dump</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>
+</code></pre></div></div> <p>With this you can generate visualizations like:</p> <ul id="log" class="tab" data-tab="5bfb9fc1-2ea6-4e16-b432-658174e60fba" data-name="log"> <li class="active" id="log-php"> <a href="#">php </a> </li> <li id="log-js"> <a href="#">js </a> </li> <li id="log-ruby"> <a href="#">ruby </a> </li> </ul> <ul class="tab-content" id="5bfb9fc1-2ea6-4e16-b432-658174e60fba" data-name="log"> <li class="active"> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">var_dump</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>
 </code></pre></div></div> </li> <li> <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">hello</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div> </li> <li> <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">pputs</span> <span class="dl">'</span><span class="s1">hello</span><span class="dl">'</span>
-</code></pre></div></div> </li> </ul> <h2 id="another-example">Another example</h2> <ul id="data-struct" class="tab" data-tab="ec00cf53-546c-438b-b695-16abfdaf75f4" data-name="data-struct"> <li class="active" id="data-struct-yaml"> <a href="#">yaml </a> </li> <li id="data-struct-json"> <a href="#">json </a> </li> </ul> <ul class="tab-content" id="ec00cf53-546c-438b-b695-16abfdaf75f4" data-name="data-struct"> <li class="active"> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">hello</span><span class="pi">:</span>
+</code></pre></div></div> </li> </ul> <h2 id="another-example">Another example</h2> <ul id="data-struct" class="tab" data-tab="aa967571-d80c-4a63-9998-1a0fefdd7a55" data-name="data-struct"> <li class="active" id="data-struct-yaml"> <a href="#">yaml </a> </li> <li id="data-struct-json"> <a href="#">json </a> </li> </ul> <ul class="tab-content" id="aa967571-d80c-4a63-9998-1a0fefdd7a55" data-name="data-struct"> <li class="active"> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">hello</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="s2">"</span><span class="s">whatsup"</span>
   <span class="pi">-</span> <span class="s2">"</span><span class="s">hi"</span>
 </code></pre></div></div> </li> <li> <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"hello"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"whatsup"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hi"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div> </li> </ul> <h2 id="tabs-for-something-else">Tabs for something else</h2> <ul id="something-else" class="tab" data-tab="0c21819a-ca2f-479a-a0ab-cc5cc052e7c5" data-name="something-else"> <li class="active" id="something-else-text"> <a href="#">text </a> </li> <li id="something-else-quote"> <a href="#">quote </a> </li> <li id="something-else-list"> <a href="#">list </a> </li> </ul> <ul class="tab-content" id="0c21819a-ca2f-479a-a0ab-cc5cc052e7c5" data-name="something-else"> <li class="active"> <p>Regular text</p> </li> <li> <blockquote> <p>A quote</p> </blockquote> </li> <li> <p>Hipster list</p> <ul> <li>brunch</li> <li>fixie</li> <li>raybans</li> <li>messenger bag</li> </ul> </li> </ul>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="code"/><summary type="html"><![CDATA[this is what included tabs in a post could look like]]></summary></entry><entry><title type="html">a post with typograms</title><link href="https://vuqv.github.io/blog/2024/typograms/" rel="alternate" type="text/html" title="a post with typograms"/><published>2024-04-29T23:36:10+00:00</published><updated>2024-04-29T23:36:10+00:00</updated><id>https://vuqv.github.io/blog/2024/typograms</id><content type="html" xml:base="https://vuqv.github.io/blog/2024/typograms/"><![CDATA[<p>This is an example post with some <a href="https://github.com/google/typograms/">typograms</a> code.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">typograms
+</span></code></pre></div></div> </li> </ul> <h2 id="tabs-for-something-else">Tabs for something else</h2> <ul id="something-else" class="tab" data-tab="81663664-9ca4-40d5-a390-9bd406095af4" data-name="something-else"> <li class="active" id="something-else-text"> <a href="#">text </a> </li> <li id="something-else-quote"> <a href="#">quote </a> </li> <li id="something-else-list"> <a href="#">list </a> </li> </ul> <ul class="tab-content" id="81663664-9ca4-40d5-a390-9bd406095af4" data-name="something-else"> <li class="active"> <p>Regular text</p> </li> <li> <blockquote> <p>A quote</p> </blockquote> </li> <li> <p>Hipster list</p> <ul> <li>brunch</li> <li>fixie</li> <li>raybans</li> <li>messenger bag</li> </ul> </li> </ul>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="code"/><summary type="html"><![CDATA[this is what included tabs in a post could look like]]></summary></entry><entry><title type="html">a post with typograms</title><link href="https://vuqv.github.io/blog/2024/typograms/" rel="alternate" type="text/html" title="a post with typograms"/><published>2024-04-29T23:36:10+00:00</published><updated>2024-04-29T23:36:10+00:00</updated><id>https://vuqv.github.io/blog/2024/typograms</id><content type="html" xml:base="https://vuqv.github.io/blog/2024/typograms/"><![CDATA[<p>This is an example post with some <a href="https://github.com/google/typograms/">typograms</a> code.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">typograms
 </span><span class="sb">+----+
 |    |---&gt; My first diagram!
 +----+</span>
@@ -492,448 +433,4 @@ Content 2
 \ENDPROCEDURE
 \end{algorithmic}
 \end{algorithm}
-</code></pre>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="code"/><summary type="html"><![CDATA[this is what included pseudo code could look like]]></summary></entry><entry><title type="html">a post with code diff</title><link href="https://vuqv.github.io/blog/2024/code-diff/" rel="alternate" type="text/html" title="a post with code diff"/><published>2024-01-27T19:22:00+00:00</published><updated>2024-01-27T19:22:00+00:00</updated><id>https://vuqv.github.io/blog/2024/code-diff</id><content type="html" xml:base="https://vuqv.github.io/blog/2024/code-diff/"><![CDATA[<p>You can display diff code by using the regular markdown syntax:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">diff
-</span><span class="gh">diff --git a/sample.js b/sample.js
-index 0000001..0ddf2ba
-</span><span class="gd">--- a/sample.js
-</span><span class="gi">+++ b/sample.js
-</span><span class="p">@@ -1 +1 @@</span>
-<span class="gd">-console.log("Hello World!")
-</span><span class="gi">+console.log("Hello from Diff2Html!")</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>Which generates:</p> <div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh">diff --git a/sample.js b/sample.js
-index 0000001..0ddf2ba
-</span><span class="gd">--- a/sample.js
-</span><span class="gi">+++ b/sample.js
-</span><span class="p">@@ -1 +1 @@</span>
-<span class="gd">-console.log("Hello World!")
-</span><span class="gi">+console.log("Hello from Diff2Html!")
-</span></code></pre></div></div> <p>But this is difficult to read, specially if you have a large diff. You can use <a href="https://diff2html.xyz/">diff2html</a> to display a more readable version of the diff. For this, just use <code class="language-plaintext highlighter-rouge">diff2html</code> instead of <code class="language-plaintext highlighter-rouge">diff</code> for the code block language:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">diff2html
-</span><span class="sb">diff --git a/sample.js b/sample.js
-index 0000001..0ddf2ba
---- a/sample.js
-+++ b/sample.js
-@@ -1 +1 @@
--console.log("Hello World!")
-+console.log("Hello from Diff2Html!")</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>If we use a longer example, for example <a href="https://github.com/rtfpessoa/diff2html/commit/c2c253d3e3f8b8b267f551e659f72b44ca2ac927">this commit from diff2html</a>, it will generate the following output:</p> <pre><code class="language-diff2html">From 2aaae31cc2a37bfff83430c2c914b140bee59b6a Mon Sep 17 00:00:00 2001
-From: Rodrigo Fernandes &lt;rtfrodrigo@gmail.com&gt;
-Date: Sun, 9 Oct 2016 16:41:54 +0100
-Subject: [PATCH 1/2] Initial template override support
-
----
- scripts/hulk.js                    |  4 ++--
- src/diff2html.js                   |  3 +--
- src/file-list-printer.js           | 11 ++++++++---
- src/hoganjs-utils.js               | 29 +++++++++++++++++------------
- src/html-printer.js                |  6 ++++++
- src/line-by-line-printer.js        |  6 +++++-
- src/side-by-side-printer.js        |  6 +++++-
- test/file-list-printer-tests.js    |  2 +-
- test/hogan-cache-tests.js          | 18 +++++++++++++++---
- test/line-by-line-tests.js         |  3 +--
- test/side-by-side-printer-tests.js |  3 +--
- 11 files changed, 62 insertions(+), 29 deletions(-)
-
-diff --git a/scripts/hulk.js b/scripts/hulk.js
-index 5a793c18..a4b1a4d5 100755
---- a/scripts/hulk.js
-+++ b/scripts/hulk.js
-@@ -173,11 +173,11 @@ function namespace(name) {
- // write a template foreach file that matches template extension
- templates = extractFiles(options.argv.remain)
-   .map(function(file) {
--    var openedFile = fs.readFileSync(file, 'utf-8');
-+    var openedFile = fs.readFileSync(file, 'utf-8').trim();
-     var name;
-     if (!openedFile) return;
-     name = namespace(path.basename(file).replace(/\..*$/, ''));
--    openedFile = removeByteOrderMark(openedFile.trim());
-+    openedFile = removeByteOrderMark(openedFile);
-     openedFile = wrap(file, name, openedFile);
-     if (!options.outputdir) return openedFile;
-     fs.writeFileSync(path.join(options.outputdir, name + '.js')
-diff --git a/src/diff2html.js b/src/diff2html.js
-index 21b0119e..64e138f5 100644
---- a/src/diff2html.js
-+++ b/src/diff2html.js
-@@ -7,7 +7,6 @@
-
- (function() {
-   var diffParser = require('./diff-parser.js').DiffParser;
--  var fileLister = require('./file-list-printer.js').FileListPrinter;
-   var htmlPrinter = require('./html-printer.js').HtmlPrinter;
-
-   function Diff2Html() {
-@@ -43,7 +42,7 @@
-
-     var fileList = '';
-     if (configOrEmpty.showFiles === true) {
--      fileList = fileLister.generateFileList(diffJson, configOrEmpty);
-+      fileList = htmlPrinter.generateFileListSummary(diffJson, configOrEmpty);
-     }
-
-     var diffOutput = '';
-diff --git a/src/file-list-printer.js b/src/file-list-printer.js
-index e408d9b2..1e0a2c61 100644
---- a/src/file-list-printer.js
-+++ b/src/file-list-printer.js
-@@ -8,11 +8,16 @@
- (function() {
-   var printerUtils = require('./printer-utils.js').PrinterUtils;
-
--  var hoganUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+  var hoganUtils;
-+
-   var baseTemplatesPath = 'file-summary';
-   var iconsBaseTemplatesPath = 'icon';
-
--  function FileListPrinter() {
-+  function FileListPrinter(config) {
-+    this.config = config;
-+
-+    var HoganJsUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+    hoganUtils = new HoganJsUtils(config);
-   }
-
-   FileListPrinter.prototype.generateFileList = function(diffFiles) {
-@@ -38,5 +43,5 @@
-     });
-   };
-
--  module.exports.FileListPrinter = new FileListPrinter();
-+  module.exports.FileListPrinter = FileListPrinter;
- })();
-diff --git a/src/hoganjs-utils.js b/src/hoganjs-utils.js
-index 9949e5fa..0dda08d7 100644
---- a/src/hoganjs-utils.js
-+++ b/src/hoganjs-utils.js
-@@ -8,18 +8,19 @@
- (function() {
-   var fs = require('fs');
-   var path = require('path');
--
-   var hogan = require('hogan.js');
-
-   var hoganTemplates = require('./templates/diff2html-templates.js');
-
--  var templatesPath = path.resolve(__dirname, 'templates');
-+  var extraTemplates;
-
--  function HoganJsUtils() {
-+  function HoganJsUtils(configuration) {
-+    this.config = configuration || {};
-+    extraTemplates = this.config.templates || {};
-   }
-
--  HoganJsUtils.prototype.render = function(namespace, view, params, configuration) {
--    var template = this.template(namespace, view, configuration);
-+  HoganJsUtils.prototype.render = function(namespace, view, params) {
-+    var template = this.template(namespace, view);
-     if (template) {
-       return template.render(params);
-     }
-@@ -27,17 +28,16 @@
-     return null;
-   };
-
--  HoganJsUtils.prototype.template = function(namespace, view, configuration) {
--    var config = configuration || {};
-+  HoganJsUtils.prototype.template = function(namespace, view) {
-     var templateKey = this._templateKey(namespace, view);
-
--    return this._getTemplate(templateKey, config);
-+    return this._getTemplate(templateKey);
-   };
-
--  HoganJsUtils.prototype._getTemplate = function(templateKey, config) {
-+  HoganJsUtils.prototype._getTemplate = function(templateKey) {
-     var template;
-
--    if (!config.noCache) {
-+    if (!this.config.noCache) {
-       template = this._readFromCache(templateKey);
-     }
-
-@@ -53,6 +53,7 @@
-
-     try {
-       if (fs.readFileSync) {
-+        var templatesPath = path.resolve(__dirname, 'templates');
-         var templatePath = path.join(templatesPath, templateKey);
-         var templateContent = fs.readFileSync(templatePath + '.mustache', 'utf8');
-         template = hogan.compile(templateContent);
-@@ -66,12 +67,16 @@
-   };
-
-   HoganJsUtils.prototype._readFromCache = function(templateKey) {
--    return hoganTemplates[templateKey];
-+    return extraTemplates[templateKey] || hoganTemplates[templateKey];
-   };
-
-   HoganJsUtils.prototype._templateKey = function(namespace, view) {
-     return namespace + '-' + view;
-   };
-
--  module.exports.HoganJsUtils = new HoganJsUtils();
-+  HoganJsUtils.prototype.compile = function(templateStr) {
-+    return hogan.compile(templateStr);
-+  };
-+
-+  module.exports.HoganJsUtils = HoganJsUtils;
- })();
-diff --git a/src/html-printer.js b/src/html-printer.js
-index 585d5b66..13f83047 100644
---- a/src/html-printer.js
-+++ b/src/html-printer.js
-@@ -8,6 +8,7 @@
- (function() {
-   var LineByLinePrinter = require('./line-by-line-printer.js').LineByLinePrinter;
-   var SideBySidePrinter = require('./side-by-side-printer.js').SideBySidePrinter;
-+  var FileListPrinter = require('./file-list-printer.js').FileListPrinter;
-
-   function HtmlPrinter() {
-   }
-@@ -22,5 +23,10 @@
-     return sideBySidePrinter.generateSideBySideJsonHtml(diffFiles);
-   };
-
-+  HtmlPrinter.prototype.generateFileListSummary = function(diffJson, config) {
-+    var fileListPrinter = new FileListPrinter(config);
-+    return fileListPrinter.generateFileList(diffJson);
-+  };
-+
-   module.exports.HtmlPrinter = new HtmlPrinter();
- })();
-diff --git a/src/line-by-line-printer.js b/src/line-by-line-printer.js
-index b07eb53c..d230bedd 100644
---- a/src/line-by-line-printer.js
-+++ b/src/line-by-line-printer.js
-@@ -11,7 +11,8 @@
-   var utils = require('./utils.js').Utils;
-   var Rematch = require('./rematch.js').Rematch;
-
--  var hoganUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+  var hoganUtils;
-+
-   var genericTemplatesPath = 'generic';
-   var baseTemplatesPath = 'line-by-line';
-   var iconsBaseTemplatesPath = 'icon';
-@@ -19,6 +20,9 @@
-
-   function LineByLinePrinter(config) {
-     this.config = config;
-+
-+    var HoganJsUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+    hoganUtils = new HoganJsUtils(config);
-   }
-
-   LineByLinePrinter.prototype.makeFileDiffHtml = function(file, diffs) {
-diff --git a/src/side-by-side-printer.js b/src/side-by-side-printer.js
-index bbf1dc8d..5e3033b3 100644
---- a/src/side-by-side-printer.js
-+++ b/src/side-by-side-printer.js
-@@ -11,7 +11,8 @@
-   var utils = require('./utils.js').Utils;
-   var Rematch = require('./rematch.js').Rematch;
-
--  var hoganUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+  var hoganUtils;
-+
-   var genericTemplatesPath = 'generic';
-   var baseTemplatesPath = 'side-by-side';
-   var iconsBaseTemplatesPath = 'icon';
-@@ -26,6 +27,9 @@
-
-   function SideBySidePrinter(config) {
-     this.config = config;
-+
-+    var HoganJsUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+    hoganUtils = new HoganJsUtils(config);
-   }
-
-   SideBySidePrinter.prototype.makeDiffHtml = function(file, diffs) {
-diff --git a/test/file-list-printer-tests.js b/test/file-list-printer-tests.js
-index a502a46f..60ea3208 100644
---- a/test/file-list-printer-tests.js
-+++ b/test/file-list-printer-tests.js
-@@ -1,6 +1,6 @@
- var assert = require('assert');
-
--var fileListPrinter = require('../src/file-list-printer.js').FileListPrinter;
-+var fileListPrinter = new (require('../src/file-list-printer.js').FileListPrinter)();
-
- describe('FileListPrinter', function() {
-   describe('generateFileList', function() {
-diff --git a/test/hogan-cache-tests.js b/test/hogan-cache-tests.js
-index 190bf6f8..3bb754ac 100644
---- a/test/hogan-cache-tests.js
-+++ b/test/hogan-cache-tests.js
-@@ -1,6 +1,6 @@
- var assert = require('assert');
-
--var HoganJsUtils = require('../src/hoganjs-utils.js').HoganJsUtils;
-+var HoganJsUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)();
- var diffParser = require('../src/diff-parser.js').DiffParser;
-
- describe('HoganJsUtils', function() {
-@@ -21,16 +21,28 @@ describe('HoganJsUtils', function() {
-       });
-       assert.equal(emptyDiffHtml, result);
-     });
-+
-     it('should render view without cache', function() {
-       var result = HoganJsUtils.render('generic', 'empty-diff', {
-         contentClass: 'd2h-code-line',
-         diffParser: diffParser
-       }, {noCache: true});
--      assert.equal(emptyDiffHtml + '\n', result);
-+      assert.equal(emptyDiffHtml, result);
-     });
-+
-     it('should return null if template is missing', function() {
--      var result = HoganJsUtils.render('generic', 'missing-template', {}, {noCache: true});
-+      var hoganUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)({noCache: true});
-+      var result = hoganUtils.render('generic', 'missing-template', {});
-       assert.equal(null, result);
-     });
-+
-+    it('should allow templates to be overridden', function() {
-+      var emptyDiffTemplate = HoganJsUtils.compile('&lt;p&gt;&lt;/p&gt;');
-+
-+      var config = {templates: {'generic-empty-diff': emptyDiffTemplate}};
-+      var hoganUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)(config);
-+      var result = hoganUtils.render('generic', 'empty-diff', {myName: 'Rodrigo Fernandes'});
-+      assert.equal('&lt;p&gt;Rodrigo Fernandes&lt;/p&gt;', result);
-+    });
-   });
- });
-diff --git a/test/line-by-line-tests.js b/test/line-by-line-tests.js
-index 1cd92073..8869b3df 100644
---- a/test/line-by-line-tests.js
-+++ b/test/line-by-line-tests.js
-@@ -14,7 +14,7 @@ describe('LineByLinePrinter', function() {
-         '            File without changes\n' +
-         '        &lt;/div&gt;\n' +
-         '    &lt;/td&gt;\n' +
--        '&lt;/tr&gt;\n';
-+        '&lt;/tr&gt;';
-
-       assert.equal(expected, fileHtml);
-     });
-@@ -422,7 +422,6 @@ describe('LineByLinePrinter', function() {
-         '        &lt;/div&gt;\n' +
-         '    &lt;/td&gt;\n' +
-         '&lt;/tr&gt;\n' +
--        '\n' +
-         '                &lt;/tbody&gt;\n' +
-         '            &lt;/table&gt;\n' +
-         '        &lt;/div&gt;\n' +
-diff --git a/test/side-by-side-printer-tests.js b/test/side-by-side-printer-tests.js
-index 76625f8e..771daaa5 100644
---- a/test/side-by-side-printer-tests.js
-+++ b/test/side-by-side-printer-tests.js
-@@ -14,7 +14,7 @@ describe('SideBySidePrinter', function() {
-         '            File without changes\n' +
-         '        &lt;/div&gt;\n' +
-         '    &lt;/td&gt;\n' +
--        '&lt;/tr&gt;\n';
-+        '&lt;/tr&gt;';
-
-       assert.equal(expectedRight, fileHtml.right);
-       assert.equal(expectedLeft, fileHtml.left);
-@@ -324,7 +324,6 @@ describe('SideBySidePrinter', function() {
-         '        &lt;/div&gt;\n' +
-         '    &lt;/td&gt;\n' +
-         '&lt;/tr&gt;\n' +
--        '\n' +
-         '                    &lt;/tbody&gt;\n' +
-         '                &lt;/table&gt;\n' +
-         '            &lt;/div&gt;\n' +
-
-From f3cadb96677d0eb82fc2752dc3ffbf35ca9b5bdb Mon Sep 17 00:00:00 2001
-From: Rodrigo Fernandes &lt;rtfrodrigo@gmail.com&gt;
-Date: Sat, 15 Oct 2016 13:21:22 +0100
-Subject: [PATCH 2/2] Allow uncompiled templates
-
----
- README.md                 |  3 +++
- src/hoganjs-utils.js      |  7 +++++++
- test/hogan-cache-tests.js | 24 +++++++++++++++++++++++-
- 3 files changed, 33 insertions(+), 1 deletion(-)
-
-diff --git a/README.md b/README.md
-index 132c8a28..46909f25 100644
---- a/README.md
-+++ b/README.md
-@@ -98,6 +98,9 @@ The HTML output accepts a Javascript object with configuration. Possible options
-   - `synchronisedScroll`: scroll both panes in side-by-side mode: `true` or `false`, default is `false`
-   - `matchWordsThreshold`: similarity threshold for word matching, default is 0.25
-   - `matchingMaxComparisons`: perform at most this much comparisons for line matching a block of changes, default is `2500`
-+  - `templates`: object with previously compiled templates to replace parts of the html
-+  - `rawTemplates`: object with raw not compiled templates to replace parts of the html
-+  &gt; For more information regarding the possible templates look into [src/templates](https://github.com/rtfpessoa/diff2html/tree/master/src/templates)
-
- ## Diff2HtmlUI Helper
-
-diff --git a/src/hoganjs-utils.js b/src/hoganjs-utils.js
-index 0dda08d7..b2e9c275 100644
---- a/src/hoganjs-utils.js
-+++ b/src/hoganjs-utils.js
-@@ -17,6 +17,13 @@
-   function HoganJsUtils(configuration) {
-     this.config = configuration || {};
-     extraTemplates = this.config.templates || {};
-+
-+    var rawTemplates = this.config.rawTemplates || {};
-+    for (var templateName in rawTemplates) {
-+      if (rawTemplates.hasOwnProperty(templateName)) {
-+        if (!extraTemplates[templateName]) extraTemplates[templateName] = this.compile(rawTemplates[templateName]);
-+      }
-+    }
-   }
-
-   HoganJsUtils.prototype.render = function(namespace, view, params) {
-diff --git a/test/hogan-cache-tests.js b/test/hogan-cache-tests.js
-index 3bb754ac..a34839c0 100644
---- a/test/hogan-cache-tests.js
-+++ b/test/hogan-cache-tests.js
-@@ -36,7 +36,7 @@ describe('HoganJsUtils', function() {
-       assert.equal(null, result);
-     });
-
--    it('should allow templates to be overridden', function() {
-+    it('should allow templates to be overridden with compiled templates', function() {
-       var emptyDiffTemplate = HoganJsUtils.compile('&lt;p&gt;&lt;/p&gt;');
-
-       var config = {templates: {'generic-empty-diff': emptyDiffTemplate}};
-@@ -44,5 +44,27 @@ describe('HoganJsUtils', function() {
-       var result = hoganUtils.render('generic', 'empty-diff', {myName: 'Rodrigo Fernandes'});
-       assert.equal('&lt;p&gt;Rodrigo Fernandes&lt;/p&gt;', result);
-     });
-+
-+    it('should allow templates to be overridden with uncompiled templates', function() {
-+      var emptyDiffTemplate = '&lt;p&gt;&lt;/p&gt;';
-+
-+      var config = {rawTemplates: {'generic-empty-diff': emptyDiffTemplate}};
-+      var hoganUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)(config);
-+      var result = hoganUtils.render('generic', 'empty-diff', {myName: 'Rodrigo Fernandes'});
-+      assert.equal('&lt;p&gt;Rodrigo Fernandes&lt;/p&gt;', result);
-+    });
-+
-+    it('should allow templates to be overridden giving priority to compiled templates', function() {
-+      var emptyDiffTemplate = HoganJsUtils.compile('&lt;p&gt;&lt;/p&gt;');
-+      var emptyDiffTemplateUncompiled = '&lt;p&gt;Not used!&lt;/p&gt;';
-+
-+      var config = {
-+        templates: {'generic-empty-diff': emptyDiffTemplate},
-+        rawTemplates: {'generic-empty-diff': emptyDiffTemplateUncompiled}
-+      };
-+      var hoganUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)(config);
-+      var result = hoganUtils.render('generic', 'empty-diff', {myName: 'Rodrigo Fernandes'});
-+      assert.equal('&lt;p&gt;Rodrigo Fernandes&lt;/p&gt;', result);
-+    });
-   });
- });
-</code></pre>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="code"/><summary type="html"><![CDATA[this is how you can display code diffs]]></summary></entry></feed>
+</code></pre>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="code"/><summary type="html"><![CDATA[this is what included pseudo code could look like]]></summary></entry></feed>

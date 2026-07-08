@@ -51,7 +51,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
-        },{id: "post-glink-entanglement-tutorial",
+        },{id: "post-topo-tutorial-part-b-co-translational-protein-synthesis",
+        
+          title: "TOPO tutorial, Part B — co-translational protein synthesis",
+        
+        description: "Growing a protein residue by residue on the ribosome with TOPO — the analytic cylinder tunnel and the explicit coarse-grained ribosome, under codon-resolved kinetics.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/topo-tutorial-translation/";
+          
+        },
+      },{id: "post-glink-entanglement-tutorial",
         
           title: "GLink Entanglement Tutorial",
         
@@ -73,11 +84,11 @@ ninja.data = [{
             window.location.href = "/blog/2026/detect-mirror-image-cg-simulation/";
           
         },
-      },{id: "post-topo-tutorial",
+      },{id: "post-topo-tutorial-part-a-simulating-folded-proteins",
         
-          title: "TOPO tutorial",
+          title: "TOPO tutorial, Part A — simulating folded proteins",
         
-        description: "an example of a blog post with some code",
+        description: "A hands-on walkthrough of TOPO&#39;s coarse-grained folded-protein workflow — from a single-domain quickstart to multidomain scaling, nscale optimization, and temperature annealing.",
         section: "Posts",
         handler: () => {
           
@@ -467,6 +478,11 @@ ninja.data = [{
           description: "A Python command-line tool for calculating and clustering Gaussian-linking protein entanglements",
           section: "Projects",handler: () => {
               window.location.href = "/projects/3_project_glink_entanglement/";
+            },},{id: "projects-topo-for-folded-protein-simulations",
+          title: 'TOPO for folded-protein simulations',
+          description: "An OpenMM-based package for topology-based coarse-grained simulations of folded proteins",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_project_topo_folded/";
             },},{
         id: 'social-cv',
         title: 'CV',
