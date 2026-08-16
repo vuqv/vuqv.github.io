@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!--
+    QV ligature: the circle reads as Q, the V's left arm pierces it and doubles as the Q's tail.
+    A favicon renders in isolation and cannot see the site stylesheet, so the theme colours are
+    embedded here — $purple-color for light, $cyan-color for dark (see _sass/_variables.scss).
+  -->
+  <style>
+    .mark {
+      fill: none;
+      stroke: #b509ac;
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    @media (prefers-color-scheme: dark) {
+      .mark { stroke: #2698ba; }
+    }
+  </style>
+  <g class="mark">
+    <circle cx="27" cy="27" r="17" />
+    <path d="M33 33L43 53L55 22" />
+  </g>
+</svg>
