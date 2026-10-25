@@ -168,3 +168,46 @@ html {
     }
   }
 }
+
+// Table-of-contents sidebar (CV page and any page with `toc: sidebar`):
+// a card panel that matches the CV section cards, larger links, and a
+// sticky offset that clears the fixed navbar (57px) with breathing room.
+#toc-sidebar.toc-sidebar {
+  top: calc(57px + 1.5rem);
+  max-height: calc(100vh - 57px - 3rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: 1rem 0.75rem 1rem 0.5rem;
+  background-color: var(--global-card-bg-color);
+  border-radius: 0.5rem;
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.16),
+    0 2px 10px rgba(0, 0, 0, 0.12);
+
+  &::before {
+    content: "On this page";
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--global-text-color-light);
+    padding: 0 0 0.6rem 1.2rem;
+    margin-bottom: 0.4rem;
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+
+  .toc-link {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    padding: 0.3rem 0.4rem 0.3rem 0.6rem;
+  }
+}
+
+// Phones: the core theme hides the sidebar; keep the card styling from leaking
+@media (max-width: 576px) {
+  #toc-sidebar.toc-sidebar {
+    padding: 0;
+    box-shadow: none;
+  }
+}
