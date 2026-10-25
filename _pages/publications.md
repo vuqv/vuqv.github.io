@@ -60,8 +60,7 @@ nav_order: 2
     // Update arrow
     var arrow = document.querySelector('#sort-year-btn .sort-arrow');
     if (arrow) arrow.textContent = currentOrder === 'desc' ? '↓' : '↑';
-
-    renumberPublications();
+    // Numbers stay attached to each paper (set once on load), so 1 is always the oldest.
   };
 
   function renumberPublications() {
@@ -72,7 +71,13 @@ nav_order: 2
     });
   }
 
-  document.addEventListener('DOMContentLoaded', renumberPublications);
+  // The script can run after DOMContentLoaded has already fired, so number now
+  // if the document is ready, otherwise wait for it.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renumberPublications);
+  } else {
+    renumberPublications();
+  }
 })();
 </script>
 

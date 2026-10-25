@@ -1,0 +1,94 @@
+---
+layout: default
+---
+{% comment %}
+  Site-local override of al_folio_core's about layout.
+  Two columns on wide screens: a sticky profile column (photo, contact, socials)
+  and a main column (bio, then news and latest posts side by side, then
+  selected publications). Stacks to one column below 992px.
+{% endcomment %}
+<div class="post about">
+  <div class="about-grid">
+    <aside class="about-aside">
+      <div class="about-profile">
+        {% if page.profile.image %}
+          {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
+          {% if page.profile.image_circular %}
+            {% assign profile_image_class = 'img-fluid rounded-circle about-photo' %}
+          {% else %}
+            {% assign profile_image_class = 'img-fluid rounded about-photo' %}
+          {% endif %}
+          {% capture sizes %}(min-width: 992px) 260px, (min-width: 576px) 40vw, 70vw{% endcapture %}
+          {%
+            include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
+            cache_bust=true
+          %}
+        {% endif %}
+        {% if page.profile.more_info %}
+          <div class="more-info">{{ page.profile.more_info }}</div>
+        {% endif %}
+        {% if page.social %}
+          <div class="social">
+            <div class="contact-icons">{% social_links %}</div>
+            {% if site.contact_note and site.contact_note != '' %}
+              <div class="contact-note">{{ site.contact_note }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </aside>
+
+    <div class="about-main">
+      <header class="post-header">
+        <h1 class="post-title">
+          {% if site.title == 'blank' %}
+            <span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }}
+            {{ site.last_name }}
+          {% else %}
+            {{ site.title }}
+          {% endif %}
+        </h1>
+        <p class="desc">{{ page.subtitle }}</p>
+      </header>
+
+      <article class="about-bio">{{ content }}</article>
+
+      {% assign show_news = false %}
+      {% if page.announcements and page.announcements.enabled %}{% assign show_news = true %}{% endif %}
+      {% assign show_posts = false %}
+      {% if page.latest_posts and page.latest_posts.enabled %}{% assign show_posts = true %}{% endif %}
+
+      {% if show_news or show_posts %}
+        <div class="about-feeds{% if show_news and show_posts %} about-feeds--two{% endif %}">
+          {% if show_news %}
+            <section class="about-section">
+              <h2><a href="{{ '/news/' | relative_url }}">News</a></h2>
+              {% include news.liquid limit=true %}
+            </section>
+          {% endif %}
+          {% if show_posts %}
+            <section class="about-section">
+              <h2><a href="{{ '/blog/' | relative_url }}">Latest posts</a></h2>
+              {% include latest_posts.liquid %}
+            </section>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if page.selected_papers %}
+        <section class="about-section">
+          <h2><a href="{{ '/publications/' | relative_url }}">Selected publications</a></h2>
+          {% include selected_papers.liquid %}
+        </section>
+      {% endif %}
+
+      {% if site.newsletter and site.newsletter.enabled and site.footer_fixed %}
+        {% if site.plugins contains 'al_newsletter' %}
+          {% include plugins/al_newsletter_form_center_margin.liquid %}
+        {% else %}
+          {% include newsletter.liquid center=true %}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>

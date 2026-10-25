@@ -2,9 +2,17 @@
   {% bibliography --group_by none --query @*[selected=true]* %}
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var items = document.querySelectorAll('#selected-publications-list ol.bibliography > li');
-  var total = items.length;
-  items.forEach(function(li, i) { li.setAttribute('data-pub-number', total - i); });
-});
+(function() {
+  function number() {
+    var items = document.querySelectorAll('#selected-publications-list ol.bibliography > li');
+    var total = items.length;
+    items.forEach(function(li, i) { li.setAttribute('data-pub-number', total - i); });
+  }
+  // May run after DOMContentLoaded has already fired
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', number);
+  } else {
+    number();
+  }
+})();
 </script>

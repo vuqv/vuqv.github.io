@@ -315,3 +315,340 @@ html {
     border: 0;
   }
 }
+
+/*******************************************************************************
+ * Wide layout (max_width: 1240px in _config.yml)
+ * Use the width for structure, not for longer lines: prose stays near 70ch,
+ * the extra room goes to a profile column, side-by-side feeds and a year gutter.
+ ******************************************************************************/
+
+$navbar-h: 57px;
+
+// About page: sticky profile column + main column
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+}
+
+.about-profile {
+  .about-photo {
+    width: 100%;
+    max-width: 220px;
+  }
+
+  figure {
+    margin-bottom: 1.25rem;
+  }
+
+  .more-info {
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--global-text-color-light);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .social {
+    text-align: left;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--global-divider-color);
+
+    .contact-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.85rem;
+      font-size: 1.35rem;
+
+      a svg,
+      a img {
+        margin-bottom: 0;
+      }
+    }
+
+    .contact-note {
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+    }
+  }
+}
+
+.about-main {
+  min-width: 0;
+
+  .post-header .post-title {
+    font-size: 2.75rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .about-bio {
+    max-width: 72ch;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+}
+
+.about-section {
+  margin-top: 3rem;
+
+  > h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--global-divider-color);
+
+    a {
+      color: inherit;
+
+      &:hover {
+        color: var(--global-theme-color);
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.about-feeds {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 3rem;
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .about-feeds--two {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
+// Wide screens: bio on the left, news + latest posts as a right rail,
+// selected publications spanning both underneath.
+@media (min-width: 1200px) {
+  .about-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    grid-template-areas:
+      "head head"
+      "bio  rail"
+      "pubs pubs";
+    column-gap: 3.5rem;
+    align-items: start;
+
+    > .post-header {
+      grid-area: head;
+    }
+
+    > .about-bio {
+      grid-area: bio;
+    }
+
+    > .about-feeds {
+      grid-area: rail;
+    }
+
+    > .about-section {
+      grid-area: pubs;
+    }
+  }
+
+  .about-feeds > .about-section:first-child {
+    margin-top: 0.4rem;
+  }
+
+  .about-feeds > .about-section + .about-section {
+    margin-top: 2.25rem;
+  }
+
+  .about-feeds .about-section > h2 {
+    font-size: 1.1rem;
+  }
+}
+
+// Feeds as compact stacked rows (date above text, optional thumbnail right)
+.about-feeds .news {
+  table,
+  tbody {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "date  thumb"
+      "text  thumb";
+    column-gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+
+  tr:last-child {
+    border-bottom: 0;
+  }
+
+  th,
+  td {
+    display: block;
+    padding: 0 !important;
+    width: auto !important;
+    border: 0 !important;
+  }
+
+  th {
+    grid-area: date;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--global-text-color-light);
+    white-space: nowrap;
+    margin-bottom: 0.15rem;
+  }
+
+  td {
+    grid-area: text;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  td.news-thumbnail-cell {
+    grid-area: thumb;
+    align-self: center;
+  }
+
+  td.news-thumbnail-cell:empty,
+  td.news-thumbnail-cell:not(:has(a)) {
+    display: none;
+  }
+
+  .news-thumbnail {
+    width: 4.5rem;
+    height: 3.25rem;
+  }
+}
+
+// Narrow screens: name first, then the profile, then the rest
+@media (max-width: 991.98px) {
+  .about-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-main {
+    display: contents;
+  }
+
+  .about-main > .post-header {
+    order: -1;
+    margin-bottom: -0.5rem;
+  }
+
+  .about-profile {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    column-gap: 1.25rem;
+    align-items: center;
+
+    figure {
+      grid-row: span 2;
+      margin: 0;
+    }
+
+    .social {
+      margin-top: 0.75rem;
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+
+  .about-section {
+    margin-top: 2.25rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .about-grid {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 4rem;
+  }
+
+  .about-aside .about-profile {
+    position: sticky;
+    top: calc(#{$navbar-h} + 2rem);
+  }
+
+  .about-profile .about-photo {
+    max-width: none;
+  }
+}
+
+// Publications page: years in a sticky left gutter, entries on the right
+@media (min-width: 992px) {
+  .publications:has(> h2.bibliography) {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    column-gap: 2.5rem;
+
+    > h2.bibliography,
+    > h2.bibliography:first-of-type {
+      grid-column: 1;
+      align-self: start;
+      position: sticky;
+      top: calc(#{$navbar-h} + 1.5rem);
+      margin: 0;
+      padding-top: 1.25rem;
+      border-top: 0;
+      text-align: left;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--global-text-color-light);
+    }
+
+    > ol.bibliography {
+      grid-column: 2;
+      margin: 0 0 1rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--global-divider-color);
+    }
+  }
+}
+
+// Publication entries: let the text column take the free width, capped for reading
+@media (min-width: 576px) {
+  .publications ol.bibliography li .row > .col-sm-8 {
+    flex: 1 1 0;
+    max-width: 48rem;
+  }
+}
+
+// Blog posts: one centred reading column
+.post:has(> article.post-content) {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+// CV lists without Bootstrap compat (backport of al_folio_cv 1.0.3, not yet on
+// rubygems): no stray bullets or indent, hairline dividers between entries,
+// and no short border above each date badge. Drop once the gem is bumped.
+.cv ul.list-group {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cv ul.list-group > li.list-group-item {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--global-divider-color);
+}
+
+.cv ul.list-group-flush > li.list-group-item:last-child {
+  border-bottom: 0;
+}
+
+table.table-cv td,
+table.table-cv th {
+  border-top: 0;
+}
